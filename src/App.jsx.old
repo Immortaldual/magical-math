@@ -55,318 +55,7 @@ function defaultData() {
     muted: false,
     unlockedCount: 8,
     seenUnlockAt: [],
-    // Crystal economy
-    crystals: 0,
-    totalCrystalsEarned: 0,
-    // Cosmetics owned & active
-    ownedItems: ["pet_luna","bg_default","sparkle_default"],
-    activePet: "pet_luna",
-    activeBg: "bg_default",
-    activeSparkle: "sparkle_default",
-    activeBorder: "border_default",
-    // Session tracking for crystal rewards
-    sessionHintsUsed: 0,
-    firstHardComplete: false,
-    perfectByDiff: { easy: false, medium: false, hard: false },
   };
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHOP ITEMS
-// ─────────────────────────────────────────────────────────────────────────────
-const SHOP_ITEMS = {
-  pets: [
-    { id:"pet_luna",    name:"Luna",          emoji:"🖤", cost:0,   desc:"Your faithful black cat companion!", art:"luna" },
-    { id:"pet_artemis", name:"Artemis",        emoji:"🤍", cost:150, desc:"Luna's wise white cat partner!" },
-    { id:"pet_diana",   name:"Diana",          emoji:"💜", cost:400, desc:"Their precious grey kitten daughter!" },
-    { id:"pet_dragon",  name:"Baby Dragon",    emoji:"🐉", cost:200, desc:"A tiny dragon who breathes sparkles!" },
-    { id:"pet_fairy",   name:"Tiny Fairy",     emoji:"✨", cost:250, desc:"A magical fairy that matches your character!" },
-    { id:"pet_fox",     name:"Celestial Fox",  emoji:"🦊", cost:300, desc:"A fox surrounded by cosmic energy!" },
-    { id:"pet_rabbit",  name:"Moon Rabbit",    emoji:"🐰", cost:50,  desc:"A gentle bunny from the moon!" },
-    { id:"pet_phoenix", name:"Baby Phoenix",   emoji:"🔥", cost:500, desc:"The rarest companion — a phoenix of pure magic!" },
-  ],
-  backgrounds: [
-    { id:"bg_default",    name:"Magical Garden",   emoji:"🌸", cost:0,  desc:"The classic magical backdrop" },
-    { id:"bg_starry",     name:"Starry Night",      emoji:"🌟", cost:20, desc:"A dreamy night sky full of stars" },
-    { id:"bg_cherry",     name:"Cherry Blossom",    emoji:"🌸", cost:20, desc:"Soft pink petals falling gently" },
-    { id:"bg_forest",     name:"Enchanted Forest",  emoji:"🌿", cost:25, desc:"A mysterious magical forest" },
-    { id:"bg_ocean",      name:"Underwater Kingdom",emoji:"🌊", cost:25, desc:"Deep beneath the sparkling sea" },
-    { id:"bg_galaxy",     name:"Galaxy",            emoji:"🔮", cost:30, desc:"Drift through the cosmos itself" },
-  ],
-  sparkles: [
-    { id:"sparkle_default", name:"Magic Stars",    emoji:"✦", cost:0,  desc:"Classic magical sparkles" },
-    { id:"sparkle_rainbow", name:"Rainbow",        emoji:"🌈", cost:15, desc:"All the colors of the rainbow!" },
-    { id:"sparkle_hearts",  name:"Hearts",         emoji:"💕", cost:15, desc:"Floating hearts everywhere!" },
-    { id:"sparkle_shoots",  name:"Shooting Stars", emoji:"💫", cost:20, desc:"Stars streaking across the screen" },
-    { id:"sparkle_blossom", name:"Blossoms",       emoji:"🌸", cost:20, desc:"Soft petals drifting by" },
-    { id:"sparkle_galaxy",  name:"Galaxy Dust",    emoji:"🌌", cost:25, desc:"Cosmic dust from distant stars" },
-  ],
-  borders: [
-    { id:"border_default", name:"Simple",        emoji:"⬜", cost:0,  desc:"Clean and simple" },
-    { id:"border_floral",  name:"Floral Vine",   emoji:"🌿", cost:20, desc:"Delicate vines and flowers" },
-    { id:"border_starburst",name:"Star Burst",   emoji:"⭐", cost:20, desc:"Radiating star energy" },
-    { id:"border_moon",    name:"Moon & Stars",  emoji:"🌙", cost:25, desc:"Crescent moons and twinkling stars" },
-    { id:"border_crystal", name:"Crystal Gems",  emoji:"💎", cost:30, desc:"Sparkling crystal gems" },
-  ],
-};
-
-// Background themes
-const BG_THEMES = {
-  bg_default: "linear-gradient(135deg,#fff0fb,#f0eaff)",
-  bg_starry:  "linear-gradient(135deg,#0d0d2e,#1a1a4e)",
-  bg_cherry:  "linear-gradient(135deg,#fff0f5,#ffe4ee)",
-  bg_forest:  "linear-gradient(135deg,#0d2e1a,#1a4e2e)",
-  bg_ocean:   "linear-gradient(135deg,#0d1e3e,#1a3a5e)",
-  bg_galaxy:  "linear-gradient(135deg,#0d0d1a,#1a0d2e)",
-};
-
-// Sparkle configs
-const SPARKLE_CONFIGS = {
-  sparkle_default: { chars:["✦","✧","⋆","✺","❋","✼","✻","✽","⊹"], colors:["#FFD700","#FF88CC","#AA88FF","#88DDFF"] },
-  sparkle_rainbow: { chars:["✦","✧","⋆","◆","●","★"], colors:["#FF4444","#FF8800","#FFDD00","#44CC44","#4488FF","#AA44FF"] },
-  sparkle_hearts:  { chars:["♥","♡","❤","💕","❣"], colors:["#FF4466","#FF88AA","#FFAABB","#FF6688"] },
-  sparkle_shoots:  { chars:["✦","★","⭐","💫","✨"], colors:["#FFD700","#FFFAAA","#FFEECC","#FFFFFF"] },
-  sparkle_blossom: { chars:["🌸","✿","❀","✽","❋"], colors:["#FFB0CC","#FFAABB","#FF88AA","#FFD0E0"] },
-  sparkle_galaxy:  { chars:["✦","✧","⋆","·","∗","⊹"], colors:["#AA44FF","#4488FF","#FF44BB","#44FFCC","#FFAA44"] },
-};
-
-// Pet SVG art
-function getPetArt(petId, state="idle", accentColor="#e0379a") {
-  const col = accentColor;
-  const arts = {
-    pet_luna: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#222222"/>
-        <ellipse cx="21" cy="20" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="39" cy="20" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="21" cy="20" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="39" cy="20" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#333333"/>
-        <ellipse cx="24" cy="30" rx="5" ry="6" fill="#FFD700"/>
-        <ellipse cx="36" cy="30" rx="5" ry="6" fill="#FFD700"/>
-        <ellipse cx="24" cy="30" rx="2.5" ry="4" fill="#222200"/>
-        <ellipse cx="36" cy="30" rx="2.5" ry="4" fill="#222200"/>
-        <circle cx="25" cy="28" r="1.5" fill="white"/>
-        <circle cx="37" cy="28" r="1.5" fill="white"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#555" stroke-width="1" fill="none"/>
-        <line x1="18" y1="34" x2="8" y2="32" stroke="#888" stroke-width="1"/>
-        <line x1="18" y1="36" x2="8" y2="36" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="34" x2="52" y2="32" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="36" x2="52" y2="36" stroke="#888" stroke-width="1"/>
-        <circle cx="30" cy="22" r="4" fill="#FFD700" opacity="0.9"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#222222"/>
-        <ellipse cx="21" cy="18" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="39" cy="18" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="21" cy="18" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="39" cy="18" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#333333"/>
-        <path d="M20 29 Q24 24 28 29" fill="#FFD700"/>
-        <path d="M32 29 Q36 24 40 29" fill="#FFD700"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#555" stroke-width="1.5" fill="none"/>
-        <line x1="18" y1="33" x2="6" y2="28" stroke="#888" stroke-width="1"/>
-        <line x1="18" y1="35" x2="6" y2="35" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="33" x2="54" y2="28" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="35" x2="54" y2="35" stroke="#888" stroke-width="1"/>
-        <circle cx="30" cy="21" r="4" fill="#FFD700" opacity="0.9"/>
-        <text x="15" y="12" font-size="8" fill="#FFD700">✦</text>
-        <text x="38" y="10" font-size="8" fill="#FF88CC">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="18" ry="14" fill="#222222"/>
-        <ellipse cx="21" cy="22" rx="5" ry="9" fill="#222222" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="5" ry="9" fill="#222222" transform="rotate(-10,39,22)"/>
-        <ellipse cx="21" cy="22" rx="2.5" ry="5" fill="#FF88AA" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="2.5" ry="5" fill="#FF88AA" transform="rotate(-10,39,22)"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#333333"/>
-        <path d="M22 31 Q26 34 30 31" fill="none" stroke="#FFD700" stroke-width="2"/>
-        <path d="M30 31 Q34 34 38 31" fill="none" stroke="#FFD700" stroke-width="2"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#555" stroke-width="1.5" fill="none"/>
-        <circle cx="30" cy="22" r="4" fill="#FFD700" opacity="0.5"/>
-      </svg>`,
-    },
-    pet_artemis: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="20" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="39" cy="20" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="20" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="20" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#F5F5F5"/>
-        <ellipse cx="24" cy="30" rx="5" ry="6" fill="#4488FF"/>
-        <ellipse cx="36" cy="30" rx="5" ry="6" fill="#4488FF"/>
-        <ellipse cx="24" cy="30" rx="2.5" ry="4" fill="#112266"/>
-        <ellipse cx="36" cy="30" rx="2.5" ry="4" fill="#112266"/>
-        <circle cx="25" cy="28" r="1.5" fill="white"/>
-        <circle cx="37" cy="28" r="1.5" fill="white"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#ccc" stroke-width="1" fill="none"/>
-        <line x1="18" y1="34" x2="8" y2="32" stroke="#ccc" stroke-width="1"/>
-        <line x1="18" y1="36" x2="8" y2="36" stroke="#ccc" stroke-width="1"/>
-        <line x1="42" y1="34" x2="52" y2="32" stroke="#ccc" stroke-width="1"/>
-        <line x1="42" y1="36" x2="52" y2="36" stroke="#ccc" stroke-width="1"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="18" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="39" cy="18" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="18" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="18" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#F5F5F5"/>
-        <path d="M20 29 Q24 24 28 29" fill="#4488FF"/>
-        <path d="M32 29 Q36 24 40 29" fill="#4488FF"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#ccc" stroke-width="1.5" fill="none"/>
-        <text x="14" y="12" font-size="8" fill="#4488FF">✦</text>
-        <text x="38" y="10" font-size="8" fill="#88CCFF">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="18" ry="14" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="22" rx="5" ry="9" fill="#EEEEEE" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="5" ry="9" fill="#EEEEEE" transform="rotate(-10,39,22)"/>
-        <ellipse cx="21" cy="22" rx="2.5" ry="5" fill="#FFB0CC" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="2.5" ry="5" fill="#FFB0CC" transform="rotate(-10,39,22)"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#F5F5F5"/>
-        <path d="M22 31 Q26 34 30 31" fill="none" stroke="#4488FF" stroke-width="2"/>
-        <path d="M30 31 Q34 34 38 31" fill="none" stroke="#4488FF" stroke-width="2"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#ccc" stroke-width="1.5" fill="none"/>
-      </svg>`,
-    },
-    pet_diana: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="16" ry="14" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="22" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="39" cy="22" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="22" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="22" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="33" rx="12" ry="12" fill="#BBBBBB"/>
-        <ellipse cx="25" cy="31" rx="4.5" ry="5" fill="#AA44FF"/>
-        <ellipse cx="35" cy="31" rx="4.5" ry="5" fill="#AA44FF"/>
-        <ellipse cx="25" cy="31" rx="2" ry="3.5" fill="#330066"/>
-        <ellipse cx="35" cy="31" rx="2" ry="3.5" fill="#330066"/>
-        <circle cx="26" cy="29" r="1.2" fill="white"/>
-        <circle cx="36" cy="29" r="1.2" fill="white"/>
-        <ellipse cx="30" cy="36" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#999" stroke-width="1" fill="none"/>
-        <line x1="19" y1="34" x2="10" y2="32" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="19" y1="36" x2="10" y2="36" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="41" y1="34" x2="50" y2="32" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="41" y1="36" x2="50" y2="36" stroke="#aaa" stroke-width="0.8"/>
-        <circle cx="30" cy="22" r="3" fill="#AA44FF" opacity="0.8"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="16" ry="14" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="19" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="39" cy="19" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="19" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="19" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="33" rx="12" ry="12" fill="#BBBBBB"/>
-        <path d="M21 30 Q25 25 29 30" fill="#AA44FF"/>
-        <path d="M31 30 Q35 25 39 30" fill="#AA44FF"/>
-        <ellipse cx="30" cy="36" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#999" stroke-width="1.5" fill="none"/>
-        <circle cx="30" cy="21" r="3" fill="#AA44FF" opacity="0.9"/>
-        <text x="13" y="13" font-size="7" fill="#AA44FF">✦</text>
-        <text x="39" y="11" font-size="7" fill="#CC88FF">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="16" ry="13" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="23" rx="4" ry="8" fill="#AAAAAA" transform="rotate(10,21,23)"/>
-        <ellipse cx="39" cy="23" rx="4" ry="8" fill="#AAAAAA" transform="rotate(-10,39,23)"/>
-        <ellipse cx="21" cy="23" rx="2" ry="4.5" fill="#FFB0CC" transform="rotate(10,21,23)"/>
-        <ellipse cx="39" cy="23" rx="2" ry="4.5" fill="#FFB0CC" transform="rotate(-10,39,23)"/>
-        <ellipse cx="30" cy="34" rx="12" ry="12" fill="#BBBBBB"/>
-        <path d="M23 31 Q27 34 31 31" fill="none" stroke="#AA44FF" stroke-width="1.5"/>
-        <path d="M29 31 Q33 34 37 31" fill="none" stroke="#AA44FF" stroke-width="1.5"/>
-        <ellipse cx="30" cy="37" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#999" stroke-width="1.2" fill="none"/>
-        <circle cx="30" cy="22" r="3" fill="#AA44FF" opacity="0.4"/>
-      </svg>`,
-    },
-    pet_rabbit: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="22" cy="16" rx="4" ry="12" fill="#F0E0FF"/>
-        <ellipse cx="38" cy="16" rx="4" ry="12" fill="#F0E0FF"/>
-        <ellipse cx="22" cy="16" rx="2" ry="7" fill="#FFB0CC"/>
-        <ellipse cx="38" cy="16" rx="2" ry="7" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#F0E0FF"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#F8F0FF"/>
-        <ellipse cx="24" cy="32" rx="5" ry="6" fill="#FF4466"/>
-        <ellipse cx="36" cy="32" rx="5" ry="6" fill="#FF4466"/>
-        <ellipse cx="24" cy="32" rx="2.5" ry="3.5" fill="#880022"/>
-        <ellipse cx="36" cy="32" rx="2.5" ry="3.5" fill="#880022"/>
-        <circle cx="25" cy="30" r="1.5" fill="white"/>
-        <circle cx="37" cy="30" r="1.5" fill="white"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FFB0CC"/>
-        <path d="M27 39 Q30 42 33 39" stroke="#ddd" stroke-width="1" fill="none"/>
-        <circle cx="20" cy="37" r="2" fill="#FFB0CC" opacity="0.6"/>
-        <circle cx="24" cy="39" r="2" fill="#FFB0CC" opacity="0.6"/>
-        <circle cx="36" cy="37" r="2" fill="#FFB0CC" opacity="0.6"/>
-        <circle cx="40" cy="39" r="2" fill="#FFB0CC" opacity="0.6"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="22" cy="14" rx="4" ry="12" fill="#F0E0FF"/>
-        <ellipse cx="38" cy="14" rx="4" ry="12" fill="#F0E0FF"/>
-        <ellipse cx="22" cy="14" rx="2" ry="7" fill="#FFB0CC"/>
-        <ellipse cx="38" cy="14" rx="2" ry="7" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#F0E0FF"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#F8F0FF"/>
-        <path d="M20 31 Q24 26 28 31" fill="#FF4466"/>
-        <path d="M32 31 Q36 26 40 31" fill="#FF4466"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FFB0CC"/>
-        <path d="M25 39 Q30 44 35 39" stroke="#ddd" stroke-width="1.5" fill="none"/>
-        <text x="12" y="12" font-size="8" fill="#AA44FF">✦</text>
-        <text x="38" y="10" font-size="8" fill="#FF88CC">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="22" cy="18" rx="4" ry="12" fill="#F0E0FF" transform="rotate(8,22,18)"/>
-        <ellipse cx="38" cy="18" rx="4" ry="12" fill="#F0E0FF" transform="rotate(-8,38,18)"/>
-        <ellipse cx="22" cy="18" rx="2" ry="7" fill="#FFB0CC" transform="rotate(8,22,18)"/>
-        <ellipse cx="38" cy="18" rx="2" ry="7" fill="#FFB0CC" transform="rotate(-8,38,18)"/>
-        <ellipse cx="30" cy="40" rx="18" ry="14" fill="#F0E0FF"/>
-        <ellipse cx="30" cy="36" rx="14" ry="12" fill="#F8F0FF"/>
-        <path d="M22 33 Q26 36 30 33" fill="none" stroke="#FF4466" stroke-width="2"/>
-        <path d="M30 33 Q34 36 38 33" fill="none" stroke="#FF4466" stroke-width="2"/>
-        <ellipse cx="30" cy="38" rx="3" ry="2" fill="#FFB0CC"/>
-        <path d="M26 41 Q30 38 34 41" stroke="#ddd" stroke-width="1.2" fill="none"/>
-      </svg>`,
-    },
-  };
-
-  // Fallback art for pets without custom art
-  const fallback = {
-    idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="35" r="20" fill="${col}88"/>
-      <circle cx="30" cy="30" r="15" fill="${col}"/>
-      <circle cx="24" cy="27" r="4" fill="white"/><circle cx="36" cy="27" r="4" fill="white"/>
-      <circle cx="24" cy="27" r="2" fill="#222"/><circle cx="36" cy="27" r="2" fill="#222"/>
-      <path d="M24 36 Q30 41 36 36" stroke="white" stroke-width="1.5" fill="none"/>
-    </svg>`,
-    happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="33" r="20" fill="${col}88"/>
-      <circle cx="30" cy="28" r="15" fill="${col}"/>
-      <path d="M20 26 Q24 21 28 26" fill="white"/><path d="M32 26 Q36 21 40 26" fill="white"/>
-      <path d="M23 34 Q30 40 37 34" stroke="white" stroke-width="2" fill="none"/>
-      <text x="10" y="12" font-size="10" fill="white">✦</text>
-      <text x="40" y="10" font-size="10" fill="white">✦</text>
-    </svg>`,
-    sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="37" r="20" fill="${col}66"/>
-      <circle cx="30" cy="32" r="15" fill="${col}aa"/>
-      <path d="M22 30 Q26 33 30 30" fill="none" stroke="white" stroke-width="2"/>
-      <path d="M30 30 Q34 33 38 30" fill="none" stroke="white" stroke-width="2"/>
-      <path d="M25 38 Q30 35 35 38" stroke="white" stroke-width="1.5" fill="none"/>
-    </svg>`,
-  };
-
-  const petArts = arts[petId] || fallback;
-  return petArts[state] || petArts.idle;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -848,10 +537,9 @@ function Confetti() {
 // ─────────────────────────────────────────────────────────────────────────────
 // SPARKLES (background)
 // ─────────────────────────────────────────────────────────────────────────────
-function Sparkles({accent, sparkleId="sparkle_default"}) {
-  const cfg = SPARKLE_CONFIGS[sparkleId] || SPARKLE_CONFIGS.sparkle_default;
-  const colors = cfg.colors;
-  const sparks = cfg.chars;
+function Sparkles({accent}) {
+  const sparks=["✦","✧","⋆","✺","❋","✼","✻","✽","⊹"];
+  const colors=[accent,"#FFD700","#FF88CC","#AA88FF","#88DDFF","#FFAADD"];
   return (
     <div style={{position:"fixed",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:0}}>
       {Array.from({length:16}).map((_,i)=>(
@@ -1002,167 +690,6 @@ function PartSection({label,accent,softBg,border,question,equation,hint,
 // ─────────────────────────────────────────────────────────────────────────────
 // START SCREEN
 // ─────────────────────────────────────────────────────────────────────────────
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PET COMPANION
-// ─────────────────────────────────────────────────────────────────────────────
-function PetCompanion({petId, state, accentColor}) {
-  const art = getPetArt(petId, state, accentColor);
-  const anim = state==="happy" ? "petHappy 0.5s ease 3" :
-               state==="sad"   ? "petSad 0.6s ease 2" :
-               "petIdle 3s ease-in-out infinite";
-  return (
-    <div style={{
-      position:"fixed", bottom:20, right:16, zIndex:50,
-      width:64, height:64,
-      filter:"drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
-      animation:anim,
-      transformOrigin:"bottom center",
-      cursor:"default",
-    }}>
-      <div dangerouslySetInnerHTML={{__html:art}}/>
-    </div>
-  );
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CRYSTAL SHOP
-// ─────────────────────────────────────────────────────────────────────────────
-function CrystalShop({appData, updateData, onClose}) {
-  const [tab, setTab] = useState("pets");
-  const {crystals, ownedItems, activePet, activeBg, activeSparkle, activeBorder} = appData;
-
-  const tabs = [
-    {id:"pets",        label:"Pets",       emoji:"🐾"},
-    {id:"backgrounds", label:"Backgrounds",emoji:"🎨"},
-    {id:"sparkles",    label:"Sparkles",   emoji:"✨"},
-    {id:"borders",     label:"Borders",    emoji:"💎"},
-  ];
-
-  const buy = (item) => {
-    if(ownedItems.includes(item.id)) return;
-    if(crystals < item.cost) return;
-    updateData(prev=>({
-      crystals: prev.crystals - item.cost,
-      ownedItems: [...prev.ownedItems, item.id],
-    }));
-  };
-
-  const equip = (item, category) => {
-    const field = category==="pets"?"activePet":category==="backgrounds"?"activeBg":
-                  category==="sparkles"?"activeSparkle":"activeBorder";
-    updateData({[field]: item.id});
-  };
-
-  const items = SHOP_ITEMS[tab] || [];
-
-  return (
-    <div style={{position:"fixed",inset:0,background:"linear-gradient(135deg,#0d0d1a,#1a0d2e)",
-      zIndex:400,overflowY:"auto",fontFamily:"Georgia,serif"}}>
-
-      {/* Header */}
-      <div style={{position:"sticky",top:0,background:"rgba(13,13,26,0.95)",
-        backdropFilter:"blur(8px)",padding:"14px 18px",
-        display:"flex",alignItems:"center",justifyContent:"space-between",
-        borderBottom:"1px solid #441166",zIndex:1}}>
-        <div>
-          <div style={{fontSize:20,fontWeight:900,color:"white"}}>💎 Crystal Shop</div>
-          <div style={{fontSize:13,color:"#cc88ff",marginTop:2,fontWeight:700}}>
-            💎 {crystals} crystals
-          </div>
-        </div>
-        <button onClick={onClose} style={{background:"#331155",border:"1.5px solid #7733dd",
-          borderRadius:12,color:"white",fontSize:14,fontWeight:700,
-          padding:"8px 16px",cursor:"pointer"}}>← Back</button>
-      </div>
-
-      {/* Tabs */}
-      <div style={{display:"flex",gap:8,padding:"14px 16px 0",maxWidth:600,margin:"0 auto"}}>
-        {tabs.map(t=>(
-          <button key={t.id} onClick={()=>setTab(t.id)} style={{
-            flex:1,padding:"10px 4px",
-            background:tab===t.id?"linear-gradient(135deg,#7733dd,#e0379a)":"#1a0d33",
-            border:`1.5px solid ${tab===t.id?"#9955ff":"#441166"}`,
-            borderRadius:12,color:"white",fontSize:11,fontWeight:700,
-            cursor:"pointer",fontFamily:"Georgia,serif",lineHeight:1.4,
-          }}>
-            <div style={{fontSize:18}}>{t.emoji}</div>
-            <div>{t.label}</div>
-          </button>
-        ))}
-      </div>
-
-      {/* Items grid */}
-      <div style={{padding:"16px",display:"grid",
-        gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",
-        gap:12,maxWidth:600,margin:"0 auto"}}>
-        {items.map(item=>{
-          const owned = ownedItems.includes(item.id);
-          const active = activePet===item.id || activeBg===item.id ||
-                         activeSparkle===item.id || activeBorder===item.id;
-          const canAfford = crystals >= item.cost;
-          const isFree = item.cost === 0;
-
-          return (
-            <div key={item.id} style={{
-              background: owned ? "#1a0d3e" : "#120820",
-              border:`2px solid ${active?"#FFD700":owned?"#7733dd":"#331144"}`,
-              borderRadius:18,padding:"16px 12px",textAlign:"center",
-              position:"relative",transition:"all 0.2s",
-            }}>
-              {active&&(
-                <div style={{position:"absolute",top:-8,left:"50%",transform:"translateX(-50%)",
-                  background:"#FFD700",color:"#330044",fontSize:9,fontWeight:900,
-                  padding:"2px 10px",borderRadius:10,whiteSpace:"nowrap"}}>✓ ACTIVE</div>
-              )}
-
-              {/* Pet preview or emoji */}
-              {tab==="pets" ? (
-                <div style={{width:56,height:56,margin:"0 auto 8px"}}>
-                  <div dangerouslySetInnerHTML={{__html:getPetArt(item.id,"idle","#9933cc")}}/>
-                </div>
-              ) : (
-                <div style={{fontSize:32,marginBottom:8}}>{item.emoji}</div>
-              )}
-
-              <div style={{fontSize:12,fontWeight:800,color:"white",marginBottom:4,lineHeight:1.3}}>
-                {item.name}
-              </div>
-              <div style={{fontSize:10,color:"#9977BB",marginBottom:10,lineHeight:1.4,minHeight:28}}>
-                {item.desc}
-              </div>
-
-              {owned ? (
-                <button onClick={()=>equip(item,tab)} style={{
-                  width:"100%",padding:"7px 0",
-                  background:active?"#332200":"linear-gradient(135deg,#7733dd,#e0379a)",
-                  border:"none",borderRadius:10,color:"white",fontSize:12,
-                  fontWeight:800,cursor:active?"default":"pointer",fontFamily:"Georgia,serif",
-                }}>
-                  {active ? "✓ Equipped" : "Equip"}
-                </button>
-              ) : (
-                <button onClick={()=>buy(item)} disabled={!canAfford} style={{
-                  width:"100%",padding:"7px 0",
-                  background:canAfford?"linear-gradient(135deg,#7733dd,#e0379a)":"#221133",
-                  border:`1.5px solid ${canAfford?"#9955ff":"#441166"}`,
-                  borderRadius:10,color:canAfford?"white":"#664488",
-                  fontSize:12,fontWeight:800,
-                  cursor:canAfford?"pointer":"not-allowed",fontFamily:"Georgia,serif",
-                }}>
-                  {isFree ? "Free! Get it" : `💎 ${item.cost}`}
-                </button>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <div style={{height:30}}/>
-    </div>
-  );
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // CHARACTER GALLERY
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1283,16 +810,12 @@ function CharacterGallery({unlockedCount, totalStars, onClose}) {
   );
 }
 
-function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCount, crystals, appData, updateData}) {
+function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCount}) {
   const [showGallery, setShowGallery] = useState(false);
-  const [showShop, setShowShop] = useState(false);
   const diff = DIFF_CONFIG[difficulty];
   const nextUnlock = ALL_CHARACTERS.find(c=>c.unlockAt>totalStars&&c.unlockAt>0);
   if(showGallery) return (
     <CharacterGallery unlockedCount={unlockedCount} totalStars={totalStars} onClose={()=>setShowGallery(false)}/>
-  );
-  if(showShop) return (
-    <CrystalShop appData={appData} updateData={updateData} onClose={()=>setShowShop(false)}/>
   );
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
@@ -1347,25 +870,14 @@ function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCou
           <div style={{fontSize:11,color:"#9977BB",marginTop:3}}>{nextUnlock.unlockAt-totalStars} stars to go!</div>
         </div>
       )}
-      <div style={{display:"flex",gap:10,flexWrap:"wrap",justifyContent:"center"}}>
-        <button onClick={()=>setShowGallery(true)} style={{
-          padding:"12px 20px",background:"white",
-          border:"2px solid #ddd0ee",borderRadius:16,
-          fontSize:14,fontWeight:700,color:"#7733dd",cursor:"pointer",
-          fontFamily:"Georgia,serif",
-        }}>
-          👯 Gallery ({unlockedCount}/{ALL_CHARACTERS.length})
-        </button>
-        <button onClick={()=>setShowShop(true)} style={{
-          padding:"12px 20px",
-          background:"linear-gradient(135deg,#330066,#550099)",
-          border:"2px solid #7733dd",borderRadius:16,
-          fontSize:14,fontWeight:700,color:"white",cursor:"pointer",
-          fontFamily:"Georgia,serif",
-        }}>
-          💎 Shop ({crystals} crystals)
-        </button>
-      </div>
+      <button onClick={()=>setShowGallery(true)} style={{
+        padding:"12px 28px",background:"white",
+        border:"2px solid #ddd0ee",borderRadius:16,
+        fontSize:15,fontWeight:700,color:"#7733dd",cursor:"pointer",
+        fontFamily:"Georgia,serif",
+      }}>
+        👯 Character Gallery ({unlockedCount}/{ALL_CHARACTERS.length})
+      </button>
       <button onClick={onStart} style={{
         padding:"18px 48px",
         background:"linear-gradient(135deg,#e0379a,#7733dd)",
@@ -1423,11 +935,9 @@ function LoadingScreen({difficulty}) {
 // ─────────────────────────────────────────────────────────────────────────────
 // SESSION COMPLETE
 // ─────────────────────────────────────────────────────────────────────────────
-function SessionComplete({stars,total,totalStars,nextUnlock,onNewSession,difficulty,onDiffChange,appData,updateData,crystalsEarned}) {
+function SessionComplete({stars,total,totalStars,nextUnlock,onNewSession,difficulty,onDiffChange}) {
   const [showGallery, setShowGallery] = useState(false);
-  const [showShop, setShowShop] = useState(false);
   if(showGallery) return <CharacterGallery unlockedCount={ALL_CHARACTERS.length} totalStars={totalStars} onClose={()=>setShowGallery(false)}/>;
-  if(showShop) return <CrystalShop appData={appData} updateData={updateData} onClose={()=>setShowShop(false)}/>;
   const pct=Math.round((stars/total)*100);
   const diff=DIFF_CONFIG[difficulty];
   return (
@@ -1457,14 +967,6 @@ function SessionComplete({stars,total,totalStars,nextUnlock,onNewSession,difficu
         border:"2px solid #ddd0ff",fontSize:15,color:"#550066",fontWeight:600}}>
         ⭐ Total stars ever: <strong style={{color:"#7733dd"}}>{totalStars}</strong>
       </div>
-      {crystalsEarned>0&&(
-        <div style={{background:"linear-gradient(135deg,#1a0033,#330066)",
-          borderRadius:16,padding:"12px 20px",border:"2px solid #7733dd",
-          fontSize:15,color:"white",fontWeight:700,animation:"popIn 0.5s ease"}}>
-          💎 +{crystalsEarned} magic crystals earned this session!
-          <div style={{fontSize:12,color:"#cc88ff",marginTop:4}}>Total: {appData?.crystals||0} 💎</div>
-        </div>
-      )}
       {nextUnlock&&(
         <div style={{background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
           borderRadius:16,padding:"12px 20px",border:"2px dashed #e0379a",
@@ -1486,22 +988,12 @@ function SessionComplete({stars,total,totalStars,nextUnlock,onNewSession,difficu
           </button>
         ))}
       </div>
-      <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"center"}}>
-        <button onClick={()=>setShowGallery(true)} style={{
-          padding:"10px 18px",background:"white",border:"2px solid #ddd0ee",
-          borderRadius:14,fontSize:13,fontWeight:700,color:"#7733dd",
-          cursor:"pointer",fontFamily:"Georgia,serif"}}>
-          👯 Gallery
-        </button>
-        <button onClick={()=>setShowShop(true)} style={{
-          padding:"10px 18px",
-          background:"linear-gradient(135deg,#330066,#550099)",
-          border:"2px solid #7733dd",
-          borderRadius:14,fontSize:13,fontWeight:700,color:"white",
-          cursor:"pointer",fontFamily:"Georgia,serif"}}>
-          💎 Shop ({appData?.crystals||0} 💎)
-        </button>
-      </div>
+      <button onClick={()=>setShowGallery(true)} style={{
+        padding:"10px 24px",background:"white",border:"2px solid #ddd0ee",
+        borderRadius:14,fontSize:14,fontWeight:700,color:"#7733dd",
+        cursor:"pointer",fontFamily:"Georgia,serif",marginTop:4}}>
+        👯 Character Gallery
+      </button>
       <button onClick={onNewSession} style={{marginTop:4,padding:"16px 40px",
         background:"linear-gradient(135deg,#e0379a,#7733dd)",border:"none",borderRadius:20,
         fontSize:18,fontWeight:900,color:"white",cursor:"pointer",
@@ -1538,12 +1030,8 @@ export default function App() {
   const [showConfetti,setShowConfetti] = useState(false);
   const [triesA,setTriesA]         = useState(0);
   const [triesB,setTriesB]         = useState(0);
-  const [unlockPopup,setUnlockPopup]   = useState(null);
-  const [streakFlash,setStreakFlash]   = useState(false);
-  const [petState,setPetState]         = useState("idle");
-  const [sessionCrystals,setSessionCrystals] = useState(0);
-  const [hintsThisSession,setHintsThisSession] = useState(0);
-  const [crystalPopup,setCrystalPopup] = useState(null);
+  const [unlockPopup,setUnlockPopup] = useState(null);
+  const [streakFlash,setStreakFlash] = useState(false);
 
   const muted = appData.muted;
 
@@ -1561,8 +1049,6 @@ export default function App() {
     const difficulty = diff || appData.difficulty;
     setScreen('loading'); setError(null); setProblems(null);
     setIdx(0); setSessionStars(0); setStreak(0);
-    setSessionCrystals(0); setHintsThisSession(0);
-    setPetState("idle");
     resetProblem();
     try {
       const data = await generateProblems(20, difficulty, appData.weakSpots, appData.unlockedCount);
@@ -1601,8 +1087,6 @@ export default function App() {
     setStreak(newStreak);
 
     SOUNDS.correct(muted);
-    setPetState("happy");
-    setTimeout(()=>setPetState("idle"),1500);
     if(newStreak>0&&newStreak%3===0) {
       SOUNDS.streak(muted);
       setStreakFlash(true);
@@ -1638,8 +1122,6 @@ export default function App() {
 
   const handleWrong = (opType) => {
     SOUNDS.wrong(muted);
-    setPetState("sad");
-    setTimeout(()=>setPetState("idle"),1500);
     setStreak(0);
     updateData(prev=>({
       weakSpots:{...prev.weakSpots,[opType]:(prev.weakSpots[opType]||0)+1}
@@ -1670,38 +1152,6 @@ export default function App() {
   const retryA=()=>{setAnswerA("");setSubmittedA(false);setCorrectA(null);};
   const retryB=()=>{setAnswerB("");setSubmittedB(false);setCorrectB(null);};
 
-  const awardCrystals = (finalStars, totalProblems, hintsUsed, currentStreak, difficulty) => {
-    let earned = 0;
-    const perfect = finalStars === totalProblems * 2;
-    const pct = finalStars / (totalProblems * 2);
-
-    if(perfect) earned += 15;
-    if(hintsUsed === 0 && finalStars > 0) earned += 10;
-    if(currentStreak >= 15) earned += 10;
-    else if(currentStreak >= 10) earned += 6;
-    else if(currentStreak >= 5) earned += 3;
-
-    // First hard complete bonus
-    if(difficulty==="hard" && !appData.firstHardComplete && finalStars > 0) {
-      earned += 20;
-      updateData({firstHardComplete:true});
-    }
-    // First perfect by difficulty
-    if(perfect && !appData.perfectByDiff?.[difficulty]) {
-      earned += 15;
-      updateData(prev=>({perfectByDiff:{...prev.perfectByDiff,[difficulty]:true}}));
-    }
-
-    if(earned > 0) {
-      setSessionCrystals(earned);
-      updateData(prev=>({
-        crystals: prev.crystals + earned,
-        totalCrystalsEarned: (prev.totalCrystalsEarned||0) + earned,
-      }));
-    }
-    return earned;
-  };
-
   const next=()=>{
     if(idx+1>=problems.length){
       if(sessionStars>=problems.length*2*0.9){
@@ -1709,7 +1159,6 @@ export default function App() {
         SOUNDS.celebrate(muted);
         setTimeout(()=>setShowConfetti(false),4000);
       }
-      awardCrystals(sessionStars, problems.length, hintsThisSession, streak, appData.difficulty);
       setScreen('done');
       return;
     }
@@ -1740,9 +1189,6 @@ export default function App() {
       onStart={()=>loadProblems()}
       totalStars={appData.totalStars}
       unlockedCount={appData.unlockedCount}
-      crystals={appData.crystals||0}
-      appData={appData}
-      updateData={updateData}
     />
   );
 
@@ -1770,9 +1216,6 @@ export default function App() {
         difficulty={appData.difficulty}
         onDiffChange={changeDifficulty}
         onNewSession={()=>loadProblems()}
-        appData={appData}
-        updateData={updateData}
-        crystalsEarned={sessionCrystals}
       />
     </>
   );
@@ -1783,20 +1226,10 @@ export default function App() {
   const raw = problems[idx];
 
   return (
-    <div style={{minHeight:"100svh",position:"relative",overflow:"hidden",
-      background:BG_THEMES[appData.activeBg||'bg_default']||p.bg,fontFamily:"'Georgia',serif",transition:"background 0.7s ease"}}>
-      <Sparkles accent={p.accent} sparkleId={appData.activeSparkle||'sparkle_default'}/>
+    <div style={{minHeight:"100vh",position:"relative",overflow:"hidden",
+      background:p.bg,fontFamily:"'Georgia',serif",transition:"background 0.7s ease"}}>
+      <Sparkles accent={p.accent}/>
       {unlockPopup&&<UnlockPopup char={unlockPopup} onClose={()=>setUnlockPopup(null)}/>}
-      <PetCompanion petId={appData.activePet||"pet_luna"} state={petState} accentColor={p.accent}/>
-      {sessionCrystals>0&&screen==='done'&&(
-        <div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",
-          background:"linear-gradient(135deg,#330066,#550099)",
-          border:"2px solid #9955ff",borderRadius:16,padding:"10px 20px",
-          color:"white",fontWeight:800,fontSize:15,zIndex:200,
-          animation:"popIn 0.4s ease",whiteSpace:"nowrap"}}>
-          💎 +{sessionCrystals} crystals earned!
-        </div>
-      )}
 
       {/* Header */}
       <div style={{textAlign:"center",padding:"16px 16px 0",position:"relative",zIndex:1}}>
@@ -1850,8 +1283,6 @@ export default function App() {
               animation:streakFlash?"streakPop 0.4s ease":"none",
             }}>🔥 {streak} streak!</span>
           )}
-          <span style={{width:1,height:14,background:p.border}}/>
-          <span style={{color:"#9977BB",fontSize:12}}>💎 {appData.crystals||0}</span>
         </div>
       </div>
 
@@ -1895,7 +1326,7 @@ export default function App() {
             <PartSection
               label="Part A" accent={p.accent} softBg={p.softBg} border={p.border}
               question={raw.partA.question} equation={raw.partA.equation} hint={raw.partA.hint}
-              showHint={showHintA} onToggleHint={()=>{if(!showHintA)setHintsThisSession(h=>h+1);setShowHintA(h=>!h);}}
+              showHint={showHintA} onToggleHint={()=>setShowHintA(h=>!h)}
               answer={answerA} onAnswer={setAnswerA}
               submitted={submittedA} correct={correctA}
               onCheck={checkA} onRetry={retryA} tries={triesA}
@@ -1906,7 +1337,7 @@ export default function App() {
             <PartSection
               label="Part B" accent={p.accent} softBg={p.softBg} border={p.border}
               question={raw.partB.question} equation={raw.partB.equation} hint={raw.partB.hint}
-              showHint={showHintB} onToggleHint={()=>{if(!showHintB)setHintsThisSession(h=>h+1);setShowHintB(h=>!h);}}
+              showHint={showHintB} onToggleHint={()=>setShowHintB(h=>!h)}
               answer={answerB} onAnswer={setAnswerB}
               submitted={submittedB} correct={correctB}
               onCheck={checkB} onRetry={retryB} tries={triesB}
@@ -1954,9 +1385,6 @@ export default function App() {
         @keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
         @keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         @keyframes streakPop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
-        @keyframes petIdle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(2deg)}}
-        @keyframes petHappy{0%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.3) rotate(-15deg)}50%{transform:scale(1.3) rotate(15deg)}75%{transform:scale(1.2) rotate(-8deg)}100%{transform:scale(1) rotate(0deg)}}
-        @keyframes petSad{0%{transform:translateY(0)}30%{transform:translateY(6px) rotate(-5deg)}60%{transform:translateY(4px) rotate(5deg)}100%{transform:translateY(0)}}
         input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         input[type=number]{-moz-appearance:textfield}
       `}</style>
