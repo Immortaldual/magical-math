@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
+// Ensure full-width rendering
+const GlobalStyle = () => (
+  <style>{`
+    html, body, #root { width: 100%; min-height: 100dvh; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
+  `}</style>
+);
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SOUND ENGINE
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1295,7 +1303,7 @@ function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCou
     <CrystalShop appData={appData} updateData={updateData} onClose={()=>setShowShop(false)}/>
   );
   return (
-    <div style={{minHeight:"100vh",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
+    <><GlobalStyle/><div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
       display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
       fontFamily:"Georgia,serif",padding:24,gap:20,textAlign:"center"}}>
       <div style={{fontSize:52,animation:"float0 2s ease-in-out infinite"}}>✨</div>
@@ -1381,7 +1389,7 @@ function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCou
         @keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         @keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
       `}</style>
-    </div>
+    </div></>
   );
 }
 
@@ -1431,7 +1439,7 @@ function SessionComplete({stars,total,totalStars,nextUnlock,onNewSession,difficu
   const pct=Math.round((stars/total)*100);
   const diff=DIFF_CONFIG[difficulty];
   return (
-    <div style={{minHeight:"100vh",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
+    <div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
       display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
       fontFamily:"Georgia,serif",padding:24,gap:14,textAlign:"center"}}>
       <div style={{fontSize:52}}>🌟✨🎉✨🌟</div>
@@ -1749,7 +1757,7 @@ export default function App() {
   if(screen==='loading') return <LoadingScreen difficulty={appData.difficulty}/>;
 
   if(error) return (
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",
+    <div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",display:"flex",flexDirection:"column",alignItems:"center",
       justifyContent:"center",fontFamily:"Georgia,serif",gap:16,background:"#fff0fb",
       padding:24,textAlign:"center"}}>
       <div style={{fontSize:40}}>😢</div>
@@ -1783,7 +1791,7 @@ export default function App() {
   const raw = problems[idx];
 
   return (
-    <div style={{minHeight:"100svh",position:"relative",overflow:"hidden",
+    <><GlobalStyle/><div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",position:"relative",overflow:"hidden",
       background:BG_THEMES[appData.activeBg||'bg_default']||p.bg,fontFamily:"'Georgia',serif",transition:"background 0.7s ease"}}>
       <Sparkles accent={p.accent} sparkleId={appData.activeSparkle||'sparkle_default'}/>
       {unlockPopup&&<UnlockPopup char={unlockPopup} onClose={()=>setUnlockPopup(null)}/>}
@@ -1802,13 +1810,25 @@ export default function App() {
       <div style={{textAlign:"center",padding:"16px 16px 0",position:"relative",zIndex:1}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
           maxWidth:540,margin:"0 auto",marginBottom:8}}>
-          {/* Mute button */}
-          <button onClick={()=>updateData({muted:!muted})} style={{
-            background:"white",border:`1.5px solid ${p.border}`,borderRadius:12,
-            width:38,height:38,cursor:"pointer",fontSize:18,display:"flex",
-            alignItems:"center",justifyContent:"center"}}>
-            {muted?"🔇":"🔊"}
-          </button>
+          {/* Left buttons: home + mute */}
+          <div style={{display:"flex",gap:6}}>
+            <button onClick={()=>{
+              if(window.confirm("Go back to the home screen? Your progress this session will be lost.")) {
+                setScreen('start');
+              }
+            }} style={{
+              background:"white",border:`1.5px solid ${p.border}`,borderRadius:12,
+              width:38,height:38,cursor:"pointer",fontSize:18,display:"flex",
+              alignItems:"center",justifyContent:"center"}}>
+              🏠
+            </button>
+            <button onClick={()=>updateData({muted:!muted})} style={{
+              background:"white",border:`1.5px solid ${p.border}`,borderRadius:12,
+              width:38,height:38,cursor:"pointer",fontSize:18,display:"flex",
+              alignItems:"center",justifyContent:"center"}}>
+              {muted?"🔇":"🔊"}
+            </button>
+          </div>
 
           {/* Title */}
           <div style={{textAlign:"center"}}>
@@ -1960,6 +1980,6 @@ export default function App() {
         input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         input[type=number]{-moz-appearance:textfield}
       `}</style>
-    </div>
+    </div></>
   );
 }
