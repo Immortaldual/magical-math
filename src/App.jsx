@@ -1,3 +1,33 @@
+/*
+CHANGELOG
+---------
+v1.5 - 2026-03-10
+- Fixed: Sparkles now contained inside app (position absolute, no longer leaking outside on iPad)
+- Fixed: Pet companion now contained inside app (position absolute)
+- Fixed: Crystal earned popup no longer uses fixed positioning
+
+v1.4 - 2026-03-10
+- Fixed: Loading screen now fills full width on all devices
+- Added: Home button (🏠) on playing screen to return to start screen
+
+v1.3 - 2026-03-10
+- Added: Crystal shop with Pets, Backgrounds, Sparkles, Borders tabs
+- Added: Luna pet companion with idle/happy/sad animations (bottom-right of playing screen)
+- Added: Magic crystal economy — earned for no-hint sessions, streaks, perfect scores, first hard clear
+- Added: 8 purchasable pets including Artemis, Diana, Moon Rabbit, Baby Phoenix
+- Added: Background themes, sparkle effects, card border cosmetics
+- Added: Crystal balance shown in playing screen header and start screen shop button
+- Fixed: All screens now fill full width on iPad and iPhone (100dvh + width:100%)
+- Fixed: Sparkle effects now use active cosmetic selection
+
+v1.2 - 2026-03-10
+- Added: Character gallery accessible from start screen and session complete
+- Fixed: Mid-session unlocks now appear immediately without restarting
+
+v1.1 - 2026-03-10
+- Added: Netlify function proxy — API key now hidden server-side
+- Added: Rate limiting (10 sessions/IP/hour)
+*/
 import { useState, useEffect, useRef, useCallback } from "react";
 
 // Ensure full-width rendering
@@ -861,7 +891,7 @@ function Sparkles({accent, sparkleId="sparkle_default"}) {
   const colors = cfg.colors;
   const sparks = cfg.chars;
   return (
-    <div style={{position:"fixed",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:0}}>
+    <div style={{position:"absolute",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:0}}>
       {Array.from({length:16}).map((_,i)=>(
         <div key={i} style={{
           position:"absolute",
@@ -1021,7 +1051,7 @@ function PetCompanion({petId, state, accentColor}) {
                "petIdle 3s ease-in-out infinite";
   return (
     <div style={{
-      position:"fixed", bottom:20, right:16, zIndex:50,
+      position:"absolute", bottom:20, right:16, zIndex:50,
       width:64, height:64,
       filter:"drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
       animation:anim,
@@ -1404,7 +1434,7 @@ function LoadingScreen({difficulty}) {
   },[]);
   const diff=DIFF_CONFIG[difficulty];
   return (
-    <div style={{minHeight:"100vh",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
+    <><GlobalStyle/><div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
       display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
       fontFamily:"Georgia,serif",gap:20,padding:24}}>
       <div style={{fontSize:60,animation:"float0 2s ease-in-out infinite"}}>✨</div>
@@ -1424,8 +1454,7 @@ function LoadingScreen({difficulty}) {
             animationDelay:`${i*0.2}s`}}>{c.emoji}</div>
         ))}
       </div>
-    </div>
-  );
+    </div></>\n  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1797,7 +1826,7 @@ export default function App() {
       {unlockPopup&&<UnlockPopup char={unlockPopup} onClose={()=>setUnlockPopup(null)}/>}
       <PetCompanion petId={appData.activePet||"pet_luna"} state={petState} accentColor={p.accent}/>
       {sessionCrystals>0&&screen==='done'&&(
-        <div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",
+        <div style={{position:"absolute",top:20,left:"50%",transform:"translateX(-50%)",
           background:"linear-gradient(135deg,#330066,#550099)",
           border:"2px solid #9955ff",borderRadius:16,padding:"10px 20px",
           color:"white",fontWeight:800,fontSize:15,zIndex:200,
