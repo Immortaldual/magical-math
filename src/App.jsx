@@ -1,7 +1,11 @@
 /*
 CHANGELOG
 ---------
-v1.5 - 2026-03-10
+v1.6 - 2026-03-10
+- Added: Full custom SVG art for Baby Dragon, Tiny Fairy, Celestial Fox, Baby Phoenix (all 3 states each)
+- Fixed: No more placeholder circle art for any pet
+
+
 - Fixed: Sparkles now contained inside app (position absolute, no longer leaking outside on iPad)
 - Fixed: Pet companion now contained inside app (position absolute)
 - Fixed: Crystal earned popup no longer uses fixed positioning
@@ -377,7 +381,386 @@ function getPetArt(petId, state="idle", accentColor="#e0379a") {
     },
   };
 
-  // Fallback art for pets without custom art
+  // ── Baby Dragon ──────────────────────────────────────────────────────────────
+  arts.pet_dragon = {
+    idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings -->
+      <path d="M10 28 Q4 18 14 20 Q10 26 18 28" fill="#66BB66" opacity="0.8"/>
+      <path d="M50 28 Q56 18 46 20 Q50 26 42 28" fill="#66BB66" opacity="0.8"/>
+      <!-- tail -->
+      <path d="M30 48 Q42 52 46 46 Q44 42 38 44" fill="#44AA44"/>
+      <!-- body -->
+      <ellipse cx="30" cy="36" rx="16" ry="14" fill="#55BB55"/>
+      <!-- tummy -->
+      <ellipse cx="30" cy="38" rx="9" ry="8" fill="#AADDAA"/>
+      <!-- head -->
+      <ellipse cx="30" cy="24" rx="13" ry="12" fill="#55BB55"/>
+      <!-- horns -->
+      <path d="M22 14 Q20 7 24 10" stroke="#44AA44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M38 14 Q40 7 36 10" stroke="#44AA44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- eyes -->
+      <ellipse cx="24" cy="23" rx="4" ry="4.5" fill="#FFD700"/>
+      <ellipse cx="36" cy="23" rx="4" ry="4.5" fill="#FFD700"/>
+      <ellipse cx="24" cy="23" rx="2" ry="3" fill="#113300"/>
+      <ellipse cx="36" cy="23" rx="2" ry="3" fill="#113300"/>
+      <circle cx="24" cy="21" r="1" fill="white"/>
+      <circle cx="36" cy="21" r="1" fill="white"/>
+      <!-- nostrils -->
+      <circle cx="27" cy="29" r="1.2" fill="#33AA33"/>
+      <circle cx="33" cy="29" r="1.2" fill="#33AA33"/>
+      <!-- mouth -->
+      <path d="M26 31 Q30 34 34 31" stroke="#33AA33" stroke-width="1" fill="none"/>
+      <!-- sparkle breath -->
+      <text x="6" y="44" font-size="7" fill="#FFD700" opacity="0.7">✦</text>
+      <text x="2" y="38" font-size="5" fill="#FF88CC" opacity="0.6">✧</text>
+    </svg>`,
+    happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings spread wide -->
+      <path d="M8 24 Q0 12 14 16 Q8 22 18 26" fill="#66BB66" opacity="0.9"/>
+      <path d="M52 24 Q60 12 46 16 Q52 22 42 26" fill="#66BB66" opacity="0.9"/>
+      <!-- tail wagging -->
+      <path d="M30 46 Q44 48 50 40 Q48 36 42 40" fill="#44AA44"/>
+      <!-- body -->
+      <ellipse cx="30" cy="35" rx="16" ry="14" fill="#55BB55"/>
+      <ellipse cx="30" cy="37" rx="9" ry="8" fill="#AADDAA"/>
+      <!-- head bounced up -->
+      <ellipse cx="30" cy="22" rx="13" ry="12" fill="#55BB55"/>
+      <path d="M22 12 Q20 5 24 8" stroke="#44AA44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M38 12 Q40 5 36 8" stroke="#44AA44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- happy eyes - arcs -->
+      <path d="M20 22 Q24 17 28 22" fill="#FFD700"/>
+      <path d="M32 22 Q36 17 40 22" fill="#FFD700"/>
+      <circle cx="27" cy="28" r="1.2" fill="#33AA33"/>
+      <circle cx="33" cy="28" r="1.2" fill="#33AA33"/>
+      <path d="M25 30 Q30 34 35 30" stroke="#33AA33" stroke-width="1.5" fill="none"/>
+      <!-- sparkles everywhere -->
+      <text x="3" y="15" font-size="9" fill="#FFD700">✦</text>
+      <text x="46" y="13" font-size="8" fill="#FF88CC">✦</text>
+      <text x="8" y="50" font-size="7" fill="#88FFCC">✧</text>
+      <text x="46" y="50" font-size="7" fill="#FFD700">✧</text>
+    </svg>`,
+    sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings drooped -->
+      <path d="M12 34 Q6 28 14 24 Q12 30 20 32" fill="#449944" opacity="0.7"/>
+      <path d="M48 34 Q54 28 46 24 Q48 30 40 32" fill="#449944" opacity="0.7"/>
+      <path d="M30 50 Q40 54 44 48 Q42 44 36 46" fill="#44AA44"/>
+      <ellipse cx="30" cy="38" rx="16" ry="14" fill="#449944"/>
+      <ellipse cx="30" cy="40" rx="9" ry="8" fill="#99CC99"/>
+      <ellipse cx="30" cy="26" rx="13" ry="12" fill="#449944"/>
+      <path d="M22 16 Q21 10 24 13" stroke="#338833" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M38 16 Q39 10 36 13" stroke="#338833" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- sad eyes - droopy -->
+      <ellipse cx="24" cy="25" rx="4" ry="4.5" fill="#CCCC44"/>
+      <ellipse cx="36" cy="25" rx="4" ry="4.5" fill="#CCCC44"/>
+      <ellipse cx="24" cy="26" rx="2" ry="2.5" fill="#113300"/>
+      <ellipse cx="36" cy="26" rx="2" ry="2.5" fill="#113300"/>
+      <path d="M22 24 Q24 21 26 24" fill="#449944"/>
+      <path d="M34 24 Q36 21 38 24" fill="#449944"/>
+      <circle cx="27" cy="31" r="1.2" fill="#338833"/>
+      <circle cx="33" cy="31" r="1.2" fill="#338833"/>
+      <path d="M26 33 Q30 31 34 33" stroke="#338833" stroke-width="1" fill="none"/>
+    </svg>`,
+  };
+
+  // ── Tiny Fairy ──────────────────────────────────────────────────────────────
+  arts.pet_fairy = {
+    idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings -->
+      <ellipse cx="16" cy="26" rx="12" ry="8" fill="#CCEEFF" opacity="0.7" transform="rotate(-20,16,26)"/>
+      <ellipse cx="44" cy="26" rx="12" ry="8" fill="#CCEEFF" opacity="0.7" transform="rotate(20,44,26)"/>
+      <ellipse cx="14" cy="34" rx="8" ry="5" fill="#DDEEFF" opacity="0.6" transform="rotate(15,14,34)"/>
+      <ellipse cx="46" cy="34" rx="8" ry="5" fill="#DDEEFF" opacity="0.6" transform="rotate(-15,46,34)"/>
+      <!-- wing shimmer lines -->
+      <path d="M16 20 Q12 26 18 30" stroke="white" stroke-width="0.5" fill="none" opacity="0.6"/>
+      <path d="M44 20 Q48 26 42 30" stroke="white" stroke-width="0.5" fill="none" opacity="0.6"/>
+      <!-- dress/body -->
+      <path d="M22 32 Q30 28 38 32 Q40 44 30 46 Q20 44 22 32" fill="#FF88CC"/>
+      <!-- skirt sparkle trim -->
+      <path d="M21 38 Q30 36 39 38" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.8"/>
+      <!-- head -->
+      <ellipse cx="30" cy="22" rx="10" ry="10" fill="#FFD9B0"/>
+      <!-- hair -->
+      <ellipse cx="30" cy="15" rx="10" ry="6" fill="#FFD700"/>
+      <path d="M20 18 Q18 10 22 14" fill="#FFD700"/>
+      <path d="M40 18 Q42 10 38 14" fill="#FFD700"/>
+      <!-- eyes -->
+      <ellipse cx="26" cy="22" rx="2.5" ry="3" fill="#4466FF"/>
+      <ellipse cx="34" cy="22" rx="2.5" ry="3" fill="#4466FF"/>
+      <circle cx="26" cy="21" r="1" fill="white"/>
+      <circle cx="34" cy="21" r="1" fill="white"/>
+      <!-- mouth -->
+      <path d="M27 27 Q30 30 33 27" stroke="#FF6688" stroke-width="1" fill="none"/>
+      <!-- wand -->
+      <line x1="40" y1="30" x2="48" y2="18" stroke="#FFD700" stroke-width="1.5"/>
+      <text x="44" y="16" font-size="8" fill="#FFD700">✦</text>
+      <!-- floating sparkles -->
+      <text x="6" y="20" font-size="6" fill="#FF88CC" opacity="0.7">✧</text>
+      <text x="8" y="44" font-size="5" fill="#AACCFF" opacity="0.6">✦</text>
+    </svg>`,
+    happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings fluttering wider -->
+      <ellipse cx="13" cy="23" rx="14" ry="9" fill="#BBDDFF" opacity="0.8" transform="rotate(-25,13,23)"/>
+      <ellipse cx="47" cy="23" rx="14" ry="9" fill="#BBDDFF" opacity="0.8" transform="rotate(25,47,23)"/>
+      <ellipse cx="11" cy="33" rx="9" ry="6" fill="#CCEEFF" opacity="0.7" transform="rotate(18,11,33)"/>
+      <ellipse cx="49" cy="33" rx="9" ry="6" fill="#CCEEFF" opacity="0.7" transform="rotate(-18,49,33)"/>
+      <!-- body raised -->
+      <path d="M22 30 Q30 26 38 30 Q40 42 30 44 Q20 42 22 30" fill="#FF66BB"/>
+      <path d="M21 36 Q30 34 39 36" stroke="#FFD700" stroke-width="1.2" fill="none"/>
+      <!-- head -->
+      <ellipse cx="30" cy="20" rx="10" ry="10" fill="#FFD9B0"/>
+      <ellipse cx="30" cy="13" rx="10" ry="6" fill="#FFCC00"/>
+      <path d="M20 16 Q18 8 22 12" fill="#FFCC00"/>
+      <path d="M40 16 Q42 8 38 12" fill="#FFCC00"/>
+      <!-- happy eyes arcs -->
+      <path d="M23 21 Q26 17 29 21" fill="#4466FF"/>
+      <path d="M31 21 Q34 17 37 21" fill="#4466FF"/>
+      <path d="M27 26 Q30 30 33 26" stroke="#FF6688" stroke-width="1.5" fill="none"/>
+      <!-- wand with big star -->
+      <line x1="40" y1="28" x2="50" y2="14" stroke="#FFD700" stroke-width="1.5"/>
+      <text x="46" y="13" font-size="10" fill="#FFD700">✦</text>
+      <!-- lots of sparkles -->
+      <text x="2" y="16" font-size="9" fill="#FF88CC">✦</text>
+      <text x="46" y="46" font-size="7" fill="#AACCFF">✧</text>
+      <text x="4" y="50" font-size="8" fill="#FFD700">✦</text>
+      <text x="28" y="56" font-size="6" fill="#FF88CC">✧</text>
+    </svg>`,
+    sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- wings drooped -->
+      <ellipse cx="16" cy="30" rx="10" ry="7" fill="#BBCCDD" opacity="0.5" transform="rotate(10,16,30)"/>
+      <ellipse cx="44" cy="30" rx="10" ry="7" fill="#BBCCDD" opacity="0.5" transform="rotate(-10,44,30)"/>
+      <ellipse cx="15" cy="38" rx="7" ry="4" fill="#CCDDEE" opacity="0.4" transform="rotate(5,15,38)"/>
+      <ellipse cx="45" cy="38" rx="7" ry="4" fill="#CCDDEE" opacity="0.4" transform="rotate(-5,45,38)"/>
+      <path d="M22 34 Q30 30 38 34 Q40 46 30 48 Q20 46 22 34" fill="#DD88AA"/>
+      <ellipse cx="30" cy="24" rx="10" ry="10" fill="#FFD9B0"/>
+      <ellipse cx="30" cy="17" rx="10" ry="6" fill="#DDAA00"/>
+      <path d="M20 20 Q18 13 22 16" fill="#DDAA00"/>
+      <path d="M40 20 Q42 13 38 16" fill="#DDAA00"/>
+      <!-- sad eyes -->
+      <ellipse cx="26" cy="24" rx="2.5" ry="3" fill="#3355DD"/>
+      <ellipse cx="34" cy="24" rx="2.5" ry="3" fill="#3355DD"/>
+      <circle cx="26" cy="23" r="1" fill="white"/>
+      <circle cx="34" cy="23" r="1" fill="white"/>
+      <!-- eyebrow furrowed -->
+      <path d="M23 20 Q26 18 29 20" stroke="#CC6644" stroke-width="1" fill="none"/>
+      <path d="M31 20 Q34 18 37 20" stroke="#CC6644" stroke-width="1" fill="none"/>
+      <path d="M27 29 Q30 27 33 29" stroke="#FF6688" stroke-width="1" fill="none"/>
+      <!-- droopy wand -->
+      <line x1="38" y1="32" x2="44" y2="42" stroke="#CCAA00" stroke-width="1.5"/>
+      <text x="42" y="44" font-size="7" fill="#CCAA00" opacity="0.5">✦</text>
+    </svg>`,
+  };
+
+  // ── Celestial Fox ────────────────────────────────────────────────────────────
+  arts.pet_fox = {
+    idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- tails (3) with cosmic glow -->
+      <path d="M30 44 Q48 38 54 28 Q50 24 44 30 Q46 36 36 40" fill="#FF8833" opacity="0.9"/>
+      <path d="M30 44 Q50 46 54 38 Q50 36 46 40 Q44 44 36 44" fill="#FFAA44" opacity="0.8"/>
+      <path d="M30 44 Q46 52 52 46 Q50 42 44 44 Q42 48 36 46" fill="#FF6622" opacity="0.7"/>
+      <!-- tail stars -->
+      <text x="44" y="28" font-size="6" fill="#FFD700" opacity="0.9">✦</text>
+      <text x="48" y="38" font-size="5" fill="#AADDFF" opacity="0.8">✧</text>
+      <text x="44" y="48" font-size="5" fill="#FF88CC" opacity="0.7">✦</text>
+      <!-- body -->
+      <ellipse cx="26" cy="40" rx="14" ry="12" fill="#FF8833"/>
+      <!-- chest fluff -->
+      <ellipse cx="26" cy="42" rx="8" ry="7" fill="#FFDDAA"/>
+      <!-- head -->
+      <ellipse cx="26" cy="26" rx="13" ry="12" fill="#FF8833"/>
+      <!-- ears -->
+      <path d="M14 18 Q12 6 20 12" fill="#FF8833"/>
+      <path d="M38 18 Q40 6 32 12" fill="#FF8833"/>
+      <path d="M15 18 Q14 10 19 13" fill="#FFB0B0"/>
+      <path d="M37 18 Q38 10 33 13" fill="#FFB0B0"/>
+      <!-- cosmic markings on forehead -->
+      <path d="M20 18 Q26 14 32 18" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.7"/>
+      <circle cx="26" cy="16" r="1.5" fill="#FFD700" opacity="0.8"/>
+      <!-- eyes - glowing -->
+      <ellipse cx="20" cy="26" rx="4" ry="4.5" fill="#AADDFF"/>
+      <ellipse cx="32" cy="26" rx="4" ry="4.5" fill="#AADDFF"/>
+      <ellipse cx="20" cy="26" rx="2" ry="3" fill="#113366"/>
+      <ellipse cx="32" cy="26" rx="2" ry="3" fill="#113366"/>
+      <circle cx="20" cy="24" r="1.2" fill="white"/>
+      <circle cx="32" cy="24" r="1.2" fill="white"/>
+      <!-- eye glow -->
+      <ellipse cx="20" cy="26" rx="4.5" ry="5" fill="#AADDFF" opacity="0.2"/>
+      <ellipse cx="32" cy="26" rx="4.5" ry="5" fill="#AADDFF" opacity="0.2"/>
+      <!-- nose -->
+      <ellipse cx="26" cy="31" rx="2" ry="1.5" fill="#CC4422"/>
+      <path d="M24 33 Q26 36 28 33" stroke="#CC4422" stroke-width="1" fill="none"/>
+      <!-- whiskers -->
+      <line x1="12" y1="30" x2="22" y2="31" stroke="#FFDDAA" stroke-width="0.8"/>
+      <line x1="12" y1="32" x2="22" y2="32" stroke="#FFDDAA" stroke-width="0.8"/>
+      <line x1="30" y1="31" x2="40" y2="30" stroke="#FFDDAA" stroke-width="0.8"/>
+      <line x1="30" y1="32" x2="40" y2="32" stroke="#FFDDAA" stroke-width="0.8"/>
+    </svg>`,
+    happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- tails fanned out wide -->
+      <path d="M30 42 Q50 32 58 20 Q54 16 46 24 Q48 32 36 38" fill="#FF8833"/>
+      <path d="M30 42 Q52 44 58 34 Q54 30 48 36 Q46 40 36 42" fill="#FFAA44"/>
+      <path d="M30 42 Q50 52 58 46 Q56 40 48 42 Q46 48 36 46" fill="#FF6622"/>
+      <text x="50" y="22" font-size="8" fill="#FFD700">✦</text>
+      <text x="52" y="36" font-size="7" fill="#AADDFF">✦</text>
+      <text x="50" y="50" font-size="6" fill="#FF88CC">✦</text>
+      <!-- body -->
+      <ellipse cx="26" cy="38" rx="14" ry="12" fill="#FF8833"/>
+      <ellipse cx="26" cy="40" rx="8" ry="7" fill="#FFDDAA"/>
+      <!-- head -->
+      <ellipse cx="26" cy="24" rx="13" ry="12" fill="#FF8833"/>
+      <path d="M14 16 Q12 4 20 10" fill="#FF8833"/>
+      <path d="M38 16 Q40 4 32 10" fill="#FF8833"/>
+      <path d="M15 16 Q14 8 19 11" fill="#FFB0B0"/>
+      <path d="M37 16 Q38 8 33 11" fill="#FFB0B0"/>
+      <path d="M20 16 Q26 12 32 16" stroke="#FFD700" stroke-width="1.2" fill="none"/>
+      <circle cx="26" cy="14" r="2" fill="#FFD700"/>
+      <!-- happy eyes -->
+      <path d="M16 25 Q20 20 24 25" fill="#AADDFF"/>
+      <path d="M28 25 Q32 20 36 25" fill="#AADDFF"/>
+      <ellipse cx="26" cy="30" rx="2" ry="1.5" fill="#CC4422"/>
+      <path d="M23 32 Q26 36 29 32" stroke="#CC4422" stroke-width="1.5" fill="none"/>
+      <line x1="12" y1="29" x2="22" y2="30" stroke="#FFDDAA" stroke-width="0.8"/>
+      <line x1="30" y1="30" x2="40" y2="29" stroke="#FFDDAA" stroke-width="0.8"/>
+      <!-- sparkles galore -->
+      <text x="2" y="18" font-size="9" fill="#FFD700">✦</text>
+      <text x="4" y="52" font-size="8" fill="#AADDFF">✧</text>
+      <text x="22" y="56" font-size="7" fill="#FF88CC">✦</text>
+    </svg>`,
+    sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- tails drooped down -->
+      <path d="M30 46 Q42 52 46 58 Q42 58 38 54 Q36 50 34 48" fill="#CC6622" opacity="0.8"/>
+      <path d="M30 46 Q44 54 46 60 Q42 60 40 56 Q38 52 34 50" fill="#DD8833" opacity="0.7"/>
+      <path d="M30 46 Q40 56 42 60 Q38 60 36 58 Q34 54 32 50" fill="#BB5511" opacity="0.6"/>
+      <ellipse cx="26" cy="40" rx="14" ry="12" fill="#CC6622"/>
+      <ellipse cx="26" cy="42" rx="8" ry="7" fill="#EECCAA"/>
+      <ellipse cx="26" cy="26" rx="13" ry="12" fill="#CC6622"/>
+      <path d="M14 18 Q12 8 20 12" fill="#CC6622"/>
+      <path d="M38 18 Q40 8 32 12" fill="#CC6622"/>
+      <path d="M15 18 Q14 10 19 13" fill="#DDAAAA"/>
+      <path d="M37 18 Q38 10 33 13" fill="#DDAAAA"/>
+      <path d="M20 18 Q26 14 32 18" stroke="#DDAA44" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <!-- sad glowing eyes -->
+      <ellipse cx="20" cy="26" rx="4" ry="4.5" fill="#88AACC"/>
+      <ellipse cx="32" cy="26" rx="4" ry="4.5" fill="#88AACC"/>
+      <ellipse cx="20" cy="27" rx="2" ry="2.5" fill="#112244"/>
+      <ellipse cx="32" cy="27" rx="2" ry="2.5" fill="#112244"/>
+      <path d="M17 23 Q20 20 23 23" fill="#CC6622"/>
+      <path d="M29 23 Q32 20 35 23" fill="#CC6622"/>
+      <ellipse cx="26" cy="31" rx="2" ry="1.5" fill="#AA3311"/>
+      <path d="M24 33 Q26 31 28 33" stroke="#AA3311" stroke-width="1" fill="none"/>
+      <line x1="12" y1="30" x2="22" y2="31" stroke="#EECCAA" stroke-width="0.8" opacity="0.6"/>
+      <line x1="30" y1="31" x2="40" y2="30" stroke="#EECCAA" stroke-width="0.8" opacity="0.6"/>
+    </svg>`,
+  };
+
+  // ── Baby Phoenix ─────────────────────────────────────────────────────────────
+  arts.pet_phoenix = {
+    idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- flame tail feathers -->
+      <path d="M30 44 Q20 50 14 58 Q20 54 24 48" fill="#FF4400" opacity="0.8"/>
+      <path d="M30 44 Q30 54 28 60 Q32 54 32 46" fill="#FF6600" opacity="0.9"/>
+      <path d="M30 44 Q40 50 46 58 Q40 54 36 48" fill="#FF4400" opacity="0.8"/>
+      <path d="M30 44 Q16 48 10 56 Q16 50 22 46" fill="#FF2200" opacity="0.7"/>
+      <path d="M30 44 Q44 48 50 56 Q44 50 38 46" fill="#FF2200" opacity="0.7"/>
+      <!-- body - fluffy chick -->
+      <ellipse cx="30" cy="36" rx="16" ry="14" fill="#FF7700"/>
+      <!-- wing feathers -->
+      <path d="M14 34 Q8 26 14 22 Q16 30 22 32" fill="#FF5500"/>
+      <path d="M46 34 Q52 26 46 22 Q44 30 38 32" fill="#FF5500"/>
+      <!-- wing tips glow -->
+      <path d="M10 24 Q8 20 12 22" fill="#FFD700" opacity="0.7"/>
+      <path d="M50 24 Q52 20 48 22" fill="#FFD700" opacity="0.7"/>
+      <!-- tummy - lighter -->
+      <ellipse cx="30" cy="38" rx="9" ry="8" fill="#FFAA44"/>
+      <!-- head -->
+      <ellipse cx="30" cy="23" rx="12" ry="11" fill="#FF7700"/>
+      <!-- crest feathers on head -->
+      <path d="M26 13 Q24 4 28 8" fill="#FF4400"/>
+      <path d="M30 12 Q30 3 32 7" fill="#FF6600"/>
+      <path d="M34 13 Q36 4 32 8" fill="#FF4400"/>
+      <!-- crest tips glow -->
+      <circle cx="28" cy="8" r="2" fill="#FFD700" opacity="0.8"/>
+      <circle cx="30" cy="6" r="2" fill="#FFEE44" opacity="0.9"/>
+      <circle cx="32" cy="8" r="2" fill="#FFD700" opacity="0.8"/>
+      <!-- eyes - glowing ember -->
+      <ellipse cx="24" cy="23" rx="4" ry="4" fill="#FFD700"/>
+      <ellipse cx="36" cy="23" rx="4" ry="4" fill="#FFD700"/>
+      <ellipse cx="24" cy="23" rx="2" ry="2.5" fill="#882200"/>
+      <ellipse cx="36" cy="23" rx="2" ry="2.5" fill="#882200"/>
+      <circle cx="24" cy="21" r="1.2" fill="#FFEE88"/>
+      <circle cx="36" cy="21" r="1.2" fill="#FFEE88"/>
+      <!-- beak -->
+      <path d="M27 29 L30 33 L33 29" fill="#FFD700"/>
+      <!-- flame glow aura -->
+      <ellipse cx="30" cy="32" rx="18" ry="16" fill="#FF6600" opacity="0.08"/>
+      <!-- floating embers -->
+      <text x="4" y="26" font-size="6" fill="#FFD700" opacity="0.7">✦</text>
+      <text x="48" y="24" font-size="5" fill="#FF8800" opacity="0.7">✧</text>
+    </svg>`,
+    happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- flame tail fanned out -->
+      <path d="M30 42 Q18 46 10 56 Q18 50 24 44" fill="#FF4400"/>
+      <path d="M30 42 Q22 50 18 60 Q24 52 28 44" fill="#FF6600"/>
+      <path d="M30 42 Q30 52 28 60 Q32 52 32 44" fill="#FF8800"/>
+      <path d="M30 42 Q38 50 42 60 Q36 52 32 44" fill="#FF6600"/>
+      <path d="M30 42 Q42 46 50 56 Q42 50 36 44" fill="#FF4400"/>
+      <!-- body lifted -->
+      <ellipse cx="30" cy="33" rx="16" ry="14" fill="#FF7700"/>
+      <path d="M12 31 Q6 22 12 18 Q14 26 20 28" fill="#FF5500"/>
+      <path d="M48 31 Q54 22 48 18 Q46 26 40 28" fill="#FF5500"/>
+      <path d="M8 20 Q6 15 10 18" fill="#FFD700"/>
+      <path d="M52 20 Q54 15 50 18" fill="#FFD700"/>
+      <ellipse cx="30" cy="35" rx="9" ry="8" fill="#FFAA44"/>
+      <ellipse cx="30" cy="20" rx="12" ry="11" fill="#FF7700"/>
+      <path d="M26 10 Q24 2 28 6" fill="#FF4400"/>
+      <path d="M30 9 Q30 1 32 5" fill="#FF6600"/>
+      <path d="M34 10 Q36 2 32 6" fill="#FF4400"/>
+      <circle cx="28" cy="6" r="2.5" fill="#FFEE44"/>
+      <circle cx="30" cy="4" r="2.5" fill="#FFFFFF" opacity="0.9"/>
+      <circle cx="32" cy="6" r="2.5" fill="#FFEE44"/>
+      <!-- happy eyes -->
+      <path d="M20 22 Q24 17 28 22" fill="#FFD700"/>
+      <path d="M32 22 Q36 17 40 22" fill="#FFD700"/>
+      <path d="M26 28 L30 32 L34 28" fill="#FFD700"/>
+      <!-- embers everywhere -->
+      <text x="2" y="16" font-size="9" fill="#FFD700">✦</text>
+      <text x="48" y="14" font-size="8" fill="#FF8800">✦</text>
+      <text x="4" y="52" font-size="7" fill="#FFCC44">✧</text>
+      <text x="48" y="54" font-size="7" fill="#FF6600">✧</text>
+      <text x="26" y="58" font-size="6" fill="#FFD700">✦</text>
+      <ellipse cx="30" cy="30" rx="20" ry="18" fill="#FF6600" opacity="0.06"/>
+    </svg>`,
+    sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <!-- tail flames low and dim -->
+      <path d="M30 46 Q22 52 18 58 Q22 54 26 48" fill="#AA2200" opacity="0.7"/>
+      <path d="M30 46 Q30 54 28 60 Q32 54 32 48" fill="#CC4400" opacity="0.8"/>
+      <path d="M30 46 Q38 52 42 58 Q38 54 34 48" fill="#AA2200" opacity="0.7"/>
+      <ellipse cx="30" cy="38" rx="16" ry="14" fill="#CC5500"/>
+      <path d="M14 36 Q8 28 14 24 Q16 32 22 34" fill="#BB4400" opacity="0.8"/>
+      <path d="M46 36 Q52 28 46 24 Q44 32 38 34" fill="#BB4400" opacity="0.8"/>
+      <ellipse cx="30" cy="40" rx="9" ry="8" fill="#DD8833"/>
+      <ellipse cx="30" cy="25" rx="12" ry="11" fill="#CC5500"/>
+      <!-- crest drooped -->
+      <path d="M26 15 Q22 8 26 12" fill="#AA2200"/>
+      <path d="M30 14 Q28 7 30 11" fill="#CC4400"/>
+      <path d="M34 15 Q38 8 34 12" fill="#AA2200"/>
+      <circle cx="26" cy="12" r="1.5" fill="#884400" opacity="0.6"/>
+      <circle cx="30" cy="10" r="1.5" fill="#AA6600" opacity="0.6"/>
+      <circle cx="34" cy="12" r="1.5" fill="#884400" opacity="0.6"/>
+      <!-- dim sad eyes -->
+      <ellipse cx="24" cy="25" rx="4" ry="4" fill="#CCAA00"/>
+      <ellipse cx="36" cy="25" rx="4" ry="4" fill="#CCAA00"/>
+      <ellipse cx="24" cy="26" rx="2" ry="2.5" fill="#661100"/>
+      <ellipse cx="36" cy="26" rx="2" ry="2.5" fill="#661100"/>
+      <!-- furrowed brow -->
+      <path d="M21 21 Q24 18 27 21" fill="#CC5500"/>
+      <path d="M33 21 Q36 18 39 21" fill="#CC5500"/>
+      <path d="M27 29 L30 33 L33 29" fill="#CCAA00"/>
+      <!-- dim ember -->
+      <text x="6" y="28" font-size="5" fill="#AA6600" opacity="0.4">✦</text>
+    </svg>`,
+  };
+
+  // Fallback (should never be reached now but kept as safety net)
   const fallback = {
     idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
       <circle cx="30" cy="35" r="20" fill="${col}88"/>
@@ -391,8 +774,6 @@ function getPetArt(petId, state="idle", accentColor="#e0379a") {
       <circle cx="30" cy="28" r="15" fill="${col}"/>
       <path d="M20 26 Q24 21 28 26" fill="white"/><path d="M32 26 Q36 21 40 26" fill="white"/>
       <path d="M23 34 Q30 40 37 34" stroke="white" stroke-width="2" fill="none"/>
-      <text x="10" y="12" font-size="10" fill="white">✦</text>
-      <text x="40" y="10" font-size="10" fill="white">✦</text>
     </svg>`,
     sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
       <circle cx="30" cy="37" r="20" fill="${col}66"/>
