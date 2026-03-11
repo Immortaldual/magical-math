@@ -1,6 +1,9 @@
 /*
 CHANGELOG
 ---------
+v1.61 - 2026-03-10
+- Redrawn: All 8 starter characters with accurate costumes and colors
+
 v1.6 - 2026-03-10
 - Redesigned: Luna, Artemis, Diana as proper matched cat trio with anatomy, symbols, paws
 - Added: SVG preview cards for all backgrounds, sparkle effects, and borders
@@ -44,9 +47,25 @@ const GlobalStyle = () => (
 // ─────────────────────────────────────────────────────────────────────────────
 // VERSION & CHANGELOG
 // ─────────────────────────────────────────────────────────────────────────────
-const CURRENT_VERSION = "1.6";
+const CURRENT_VERSION = "1.61";
 
 const CHANGELOG = [
+  {
+    version: "1.61",
+    date: "2026-03-10",
+    label: "Starter Character Art Pass",
+    emoji: "✨",
+    changes: [
+      "Redrawn: Sailor Moon — yellow odango buns, navy sailor uniform, red front bow, crescent moon, blue eyes",
+      "Redrawn: Cardcaptor Sakura — brown hair, vivid green eyes, pink/white frilly battle dress, golden Sealing Wand with star",
+      "Redrawn: Cure Star — coral twin-tails with curls, star pins, pink PreCure suit, star brooch",
+      "Redrawn: Luna the Moon Bunny — white/lavender, ruby red eyes, bunny ears with glow tips, moon crescent brooch",
+      "Redrawn: Sailor Mercury — short blue hair, blue sailor uniform, Mercury brooch, subtle data visor detail",
+      "Redrawn: Galaxy Mage — galaxy-gradient hair with stars, deep cosmic robe, constellation forehead mark, galaxy orb staff",
+      "Redrawn: Cure Bloom — brown hair in large orange-tied twin tails, flower brooch, white/orange PreCure suit",
+      "Redrawn: Sailor Venus — long blonde hair, orange ribbon, white front bow, orange sailor uniform, Venus brooch",
+    ],
+  },
   {
     version: "1.6",
     date: "2026-03-10",
@@ -1422,185 +1441,515 @@ const ALL_CHARACTERS = [
     bg:"linear-gradient(135deg,#fff0fb,#ffe6f7)",
     accent:"#e0379a", softBg:"#ffe0f4", border:"#f7b8e0",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="55" rx="34" ry="38" fill="#FFE84B"/>
-      <path d="M28 65 Q5 90 15 120 Q22 135 30 120 Q28 95 35 78" fill="#FFE84B"/>
-      <path d="M92 65 Q115 90 105 120 Q98 135 90 120 Q92 95 85 78" fill="#FFE84B"/>
-      <circle cx="42" cy="30" r="12" fill="#FFE84B"/><circle cx="78" cy="30" r="12" fill="#FFE84B"/>
-      <circle cx="42" cy="30" r="8" fill="#FFD700"/><circle cx="78" cy="30" r="8" fill="#FFD700"/>
-      <ellipse cx="60" cy="62" rx="26" ry="28" fill="#FFE4CC"/>
-      <ellipse cx="50" cy="60" rx="7" ry="8" fill="#4488FF"/><ellipse cx="70" cy="60" rx="7" ry="8" fill="#4488FF"/>
-      <ellipse cx="50" cy="60" rx="4" ry="5" fill="#1144BB"/><ellipse cx="70" cy="60" rx="4" ry="5" fill="#1144BB"/>
-      <circle cx="52" cy="57" r="2" fill="white"/><circle cx="72" cy="57" r="2" fill="white"/>
-      <ellipse cx="44" cy="68" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <ellipse cx="76" cy="68" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <path d="M54 76 Q60 82 66 76" stroke="#FF88A0" stroke-width="1.5" fill="none"/>
-      <path d="M34 88 L60 100 L86 88 L80 95 L60 108 L40 95 Z" fill="#1144BB"/>
-      <path d="M34 88 L60 100 L86 88" stroke="white" stroke-width="2" fill="none"/>
-      <ellipse cx="60" cy="115" rx="22" ry="18" fill="white"/>
-      <path d="M50 100 Q60 106 70 100 Q65 112 60 108 Q55 112 50 100Z" fill="#FF3388"/>
-      <path d="M56 47 Q60 42 64 47 Q60 50 56 47Z" fill="#FFD700"/>
-    </svg>`,
+  <!-- twin pigtail hair flowing down -->
+  <path d="M22 62 Q8 82 14 112 Q20 128 28 114 Q24 92 30 76" fill="#FFD700"/>
+  <path d="M98 62 Q112 82 106 112 Q100 128 92 114 Q96 92 90 76" fill="#FFD700"/>
+  <!-- hair ribbons on pigtails -->
+  <ellipse cx="22" cy="64" rx="6" ry="3" fill="#FF3366"/>
+  <ellipse cx="98" cy="64" rx="6" ry="3" fill="#FF3366"/>
+  <!-- odango buns -->
+  <circle cx="40" cy="28" r="16" fill="#FFD700"/>
+  <circle cx="80" cy="28" r="16" fill="#FFD700"/>
+  <!-- bun sheen -->
+  <circle cx="36" cy="24" r="4" fill="#FFE866" opacity="0.6"/>
+  <circle cx="76" cy="24" r="4" fill="#FFE866" opacity="0.6"/>
+  <!-- neck hair connecting buns -->
+  <ellipse cx="60" cy="42" rx="20" ry="10" fill="#FFD700"/>
+  <!-- face -->
+  <ellipse cx="60" cy="58" rx="26" ry="28" fill="#FFE8C8"/>
+  <!-- crescent moon on forehead -->
+  <path d="M55 36 Q60 30 65 36 Q60 33 55 36" fill="#FFD700"/>
+  <circle cx="60" cy="34" r="5" fill="none" stroke="#FFD700" stroke-width="1.5"/>
+  <circle cx="62" cy="33" r="4" fill="#FFE8C8"/>
+  <!-- eyes - blue, large, iconic -->
+  <ellipse cx="49" cy="56" rx="8" ry="9" fill="#2255DD"/>
+  <ellipse cx="71" cy="56" rx="8" ry="9" fill="#2255DD"/>
+  <ellipse cx="49" cy="57" rx="5" ry="6" fill="#001188"/>
+  <ellipse cx="71" cy="57" rx="5" ry="6" fill="#001188"/>
+  <circle cx="47" cy="53" r="2.5" fill="white"/>
+  <circle cx="69" cy="53" r="2.5" fill="white"/>
+  <circle cx="52" cy="59" r="1" fill="white" opacity="0.7"/>
+  <circle cx="74" cy="59" r="1" fill="white" opacity="0.7"/>
+  <!-- lashes -->
+  <path d="M42 50 Q45 47 49 49" stroke="#001188" stroke-width="1" fill="none"/>
+  <path d="M71 49 Q75 47 78 50" stroke="#001188" stroke-width="1" fill="none"/>
+  <!-- blush -->
+  <ellipse cx="40" cy="64" rx="8" ry="4" fill="#FFB0B0" opacity="0.55"/>
+  <ellipse cx="80" cy="64" rx="8" ry="4" fill="#FFB0B0" opacity="0.55"/>
+  <!-- nose -->
+  <ellipse cx="60" cy="67" rx="2" ry="1.2" fill="#FFB888" opacity="0.7"/>
+  <!-- mouth -->
+  <path d="M54 72 Q60 78 66 72" stroke="#FF6688" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- sailor uniform - white body -->
+  <path d="M34 84 L60 94 L86 84 L82 92 L60 106 L38 92 Z" fill="white"/>
+  <!-- navy sailor collar -->
+  <path d="M34 84 L60 76 L86 84 L78 80 L60 86 L42 80 Z" fill="#002299"/>
+  <!-- white collar stripes -->
+  <path d="M36 85 L60 77 L84 85" stroke="white" stroke-width="1.2" fill="none"/>
+  <path d="M38 88 L60 80 L82 88" stroke="white" stroke-width="0.8" fill="none" opacity="0.6"/>
+  <!-- red front bow - iconic -->
+  <path d="M52 90 Q60 96 68 90 L64 84 Q60 88 56 84 Z" fill="#FF1144"/>
+  <circle cx="60" cy="90" r="3" fill="#FF3366"/>
+  <!-- white skirt -->
+  <ellipse cx="60" cy="116" rx="28" ry="20" fill="white"/>
+  <!-- navy skirt band -->
+  <path d="M32 104 Q60 100 88 104" stroke="#002299" stroke-width="5" fill="none"/>
+  <!-- brooch on bow -->
+  <circle cx="60" cy="84" r="3" fill="#FFD700"/>
+  <circle cx="60" cy="84" r="1.5" fill="#FF9900"/>
+</svg>`,
   },
   {
     name:"Cardcaptor Sakura", emoji:"🃏", unlockAt:0,
     bg:"linear-gradient(135deg,#f0fff4,#e0ffe8)",
     accent:"#22aa55", softBg:"#d0f5e0", border:"#90dda8",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="52" rx="30" ry="32" fill="#3DDC6A"/>
-      <path d="M32 55 Q20 75 28 100 Q34 118 42 105 Q36 82 40 68" fill="#3DDC6A"/>
-      <path d="M88 55 Q100 75 92 100 Q86 118 78 105 Q84 82 80 68" fill="#3DDC6A"/>
-      <ellipse cx="60" cy="65" rx="25" ry="27" fill="#FFE4CC"/>
-      <ellipse cx="50" cy="63" rx="7" ry="8" fill="#22CC66"/><ellipse cx="70" cy="63" rx="7" ry="8" fill="#22CC66"/>
-      <ellipse cx="50" cy="63" rx="4" ry="5" fill="#116633"/><ellipse cx="70" cy="63" rx="4" ry="5" fill="#116633"/>
-      <circle cx="52" cy="60" r="2" fill="white"/><circle cx="72" cy="60" r="2" fill="white"/>
-      <ellipse cx="44" cy="70" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <ellipse cx="76" cy="70" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <path d="M54 78 Q60 84 66 78" stroke="#FF88A0" stroke-width="1.5" fill="none"/>
-      <ellipse cx="60" cy="115" rx="22" ry="18" fill="white"/>
-      <path d="M38 90 L60 98 L82 90 L82 105 L60 115 L38 105Z" fill="#FF6699"/>
-      <path d="M38 90 L60 98 L82 90" stroke="white" stroke-width="2" fill="none"/>
-      <line x1="85" y1="70" x2="100" y2="50" stroke="#FFD700" stroke-width="3"/>
-      <circle cx="100" cy="44" r="6" fill="#FF99CC"/><circle cx="100" cy="44" r="3" fill="#FFD700"/>
-    </svg>`,
+  <!-- brown hair - short, fluffy -->
+  <ellipse cx="60" cy="44" rx="28" ry="26" fill="#8B5E3C"/>
+  <!-- hair shine -->
+  <ellipse cx="50" cy="36" rx="8" ry="5" fill="#A8784A" opacity="0.5"/>
+  <!-- side hair pieces -->
+  <path d="M34 52 Q24 60 28 72 Q32 68 36 62" fill="#8B5E3C"/>
+  <path d="M86 52 Q96 60 92 72 Q88 68 84 62" fill="#8B5E3C"/>
+  <!-- star/wing hair clips - signature -->
+  <text x="28" y="46" font-size="10" fill="#FFD700">✦</text>
+  <text x="80" y="46" font-size="10" fill="#FFD700">✦</text>
+  <!-- face -->
+  <ellipse cx="60" cy="60" rx="24" ry="26" fill="#FFE8C8"/>
+  <!-- eyes - bright green, large, iconic Sakura eyes -->
+  <ellipse cx="49" cy="58" rx="8" ry="9.5" fill="#33BB44"/>
+  <ellipse cx="71" cy="58" rx="8" ry="9.5" fill="#33BB44"/>
+  <ellipse cx="49" cy="59" rx="5" ry="6.5" fill="#116622"/>
+  <ellipse cx="71" cy="59" rx="5" ry="6.5" fill="#116622"/>
+  <circle cx="47" cy="55" r="2.5" fill="white"/>
+  <circle cx="69" cy="55" r="2.5" fill="white"/>
+  <circle cx="52" cy="62" r="1" fill="white" opacity="0.6"/>
+  <circle cx="74" cy="62" r="1" fill="white" opacity="0.6"/>
+  <!-- star-shaped pupil detail -->
+  <circle cx="49" cy="59" r="1" fill="#88EE88" opacity="0.4"/>
+  <circle cx="71" cy="59" r="1" fill="#88EE88" opacity="0.4"/>
+  <!-- lashes -->
+  <path d="M42 52 Q46 49 50 51" stroke="#116622" stroke-width="1.2" fill="none"/>
+  <path d="M70 51 Q74 49 78 52" stroke="#116622" stroke-width="1.2" fill="none"/>
+  <!-- blush dots - Sakura signature -->
+  <circle cx="40" cy="65" r="4" fill="#FFB0B0" opacity="0.55"/>
+  <circle cx="80" cy="65" r="4" fill="#FFB0B0" opacity="0.55"/>
+  <ellipse cx="60" cy="69" rx="2" ry="1.2" fill="#FFB888" opacity="0.6"/>
+  <path d="M54 74 Q60 80 66 74" stroke="#FF6688" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- pink/white frilly battle dress - bodice -->
+  <path d="M36 84 L60 92 L84 84 L84 106 L60 118 L36 106 Z" fill="#FF88BB"/>
+  <!-- white dress overlay/frills -->
+  <path d="M38 92 Q60 98 82 92 Q78 102 60 106 Q42 102 38 92 Z" fill="white" opacity="0.85"/>
+  <!-- pink ribbon bow at waist -->
+  <path d="M50 96 Q60 100 70 96 L66 90 Q60 94 54 90 Z" fill="#FF4488"/>
+  <circle cx="60" cy="96" r="2.5" fill="#FF66AA"/>
+  <!-- dress collar - white with pink trim -->
+  <path d="M40 84 L60 78 L80 84 L74 80 L60 84 L46 80 Z" fill="white"/>
+  <path d="M40 84 L60 78 L80 84" stroke="#FF88BB" stroke-width="1.5" fill="none"/>
+  <!-- skirt frills -->
+  <ellipse cx="60" cy="118" rx="26" ry="16" fill="#FF88BB"/>
+  <path d="M34 112 Q47 108 60 112 Q73 108 86 112" stroke="white" stroke-width="2" fill="none"/>
+  <!-- Sealing Wand - pink with gold star -->
+  <line x1="86" y1="88" x2="104" y2="66" stroke="#FF88BB" stroke-width="3" stroke-linecap="round"/>
+  <line x1="88" y1="86" x2="106" y2="64" stroke="#FFCCDD" stroke-width="1" stroke-linecap="round"/>
+  <!-- star on wand top -->
+  <polygon points="105,57 107,63 113,63 108,67 110,73 105,69 100,73 102,67 97,63 103,63" fill="#FFD700"/>
+  <circle cx="105" cy="65" r="3" fill="#FF88BB"/>
+  <!-- wing accessories on back of dress -->
+  <path d="M36 88 Q26 78 30 68 Q34 74 38 80" fill="#FFDDEE" opacity="0.8"/>
+  <path d="M84 88 Q94 78 90 68 Q86 74 82 80" fill="#FFDDEE" opacity="0.8"/>
+</svg>`,
   },
   {
     name:"Cure Star", emoji:"⭐", unlockAt:0,
     bg:"linear-gradient(135deg,#fff0f6,#ffe4f0)",
     accent:"#cc2277", softBg:"#ffd6ea", border:"#ffaad0",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="50" rx="36" ry="40" fill="#FF88BB"/>
-      <path d="M25 55 Q8 80 18 115 Q25 130 34 115 Q30 88 38 72" fill="#FF88BB"/>
-      <path d="M95 55 Q112 80 102 115 Q95 130 86 115 Q90 88 82 72" fill="#FF88BB"/>
-      <ellipse cx="52" cy="35" rx="8" ry="12" fill="#FFAAD0" opacity="0.5"/>
-      <ellipse cx="60" cy="65" rx="24" ry="26" fill="#FFE8D5"/>
-      <ellipse cx="50" cy="62" rx="7" ry="9" fill="#FF66AA"/><ellipse cx="70" cy="62" rx="7" ry="9" fill="#FF66AA"/>
-      <ellipse cx="50" cy="63" rx="4" ry="5.5" fill="#CC2277"/><ellipse cx="70" cy="63" rx="4" ry="5.5" fill="#CC2277"/>
-      <circle cx="52" cy="59" r="2" fill="white"/><circle cx="72" cy="59" r="2" fill="white"/>
-      <ellipse cx="43" cy="70" rx="7" ry="4" fill="#FFB0C8" opacity="0.7"/>
-      <ellipse cx="77" cy="70" rx="7" ry="4" fill="#FFB0C8" opacity="0.7"/>
-      <path d="M53 76 Q60 83 67 76" stroke="#FF7799" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M36 91 L60 100 L84 91 L84 108 L60 120 L36 108Z" fill="#FF66AA"/>
-      <path d="M36 91 L60 100 L84 91" stroke="white" stroke-width="2.5" fill="none"/>
-      <line x1="84" y1="85" x2="104" y2="62" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-      <polygon points="104,55 107,64 116,64 109,70 112,79 104,73 96,79 99,70 92,64 101,64" fill="#FFD700" transform="scale(0.6) translate(68,42)"/>
-    </svg>`,
+  <!-- twin tails - coral pink, curly, voluminous -->
+  <path d="M20 60 Q6 78 10 106 Q16 122 26 108 Q20 88 26 72" fill="#FF6699"/>
+  <path d="M100 60 Q114 78 110 106 Q104 122 94 108 Q100 88 94 72" fill="#FF6699"/>
+  <!-- hair curls at tips -->
+  <circle cx="18" cy="108" r="6" fill="#FF6699"/>
+  <circle cx="102" cy="108" r="6" fill="#FF6699"/>
+  <!-- main hair - coral pink, fluffy top -->
+  <ellipse cx="60" cy="42" rx="30" ry="28" fill="#FF6699"/>
+  <ellipse cx="60" cy="34" rx="22" ry="14" fill="#FF88AA"/>
+  <!-- hair shine -->
+  <ellipse cx="48" cy="32" rx="7" ry="4" fill="#FFAABB" opacity="0.6"/>
+  <!-- star hair pins -->
+  <text x="44" y="30" font-size="8" fill="#FFD700">★</text>
+  <text x="68" y="30" font-size="8" fill="#FFD700">★</text>
+  <!-- face -->
+  <ellipse cx="60" cy="58" rx="25" ry="26" fill="#FFE8D0"/>
+  <!-- eyes - vivid pink/magenta, Cure style large -->
+  <ellipse cx="48" cy="56" rx="8.5" ry="10" fill="#FF3388"/>
+  <ellipse cx="72" cy="56" rx="8.5" ry="10" fill="#FF3388"/>
+  <ellipse cx="48" cy="57" rx="5" ry="7" fill="#AA0055"/>
+  <ellipse cx="72" cy="57" rx="5" ry="7" fill="#AA0055"/>
+  <circle cx="46" cy="53" r="3" fill="white"/>
+  <circle cx="70" cy="53" r="3" fill="white"/>
+  <circle cx="50" cy="60" r="1" fill="white" opacity="0.6"/>
+  <circle cx="74" cy="60" r="1" fill="white" opacity="0.6"/>
+  <!-- star sparkle in eye -->
+  <text x="45" y="58" font-size="5" fill="#FFD700" opacity="0.7">✦</text>
+  <text x="69" y="58" font-size="5" fill="#FFD700" opacity="0.7">✦</text>
+  <!-- lashes - PreCure style prominent -->
+  <path d="M40 49 Q44 46 49 48" stroke="#AA0055" stroke-width="1.5" fill="none"/>
+  <path d="M71 48 Q76 46 80 49" stroke="#AA0055" stroke-width="1.5" fill="none"/>
+  <ellipse cx="40" cy="63" r="5" fill="#FFB0C0" opacity="0.6"/>
+  <ellipse cx="80" cy="63" r="5" fill="#FFB0C0" opacity="0.6"/>
+  <path d="M54 70 Q60 77 66 70" stroke="#FF5588" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- PreCure suit - white bodice with pink accents -->
+  <path d="M35 84 L60 94 L85 84 L85 108 L60 120 L35 108 Z" fill="white"/>
+  <!-- pink collar and trim -->
+  <path d="M38 84 L60 78 L82 84 L76 80 L60 84 L44 80 Z" fill="#FF6699"/>
+  <path d="M38 86 L60 80 L82 86" stroke="white" stroke-width="1" fill="none"/>
+  <!-- gold star brooch center chest -->
+  <polygon points="60,88 62,94 68,94 63,98 65,104 60,100 55,104 57,98 52,94 58,94" fill="#FFD700" transform="scale(0.7) translate(18,30)"/>
+  <!-- pink waist ribbon -->
+  <path d="M48 100 Q60 104 72 100 L68 94 Q60 98 52 94 Z" fill="#FF6699"/>
+  <circle cx="60" cy="100" r="3" fill="#FF88AA"/>
+  <!-- skirt - white with pink star trim -->
+  <ellipse cx="60" cy="118" rx="27" ry="18" fill="white"/>
+  <path d="M33 110 Q60 106 87 110" stroke="#FF6699" stroke-width="3" fill="none"/>
+  <!-- star motifs on skirt -->
+  <text x="44" y="120" font-size="8" fill="#FF6699" opacity="0.7">★</text>
+  <text x="64" y="122" font-size="7" fill="#FF6699" opacity="0.6">★</text>
+</svg>`,
   },
   {
     name:"Luna the Moon Bunny", emoji:"🐰", unlockAt:0,
     bg:"linear-gradient(135deg,#f4f0ff,#ede4ff)",
     accent:"#7744cc", softBg:"#e4d8ff", border:"#c4aaee",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="44" cy="22" rx="8" ry="18" fill="white" transform="rotate(-10,44,22)"/>
-      <ellipse cx="76" cy="22" rx="8" ry="18" fill="white" transform="rotate(10,76,22)"/>
-      <ellipse cx="44" cy="22" rx="4" ry="13" fill="#FFB0D0" transform="rotate(-10,44,22)"/>
-      <ellipse cx="76" cy="22" rx="4" ry="13" fill="#FFB0D0" transform="rotate(10,76,22)"/>
-      <ellipse cx="60" cy="60" rx="30" ry="33" fill="#E8DDFF"/>
-      <path d="M32 65 Q18 88 27 112 Q33 128 41 112 Q37 88 42 72" fill="#E8DDFF"/>
-      <path d="M88 65 Q102 88 93 112 Q87 128 79 112 Q83 88 78 72" fill="#E8DDFF"/>
-      <ellipse cx="60" cy="68" rx="24" ry="25" fill="#FFF0E8"/>
-      <ellipse cx="50" cy="66" rx="7" ry="8" fill="#FF4466"/><ellipse cx="70" cy="66" rx="7" ry="8" fill="#FF4466"/>
-      <ellipse cx="50" cy="67" rx="4" ry="5" fill="#AA1133"/><ellipse cx="70" cy="67" rx="4" ry="5" fill="#AA1133"/>
-      <circle cx="52" cy="63" r="2" fill="white"/><circle cx="72" cy="63" r="2" fill="white"/>
-      <circle cx="42" cy="73" r="2.5" fill="#FFB0C0" opacity="0.8"/><circle cx="46" cy="75" r="2.5" fill="#FFB0C0" opacity="0.8"/>
-      <circle cx="74" cy="73" r="2.5" fill="#FFB0C0" opacity="0.8"/><circle cx="78" cy="75" r="2.5" fill="#FFB0C0" opacity="0.8"/>
-      <path d="M54 78 Q60 85 66 78" stroke="#FF7799" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M38 92 L60 102 L82 92 L82 110 L60 122 L38 110Z" fill="#AADDFF"/>
-      <path d="M38 92 L60 102 L82 92" stroke="white" stroke-width="2" fill="none"/>
-    </svg>`,
+  <!-- long bunny ears -->
+  <ellipse cx="42" cy="20" rx="10" ry="22" fill="#F0EAFF" transform="rotate(-8,42,20)"/>
+  <ellipse cx="78" cy="20" rx="10" ry="22" fill="#F0EAFF" transform="rotate(8,78,20)"/>
+  <!-- inner ear -->
+  <ellipse cx="42" cy="20" rx="5" ry="15" fill="#FFB0D0" transform="rotate(-8,42,20)"/>
+  <ellipse cx="78" cy="20" rx="5" ry="15" fill="#FFB0D0" transform="rotate(8,78,20)"/>
+  <!-- ear tips sparkle -->
+  <circle cx="39" cy="4" r="3" fill="#AADDFF" opacity="0.7"/>
+  <circle cx="80" cy="4" r="3" fill="#AADDFF" opacity="0.7"/>
+  <!-- body/hair - soft white-lavender -->
+  <ellipse cx="60" cy="54" rx="28" ry="26" fill="#E8DDFF"/>
+  <!-- side hair puffs -->
+  <path d="M33 58 Q22 72 28 90 Q33 84 36 74" fill="#E8DDFF"/>
+  <path d="M87 58 Q98 72 92 90 Q87 84 84 74" fill="#E8DDFF"/>
+  <!-- face -->
+  <ellipse cx="60" cy="64" rx="24" ry="25" fill="#FFF0F0"/>
+  <!-- cheek fluff -->
+  <ellipse cx="38" cy="70" rx="7" ry="5" fill="#F0EAFF" opacity="0.8"/>
+  <ellipse cx="82" cy="70" rx="7" ry="5" fill="#F0EAFF" opacity="0.8"/>
+  <!-- eyes - red/ruby, large bunny eyes -->
+  <ellipse cx="49" cy="62" rx="8" ry="9" fill="#FF3344"/>
+  <ellipse cx="71" cy="62" rx="8" ry="9" fill="#FF3344"/>
+  <ellipse cx="49" cy="63" rx="5" ry="6" fill="#AA0022"/>
+  <ellipse cx="71" cy="63" rx="5" ry="6" fill="#AA0022"/>
+  <circle cx="47" cy="59" r="2.5" fill="white"/>
+  <circle cx="69" cy="59" r="2.5" fill="white"/>
+  <circle cx="52" cy="66" r="1" fill="white" opacity="0.6"/>
+  <circle cx="74" cy="66" r="1" fill="white" opacity="0.6"/>
+  <!-- cute lashes -->
+  <path d="M42 55 Q46 52 50 54" stroke="#AA0022" stroke-width="1" fill="none"/>
+  <path d="M70 54 Q74 52 78 55" stroke="#AA0022" stroke-width="1" fill="none"/>
+  <!-- blush cheeks - cute circle dots -->
+  <circle cx="38" cy="68" r="5" fill="#FFB0B0" opacity="0.5"/>
+  <circle cx="82" cy="68" r="5" fill="#FFB0B0" opacity="0.5"/>
+  <!-- bunny nose - round -->
+  <ellipse cx="60" cy="72" rx="3" ry="2.2" fill="#FF8899"/>
+  <!-- mouth -->
+  <path d="M57 74 Q60 70 63 74" stroke="#FF8899" stroke-width="1.2" fill="none"/>
+  <path d="M54 76 Q60 82 66 76" stroke="#FF8899" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- outfit - white/blue with moon crescent -->
+  <path d="M36 88 L60 98 L84 88 L84 110 L60 122 L36 110 Z" fill="#AADDFF"/>
+  <!-- white dress overlay -->
+  <path d="M38 94 Q60 100 82 94 Q78 108 60 112 Q42 108 38 94 Z" fill="white" opacity="0.8"/>
+  <!-- moon crescent brooch -->
+  <circle cx="60" cy="92" r="5" fill="none" stroke="#FFD700" stroke-width="1.8"/>
+  <circle cx="62" cy="91" r="4" fill="#AADDFF"/>
+  <!-- blue ribbon bow -->
+  <path d="M50 96 Q60 100 70 96 L66 90 Q60 94 54 90 Z" fill="#5599FF"/>
+  <circle cx="60" cy="96" r="2.5" fill="#88BBFF"/>
+  <!-- skirt -->
+  <ellipse cx="60" cy="120" rx="26" ry="16" fill="#AADDFF"/>
+  <path d="M34 114 Q60 110 86 114" stroke="white" stroke-width="2" fill="none"/>
+  <!-- stars on skirt -->
+  <text x="44" y="124" font-size="8" fill="white" opacity="0.7">✦</text>
+  <text x="64" y="122" font-size="7" fill="#FFD700" opacity="0.8">✦</text>
+</svg>`,
   },
   {
     name:"Sailor Mercury", emoji:"💙", unlockAt:0,
     bg:"linear-gradient(135deg,#eef8ff,#ddf0ff)",
     accent:"#1177cc", softBg:"#d0ecff", border:"#88ccee",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="52" rx="28" ry="32" fill="#88CCFF"/>
-      <path d="M33 60 Q18 82 26 110 Q32 126 40 110 Q36 86 40 70" fill="#88CCFF"/>
-      <path d="M87 60 Q102 82 94 110 Q88 126 80 110 Q84 86 80 70" fill="#88CCFF"/>
-      <ellipse cx="60" cy="65" rx="24" ry="26" fill="#E8F4FF"/>
-      <ellipse cx="50" cy="63" rx="7" ry="8" fill="#2299EE"/><ellipse cx="70" cy="63" rx="7" ry="8" fill="#2299EE"/>
-      <ellipse cx="50" cy="64" rx="4" ry="5" fill="#0055AA"/><ellipse cx="70" cy="64" rx="4" ry="5" fill="#0055AA"/>
-      <circle cx="52" cy="60" r="2" fill="white"/><circle cx="72" cy="60" r="2" fill="white"/>
-      <ellipse cx="44" cy="70" rx="6" ry="3" fill="#AADDFF" opacity="0.7"/>
-      <ellipse cx="76" cy="70" rx="6" ry="3" fill="#AADDFF" opacity="0.7"/>
-      <path d="M54 76 Q60 82 66 76" stroke="#6699CC" stroke-width="1.5" fill="none"/>
-      <path d="M36 90 L60 100 L84 90 L80 96 L60 108 L40 96 Z" fill="#1144BB"/>
-      <path d="M36 90 L60 100 L84 90" stroke="white" stroke-width="2" fill="none"/>
-      <ellipse cx="60" cy="115" rx="22" ry="18" fill="white"/>
-      <path d="M50 100 Q60 106 70 100 Q65 112 60 108 Q55 112 50 100Z" fill="#2299EE"/>
-    </svg>`,
+  <!-- short blue hair - neat, chin length -->
+  <ellipse cx="60" cy="48" rx="28" ry="24" fill="#3399CC"/>
+  <ellipse cx="60" cy="40" rx="22" ry="12" fill="#44AADD"/>
+  <!-- side hair -->
+  <path d="M34 54 Q26 64 30 76 Q34 70 36 62" fill="#3399CC"/>
+  <path d="M86 54 Q94 64 90 76 Q86 70 84 62" fill="#3399CC"/>
+  <!-- hair shine -->
+  <ellipse cx="48" cy="38" rx="8" ry="4" fill="#66BBEE" opacity="0.5"/>
+  <!-- face -->
+  <ellipse cx="60" cy="62" rx="24" ry="26" fill="#E8F4FF"/>
+  <!-- eyes - clear blue, intelligent look -->
+  <ellipse cx="49" cy="60" rx="7.5" ry="9" fill="#2299EE"/>
+  <ellipse cx="71" cy="60" rx="7.5" ry="9" fill="#2299EE"/>
+  <ellipse cx="49" cy="61" rx="4.5" ry="6" fill="#0066BB"/>
+  <ellipse cx="71" cy="61" rx="4.5" ry="6" fill="#0066BB"/>
+  <circle cx="47" cy="57" r="2.5" fill="white"/>
+  <circle cx="69" cy="57" r="2.5" fill="white"/>
+  <circle cx="52" cy="64" r="1" fill="white" opacity="0.6"/>
+  <circle cx="74" cy="64" r="1" fill="white" opacity="0.6"/>
+  <!-- Mercury visor data - iconic detail -->
+  <path d="M38 56 Q60 52 82 56" stroke="#44DDFF" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- lashes - elegant -->
+  <path d="M42 53 Q46 50 50 52" stroke="#0066BB" stroke-width="1.2" fill="none"/>
+  <path d="M70 52 Q74 50 78 53" stroke="#0066BB" stroke-width="1.2" fill="none"/>
+  <!-- blush - subtle for Mercury -->
+  <ellipse cx="40" cy="67" rx="7" ry="3.5" fill="#AADDFF" opacity="0.4"/>
+  <ellipse cx="80" cy="67" rx="7" ry="3.5" fill="#AADDFF" opacity="0.4"/>
+  <ellipse cx="60" cy="70" rx="2" ry="1.2" fill="#BBD4E8" opacity="0.6"/>
+  <path d="M54 74 Q60 79 66 74" stroke="#6699BB" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- sailor uniform white body -->
+  <path d="M36 88 L60 98 L84 88 L80 96 L60 110 L40 96 Z" fill="white"/>
+  <!-- light blue sailor collar -->
+  <path d="M36 88 L60 80 L84 88 L78 84 L60 88 L42 84 Z" fill="#2299EE"/>
+  <!-- white collar double stripe -->
+  <path d="M38 89 L60 81 L82 89" stroke="white" stroke-width="1.5" fill="none"/>
+  <path d="M40 92 L60 84 L80 92" stroke="white" stroke-width="0.8" fill="none" opacity="0.7"/>
+  <!-- light blue front bow -->
+  <path d="M52 92 Q60 98 68 92 L64 86 Q60 90 56 86 Z" fill="#66CCFF"/>
+  <circle cx="60" cy="92" r="3" fill="#44AADD"/>
+  <!-- skirt - blue, pleated -->
+  <ellipse cx="60" cy="118" rx="26" ry="18" fill="#2299EE"/>
+  <path d="M34 106 Q60 102 86 106" stroke="#44BBFF" stroke-width="3" fill="none"/>
+  <!-- pleats -->
+  <line x1="44" y1="106" x2="42" y2="124" stroke="#1177BB" stroke-width="0.8" opacity="0.5"/>
+  <line x1="54" y1="104" x2="52" y2="124" stroke="#1177BB" stroke-width="0.8" opacity="0.5"/>
+  <line x1="64" y1="104" x2="66" y2="124" stroke="#1177BB" stroke-width="0.8" opacity="0.5"/>
+  <line x1="74" y1="104" x2="76" y2="124" stroke="#1177BB" stroke-width="0.8" opacity="0.5"/>
+  <!-- Mercury symbol on brooch -->
+  <circle cx="60" cy="86" r="3.5" fill="#44AADD"/>
+  <text x="57" y="90" font-size="5" fill="white">☿</text>
+</svg>`,
   },
   {
     name:"Galaxy Mage", emoji:"🔮", unlockAt:0,
     bg:"linear-gradient(135deg,#f0eaff,#e8e0ff)",
     accent:"#7733dd", softBg:"#ddd0ff", border:"#bb99ee",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="gh" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#7744FF"/>
-        <stop offset="50%" style="stop-color:#FF44BB"/>
-        <stop offset="100%" style="stop-color:#44CCFF"/>
-      </linearGradient></defs>
-      <ellipse cx="60" cy="52" rx="34" ry="38" fill="url(#gh)"/>
-      <path d="M26 60 Q10 85 22 115 Q28 132 38 116 Q32 90 38 73" fill="url(#gh)"/>
-      <path d="M94 60 Q110 85 98 115 Q92 132 82 116 Q88 90 82 73" fill="url(#gh)"/>
-      <circle cx="35" cy="40" r="2" fill="white" opacity="0.9"/><circle cx="82" cy="35" r="1.5" fill="white" opacity="0.9"/>
-      <circle cx="60" cy="28" r="2" fill="white" opacity="0.9"/>
-      <ellipse cx="60" cy="66" rx="25" ry="27" fill="#FFF0E8"/>
-      <ellipse cx="50" cy="64" rx="7" ry="8" fill="#9955FF"/><ellipse cx="70" cy="64" rx="7" ry="8" fill="#9955FF"/>
-      <ellipse cx="50" cy="65" rx="4" ry="5" fill="#5522AA"/><ellipse cx="70" cy="65" rx="4" ry="5" fill="#5522AA"/>
-      <circle cx="52" cy="61" r="2" fill="white"/><circle cx="72" cy="61" r="2" fill="white"/>
-      <ellipse cx="43" cy="71" rx="7" ry="3.5" fill="#FFB0D8" opacity="0.7"/>
-      <ellipse cx="77" cy="71" rx="7" ry="3.5" fill="#FFB0D8" opacity="0.7"/>
-      <path d="M53 78 Q60 85 67 78" stroke="#FF66AA" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M36 92 L60 102 L84 92 L84 110 L60 122 L36 110Z" fill="#7744FF"/>
-      <path d="M36 92 L60 102 L84 92" stroke="#44CCFF" stroke-width="2" fill="none"/>
-      <line x1="83" y1="88" x2="102" y2="65" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="104" cy="62" r="7" fill="#7744FF" opacity="0.8"/>
-      <circle cx="104" cy="62" r="4" fill="#FF44BB"/>
-      <circle cx="104" cy="62" r="2" fill="white"/>
-    </svg>`,
+  <defs>
+    <linearGradient id="galaxyHair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4422AA"/>
+      <stop offset="40%" stop-color="#CC44FF"/>
+      <stop offset="70%" stop-color="#4488FF"/>
+      <stop offset="100%" stop-color="#FF44CC"/>
+    </linearGradient>
+    <linearGradient id="galaxyRobe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0044"/>
+      <stop offset="100%" stop-color="#330066"/>
+    </linearGradient>
+  </defs>
+  <!-- long flowing galaxy hair -->
+  <path d="M24 58 Q8 82 14 114 Q20 130 30 116 Q24 92 30 74" fill="url(#galaxyHair)" opacity="0.9"/>
+  <path d="M96 58 Q112 82 106 114 Q100 130 90 116 Q96 92 90 74" fill="url(#galaxyHair)" opacity="0.9"/>
+  <!-- stars in hair -->
+  <circle cx="16" cy="90" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="104" cy="86" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="20" cy="110" r="1" fill="#AADDFF" opacity="0.7"/>
+  <circle cx="100" cy="106" r="1" fill="#FFAAFF" opacity="0.7"/>
+  <!-- main hair volume -->
+  <ellipse cx="60" cy="44" rx="30" ry="28" fill="url(#galaxyHair)"/>
+  <!-- hair shine galaxy swirl -->
+  <path d="M44 34 Q60 28 76 34 Q68 36 60 34 Q52 36 44 34" fill="#CC88FF" opacity="0.3"/>
+  <!-- constellation mark on forehead -->
+  <circle cx="60" cy="32" r="2" fill="#FFD700" opacity="0.9"/>
+  <circle cx="55" cy="36" r="1" fill="#AADDFF" opacity="0.8"/>
+  <circle cx="65" cy="36" r="1" fill="#AADDFF" opacity="0.8"/>
+  <line x1="58" y1="33" x2="56" y2="36" stroke="#AADDFF" stroke-width="0.5" opacity="0.6"/>
+  <line x1="62" y1="33" x2="64" y2="36" stroke="#AADDFF" stroke-width="0.5" opacity="0.6"/>
+  <!-- face -->
+  <ellipse cx="60" cy="60" rx="25" ry="26" fill="#F0E8FF"/>
+  <!-- eyes - deep violet with galaxy depth -->
+  <ellipse cx="49" cy="58" rx="8" ry="9.5" fill="#8833FF"/>
+  <ellipse cx="71" cy="58" rx="8" ry="9.5" fill="#8833FF"/>
+  <ellipse cx="49" cy="59" rx="5" ry="6.5" fill="#330088"/>
+  <ellipse cx="71" cy="59" rx="5" ry="6.5" fill="#330088"/>
+  <circle cx="47" cy="55" r="2.5" fill="white"/>
+  <circle cx="69" cy="55" r="2.5" fill="white"/>
+  <!-- galaxy sparkle in eyes -->
+  <circle cx="50" cy="60" r="1" fill="#AADDFF" opacity="0.7"/>
+  <circle cx="72" cy="60" r="1" fill="#FF88CC" opacity="0.7"/>
+  <!-- lashes -->
+  <path d="M41 51 Q45 48 50 50" stroke="#330088" stroke-width="1.2" fill="none"/>
+  <path d="M70 50 Q75 48 79 51" stroke="#330088" stroke-width="1.2" fill="none"/>
+  <!-- blush - purple-toned -->
+  <ellipse cx="40" cy="65" rx="7" ry="4" fill="#CC88FF" opacity="0.35"/>
+  <ellipse cx="80" cy="65" rx="7" ry="4" fill="#CC88FF" opacity="0.35"/>
+  <ellipse cx="60" cy="68" rx="2" ry="1.2" fill="#C8A8E0" opacity="0.7"/>
+  <path d="M54 72 Q60 78 66 72" stroke="#AA66CC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- deep galaxy robe - dramatic -->
+  <path d="M30 86 L60 96 L90 86 L90 112 L60 126 L30 112 Z" fill="url(#galaxyRobe)"/>
+  <!-- galaxy robe stars -->
+  <circle cx="44" cy="98" r="1" fill="white" opacity="0.7"/>
+  <circle cx="76" cy="100" r="1.2" fill="#AADDFF" opacity="0.8"/>
+  <circle cx="56" cy="110" r="1" fill="#FFAAFF" opacity="0.7"/>
+  <circle cx="66" cy="106" r="0.8" fill="white" opacity="0.6"/>
+  <!-- cosmic collar - glowing purple -->
+  <path d="M32 86 L60 78 L88 86 L82 82 L60 86 L38 82 Z" fill="#6622CC"/>
+  <path d="M34 87 L60 79 L86 87" stroke="#AA66FF" stroke-width="1.5" fill="none"/>
+  <!-- star brooch -->
+  <polygon points="60,84 62,90 68,90 63,94 65,100 60,96 55,100 57,94 52,90 58,90" fill="#FFD700" transform="scale(0.65) translate(32,44)"/>
+  <!-- galaxy staff - cosmic orb -->
+  <line x1="86" y1="90" x2="106" y2="66" stroke="#6622CC" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="87" y1="89" x2="107" y2="65" stroke="#AA66FF" stroke-width="1" opacity="0.7"/>
+  <!-- orb -->
+  <circle cx="108" cy="62" r="9" fill="#330066" opacity="0.9"/>
+  <circle cx="108" cy="62" r="7" fill="#6622CC" opacity="0.7"/>
+  <!-- galaxy swirl in orb -->
+  <circle cx="108" cy="62" r="5" fill="none" stroke="#AA44FF" stroke-width="0.8" opacity="0.8"/>
+  <circle cx="108" cy="62" r="2.5" fill="#FF44BB" opacity="0.8"/>
+  <circle cx="106" cy="60" r="1.5" fill="white" opacity="0.9"/>
+  <!-- orb glow -->
+  <circle cx="108" cy="62" r="10" fill="#8833FF" opacity="0.15"/>
+</svg>`,
   },
   {
     name:"Cure Bloom", emoji:"🌸", unlockAt:0,
     bg:"linear-gradient(135deg,#fff5f0,#ffe8e0)",
     accent:"#dd5522", softBg:"#ffd8c8", border:"#ffb8a0",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="50" rx="32" ry="36" fill="#FFB347"/>
-      <path d="M28 58 Q12 80 22 112 Q28 128 36 112 Q32 88 38 70" fill="#FFB347"/>
-      <path d="M92 58 Q108 80 98 112 Q92 128 84 112 Q88 88 82 70" fill="#FFB347"/>
-      <circle cx="42" cy="28" r="9" fill="#FF8C00"/><circle cx="78" cy="28" r="9" fill="#FF8C00"/>
-      <ellipse cx="60" cy="65" rx="25" ry="27" fill="#FFE4CC"/>
-      <ellipse cx="50" cy="63" rx="7" ry="8" fill="#FF7722"/><ellipse cx="70" cy="63" rx="7" ry="8" fill="#FF7722"/>
-      <ellipse cx="50" cy="64" rx="4" ry="5" fill="#AA3300"/><ellipse cx="70" cy="64" rx="4" ry="5" fill="#AA3300"/>
-      <circle cx="52" cy="60" r="2" fill="white"/><circle cx="72" cy="60" r="2" fill="white"/>
-      <ellipse cx="44" cy="71" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <ellipse cx="76" cy="71" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <path d="M54 77 Q60 83 66 77" stroke="#FF8877" stroke-width="1.5" fill="none"/>
-      <path d="M36 90 L60 100 L84 90 L84 108 L60 120 L36 108Z" fill="#FF7722"/>
-      <path d="M36 90 L60 100 L84 90" stroke="#FFD700" stroke-width="2" fill="none"/>
-      <ellipse cx="60" cy="115" rx="22" ry="18" fill="#FFEECC"/>
-    </svg>`,
+  <!-- large voluminous twin tails - brown, tied up -->
+  <path d="M22 58 Q6 74 8 104 Q14 122 24 108 Q18 86 24 70" fill="#8B5E3C"/>
+  <path d="M98 58 Q114 74 112 104 Q106 122 96 108 Q102 86 96 70" fill="#8B5E3C"/>
+  <!-- tail volume puffs -->
+  <ellipse cx="16" cy="80" rx="10" ry="14" fill="#A0724A"/>
+  <ellipse cx="104" cy="80" rx="10" ry="14" fill="#A0724A"/>
+  <!-- orange/yellow hair ties - signature -->
+  <ellipse cx="26" cy="60" rx="8" ry="5" fill="#FF9900"/>
+  <ellipse cx="94" cy="60" rx="8" ry="5" fill="#FF9900"/>
+  <!-- yellow ribbon decorations on ties -->
+  <path d="M20 58 Q26 54 32 58 Q26 56 20 58" fill="#FFD700"/>
+  <path d="M88 58 Q94 54 100 58 Q94 56 88 58" fill="#FFD700"/>
+  <!-- main hair - brown, round top -->
+  <ellipse cx="60" cy="44" rx="28" ry="24" fill="#8B5E3C"/>
+  <ellipse cx="60" cy="36" rx="20" ry="12" fill="#A0724A"/>
+  <!-- hair shine -->
+  <ellipse cx="50" cy="34" rx="7" ry="4" fill="#C09060" opacity="0.5"/>
+  <!-- flower hair pin - signature Cure Bloom -->
+  <circle cx="46" cy="32" r="5" fill="#FF8844"/>
+  <circle cx="46" cy="32" r="3" fill="#FFD700"/>
+  <!-- face -->
+  <ellipse cx="60" cy="60" rx="24" ry="26" fill="#FFE8D0"/>
+  <!-- eyes - warm amber/brown, PreCure large -->
+  <ellipse cx="48" cy="58" rx="8.5" ry="10" fill="#CC6622"/>
+  <ellipse cx="72" cy="58" rx="8.5" ry="10" fill="#CC6622"/>
+  <ellipse cx="48" cy="59" rx="5" ry="7" fill="#882200"/>
+  <ellipse cx="72" cy="59" rx="5" ry="7" fill="#882200"/>
+  <circle cx="46" cy="55" r="3" fill="white"/>
+  <circle cx="70" cy="55" r="3" fill="white"/>
+  <circle cx="51" cy="62" r="1.2" fill="white" opacity="0.6"/>
+  <circle cx="75" cy="62" r="1.2" fill="white" opacity="0.6"/>
+  <!-- flower petal detail in eyes -->
+  <circle cx="48" cy="59" r="1" fill="#FF8844" opacity="0.4"/>
+  <circle cx="72" cy="59" r="1" fill="#FF8844" opacity="0.4"/>
+  <!-- lashes -->
+  <path d="M40 51 Q44 48 49 50" stroke="#882200" stroke-width="1.5" fill="none"/>
+  <path d="M71 50 Q76 48 80 51" stroke="#882200" stroke-width="1.5" fill="none"/>
+  <ellipse cx="38" cy="66" r="5.5" fill="#FFB888" opacity="0.5"/>
+  <ellipse cx="82" cy="66" r="5.5" fill="#FFB888" opacity="0.5"/>
+  <path d="M54 72 Q60 79 66 72" stroke="#FF7755" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- PreCure suit - white with orange/gold Bloom style -->
+  <path d="M35 84 L60 94 L85 84 L85 108 L60 120 L35 108 Z" fill="white"/>
+  <!-- orange collar -->
+  <path d="M38 84 L60 78 L82 84 L76 80 L60 84 L44 80 Z" fill="#FF8844"/>
+  <path d="M40 86 L60 80 L80 86" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <!-- flower brooch - Cure Bloom signature -->
+  <circle cx="60" cy="92" r="7" fill="#FF8844" opacity="0.2"/>
+  <circle cx="60" cy="88" r="3" fill="#FF8844"/>
+  <circle cx="55" cy="90" r="3" fill="#FF8844"/>
+  <circle cx="65" cy="90" r="3" fill="#FF8844"/>
+  <circle cx="57" cy="95" r="3" fill="#FF8844"/>
+  <circle cx="63" cy="95" r="3" fill="#FF8844"/>
+  <circle cx="60" cy="91" r="3" fill="#FFD700"/>
+  <!-- orange sash at waist -->
+  <path d="M38 100 Q60 104 82 100" stroke="#FF8844" stroke-width="4" fill="none"/>
+  <!-- skirt - white with orange flower trim -->
+  <ellipse cx="60" cy="118" rx="27" ry="18" fill="white"/>
+  <path d="M33 110 Q60 106 87 110" stroke="#FF8844" stroke-width="3" fill="none"/>
+  <!-- flower motifs on skirt -->
+  <circle cx="46" cy="118" r="4" fill="#FF8844" opacity="0.5"/>
+  <circle cx="46" cy="118" r="2" fill="#FFD700" opacity="0.7"/>
+  <circle cx="74" cy="118" r="4" fill="#FF8844" opacity="0.5"/>
+  <circle cx="74" cy="118" r="2" fill="#FFD700" opacity="0.7"/>
+</svg>`,
   },
   {
     name:"Sailor Venus", emoji:"💛", unlockAt:0,
     bg:"linear-gradient(135deg,#fffbea,#fff5cc)",
     accent:"#cc8800", softBg:"#fff0b0", border:"#ffd966",
     art:`<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="55" rx="34" ry="38" fill="#FFD700"/>
-      <path d="M28 65 Q5 90 15 120 Q22 135 30 120 Q28 95 35 78" fill="#FFD700"/>
-      <path d="M92 65 Q115 90 105 120 Q98 135 90 120 Q92 95 85 78" fill="#FFD700"/>
-      <ellipse cx="60" cy="62" rx="26" ry="28" fill="#FFE4CC"/>
-      <ellipse cx="50" cy="60" rx="7" ry="8" fill="#2255DD"/><ellipse cx="70" cy="60" rx="7" ry="8" fill="#2255DD"/>
-      <ellipse cx="50" cy="60" rx="4" ry="5" fill="#0033AA"/><ellipse cx="70" cy="60" rx="4" ry="5" fill="#0033AA"/>
-      <circle cx="52" cy="57" r="2" fill="white"/><circle cx="72" cy="57" r="2" fill="white"/>
-      <ellipse cx="44" cy="68" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <ellipse cx="76" cy="68" rx="6" ry="3" fill="#FFB0B0" opacity="0.6"/>
-      <path d="M54 76 Q60 82 66 76" stroke="#FF88A0" stroke-width="1.5" fill="none"/>
-      <path d="M34 88 L60 100 L86 88 L80 95 L60 108 L40 95 Z" fill="#0033AA"/>
-      <path d="M34 88 L60 100 L86 88" stroke="white" stroke-width="2" fill="none"/>
-      <ellipse cx="60" cy="115" rx="22" ry="18" fill="white"/>
-      <path d="M50 100 Q60 106 70 100 Q65 112 60 108 Q55 112 50 100Z" fill="#FF8800"/>
-      <path d="M44 52 Q60 44 76 52" stroke="#FF8800" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </svg>`,
+  <!-- long flowing blonde hair -->
+  <path d="M24 60 Q8 84 14 116 Q20 132 30 118 Q24 94 30 76" fill="#FFD700"/>
+  <path d="M96 60 Q112 84 106 116 Q100 132 90 118 Q96 94 90 76" fill="#FFD700"/>
+  <!-- hair volume sides -->
+  <ellipse cx="20" cy="88" rx="10" ry="18" fill="#FFE033"/>
+  <ellipse cx="100" cy="88" rx="10" ry="18" fill="#FFE033"/>
+  <!-- orange hair ribbon - Venus signature -->
+  <path d="M36 56 Q60 50 84 56 Q78 54 60 52 Q42 54 36 56 Z" fill="#FF8800"/>
+  <ellipse cx="60" cy="54" rx="6" ry="3" fill="#FF9900"/>
+  <!-- main hair - big, flowing, blonde -->
+  <ellipse cx="60" cy="46" rx="30" ry="28" fill="#FFD700"/>
+  <ellipse cx="60" cy="38" rx="22" ry="14" fill="#FFE844"/>
+  <!-- hair shine -->
+  <ellipse cx="48" cy="36" rx="8" ry="4" fill="#FFF066" opacity="0.6"/>
+  <!-- crescent moon on forehead - Venus also has this -->
+  <path d="M55 30 Q60 24 65 30 Q60 27 55 30" fill="#FFD700"/>
+  <circle cx="60" cy="28" r="4" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <circle cx="62" cy="27" r="3.2" fill="#FFE8C8"/>
+  <!-- face -->
+  <ellipse cx="60" cy="60" rx="26" ry="27" fill="#FFE8C8"/>
+  <!-- eyes - blue, like Sailor Moon (Venus was the original) -->
+  <ellipse cx="49" cy="58" rx="8" ry="9" fill="#3366DD"/>
+  <ellipse cx="71" cy="58" rx="8" ry="9" fill="#3366DD"/>
+  <ellipse cx="49" cy="59" rx="5" ry="6" fill="#112299"/>
+  <ellipse cx="71" cy="59" rx="5" ry="6" fill="#112299"/>
+  <circle cx="47" cy="55" r="2.5" fill="white"/>
+  <circle cx="69" cy="55" r="2.5" fill="white"/>
+  <circle cx="52" cy="62" r="1" fill="white" opacity="0.6"/>
+  <circle cx="74" cy="62" r="1" fill="white" opacity="0.6"/>
+  <!-- lashes -->
+  <path d="M42 51 Q46 48 50 50" stroke="#112299" stroke-width="1.2" fill="none"/>
+  <path d="M70 50 Q74 48 78 51" stroke="#112299" stroke-width="1.2" fill="none"/>
+  <!-- blush - warm golden -->
+  <ellipse cx="40" cy="66" rx="8" ry="4" fill="#FFB0B0" opacity="0.55"/>
+  <ellipse cx="80" cy="66" rx="8" ry="4" fill="#FFB0B0" opacity="0.55"/>
+  <ellipse cx="60" cy="69" rx="2" ry="1.2" fill="#FFB888" opacity="0.7"/>
+  <path d="M54 74 Q60 80 66 74" stroke="#FF8899" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- sailor uniform - orange/yellow body -->
+  <path d="M34 86 L60 96 L86 86 L82 94 L60 108 L38 94 Z" fill="#FF9900"/>
+  <!-- white sailor collar -->
+  <path d="M36 86 L60 78 L84 86 L78 82 L60 86 L42 82 Z" fill="#FF9900"/>
+  <!-- collar overlay with outline -->
+  <path d="M37 87 L60 79 L83 87 L77 83 L60 87 L43 83 Z" fill="white" opacity="0.25"/>
+  <path d="M38 88 L60 80 L82 88" stroke="white" stroke-width="1.5" fill="none"/>
+  <path d="M40 91 L60 83 L80 91" stroke="white" stroke-width="0.8" fill="none" opacity="0.7"/>
+  <!-- white front bow - Venus has white not colored -->
+  <path d="M52 92 Q60 98 68 92 L64 86 Q60 90 56 86 Z" fill="white"/>
+  <circle cx="60" cy="92" r="3" fill="#FFD700"/>
+  <!-- orange skirt -->
+  <ellipse cx="60" cy="118" rx="27" ry="18" fill="#FF9900"/>
+  <path d="M33 108 Q60 104 87 108" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <!-- love-me chain - Venus signature weapon hint -->
+  <path d="M84 96 Q90 90 94 96 Q92 98 88 96" stroke="#FFD700" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <circle cx="94" cy="96" r="2" fill="#FFD700" opacity="0.8"/>
+  <!-- Venus symbol brooch -->
+  <circle cx="60" cy="86" r="3.5" fill="#FFD700"/>
+  <text x="57" y="90" font-size="5" fill="#FF8800">♀</text>
+</svg>`,
   },
 
   // ── UNLOCKABLES (indices 8-15) ────────────────────────────────────────────
