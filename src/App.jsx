@@ -1,6 +1,11 @@
 /*
 CHANGELOG
 ---------
+v1.6 - 2026-03-10
+- Redesigned: Luna, Artemis, Diana as proper matched cat trio with anatomy, symbols, paws
+- Added: SVG preview cards for all backgrounds, sparkle effects, and borders
+- Fixed: Magical Garden / Cherry Blossom / Blossoms no longer share same image
+
 v1.54 - 2026-03-10
 - Added: Update splash screen on first visit after each update
 - Added: Full version history screen (📋 What's New button on start screen)
@@ -39,15 +44,30 @@ const GlobalStyle = () => (
 // ─────────────────────────────────────────────────────────────────────────────
 // VERSION & CHANGELOG
 // ─────────────────────────────────────────────────────────────────────────────
-const CURRENT_VERSION = "1.54";
+const CURRENT_VERSION = "1.6";
 
 const CHANGELOG = [
+  {
+    version: "1.6",
+    date: "2026-03-10",
+    label: "Cat Trio Redesign & Shop Art",
+    emoji: "🐱",
+    changes: [
+      "Redesigned: Luna — proper sharp triangular ears, golden eyes, crescent forehead symbol, visible paws, matching cat anatomy",
+      "Redesigned: Artemis — cream/white fur, vivid blue glowing eyes, mirrored crescent symbol, paws, distinct from Luna",
+      "Redesigned: Diana — lavender-grey kitten, oversized violet eyes with sparkle, crescent+star symbol, tiny paws, tear when sad",
+      "All three cats now share a consistent design language but are immediately recognisable as individuals",
+      "Added: SVG preview cards for all Backgrounds — unique hand-drawn scenes (garden, night sky, cherry tree, forest, ocean, galaxy)",
+      "Added: SVG preview cards for all Sparkle effects — unique compositions showing the effect style",
+      "Added: SVG preview cards for all Border styles — accurate border previews",
+      "Fixed: Magical Garden, Cherry Blossom, and Blossoms sparkles no longer share the same 🌸 image",
+    ],
+  },
   {
     version: "1.54",
     date: "2026-03-10",
     label: "Update Log System",
     emoji: "📋",
-    isNew: true,
     changes: [
       "Added: Update splash screen — shows what's new automatically after each update",
       "Added: Full version history accessible from the start screen",
@@ -227,9 +247,315 @@ function defaultData() {
 // ─────────────────────────────────────────────────────────────────────────────
 // SHOP ITEMS
 // ─────────────────────────────────────────────────────────────────────────────
+// Shop preview SVGs — unique scenes for each item
+const SHOP_PREVIEWS = {
+  bg_default: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff0fb"/><stop offset="100%" stop-color="#f0eaff"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g1)" rx="8"/>
+    <circle cx="12" cy="12" r="5" fill="#FFD700" opacity="0.7"/>
+    <ellipse cx="32" cy="36" rx="14" ry="6" fill="#88CC88" opacity="0.6"/>
+    <path d="M20 36 Q24 28 28 36" fill="#66AA66" opacity="0.8"/>
+    <path d="M32 36 Q36 26 40 36" fill="#55BB55" opacity="0.8"/>
+    <path d="M44 36 Q46 30 48 36" fill="#66AA66" opacity="0.7"/>
+    <circle cx="18" cy="20" r="3" fill="#FF88CC" opacity="0.7"/>
+    <circle cx="44" cy="16" r="2" fill="#FF66AA" opacity="0.6"/>
+    <text x="28" y="18" font-size="10" fill="#e0379a" opacity="0.8">✦</text>
+    <text x="8" y="30" font-size="7" fill="#AA88FF" opacity="0.7">✧</text>
+    <text x="50" y="30" font-size="7" fill="#FFD700" opacity="0.7">✦</text>
+  </svg>`,
+  bg_starry: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d0d2e"/><stop offset="100%" stop-color="#1a1a4e"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g2)" rx="8"/>
+    <circle cx="10" cy="8" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="22" cy="14" r="1" fill="white" opacity="0.7"/>
+    <circle cx="38" cy="6" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="52" cy="12" r="1" fill="white" opacity="0.8"/>
+    <circle cx="18" cy="22" r="1" fill="white" opacity="0.6"/>
+    <circle cx="44" cy="20" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="58" cy="26" r="1" fill="white" opacity="0.7"/>
+    <circle cx="6" cy="30" r="1" fill="white" opacity="0.8"/>
+    <circle cx="30" cy="18" r="2" fill="#FFD700" opacity="0.9"/>
+    <path d="M28 18 L30 14 L32 18 L36 18 L33 21 L34 25 L30 22 L26 25 L27 21 L24 18 Z" fill="#FFD700" opacity="0.4" transform="scale(0.6) translate(20,12)"/>
+    <path d="M20 38 Q32 28 44 38" stroke="#4466FF" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <text x="26" y="36" font-size="8" fill="#FFD700" opacity="0.8">★</text>
+    <text x="10" y="42" font-size="6" fill="white" opacity="0.5">✦</text>
+    <text x="48" y="40" font-size="6" fill="#AADDFF" opacity="0.6">✧</text>
+  </svg>`,
+  bg_cherry: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff0f5"/><stop offset="100%" stop-color="#ffe4ee"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g3)" rx="8"/>
+    <!-- cherry blossom tree -->
+    <line x1="32" y1="48" x2="32" y2="28" stroke="#8B5E3C" stroke-width="2.5"/>
+    <line x1="32" y1="36" x2="20" y2="26" stroke="#8B5E3C" stroke-width="1.5"/>
+    <line x1="32" y1="32" x2="44" y2="24" stroke="#8B5E3C" stroke-width="1.5"/>
+    <!-- blossoms on branches -->
+    <circle cx="20" cy="24" r="5" fill="#FFB0CC" opacity="0.85"/>
+    <circle cx="15" cy="20" r="4" fill="#FF88AA" opacity="0.8"/>
+    <circle cx="25" cy="19" r="4.5" fill="#FFCCDD" opacity="0.8"/>
+    <circle cx="44" cy="22" r="5" fill="#FFB0CC" opacity="0.85"/>
+    <circle cx="50" cy="18" r="4" fill="#FF88AA" opacity="0.8"/>
+    <circle cx="40" cy="17" r="4.5" fill="#FFCCDD" opacity="0.8"/>
+    <circle cx="32" cy="18" r="5" fill="#FFB0CC" opacity="0.8"/>
+    <!-- falling petals -->
+    <ellipse cx="8" cy="16" rx="2.5" ry="1.5" fill="#FFB0CC" opacity="0.7" transform="rotate(30,8,16)"/>
+    <ellipse cx="54" cy="24" rx="2" ry="1.2" fill="#FF88AA" opacity="0.6" transform="rotate(-20,54,24)"/>
+    <ellipse cx="14" cy="36" rx="2.5" ry="1.5" fill="#FFCCDD" opacity="0.7" transform="rotate(15,14,36)"/>
+    <ellipse cx="48" cy="38" rx="2" ry="1.2" fill="#FFB0CC" opacity="0.6" transform="rotate(-30,48,38)"/>
+    <ellipse cx="38" cy="42" rx="2" ry="1.2" fill="#FF88AA" opacity="0.5" transform="rotate(10,38,42)"/>
+  </svg>`,
+  bg_forest: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d2e1a"/><stop offset="100%" stop-color="#1a4e2e"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g4)" rx="8"/>
+    <!-- trees -->
+    <polygon points="10,42 18,18 26,42" fill="#1a6630"/>
+    <polygon points="8,42 18,12 28,42" fill="#228844"/>
+    <polygon points="36,42 44,20 52,42" fill="#1a6630"/>
+    <polygon points="34,42 44,14 54,42" fill="#228844"/>
+    <polygon points="20,42 28,24 36,42" fill="#2a7740" opacity="0.8"/>
+    <!-- ground -->
+    <ellipse cx="32" cy="44" rx="32" ry="6" fill="#0d2e1a"/>
+    <!-- fireflies -->
+    <circle cx="14" cy="28" r="1.5" fill="#AAFF44" opacity="0.9"/>
+    <circle cx="14" cy="28" r="3" fill="#AAFF44" opacity="0.2"/>
+    <circle cx="50" cy="24" r="1.5" fill="#AAFF44" opacity="0.8"/>
+    <circle cx="50" cy="24" r="3" fill="#AAFF44" opacity="0.2"/>
+    <circle cx="30" cy="32" r="1.5" fill="#FFFF88" opacity="0.7"/>
+    <circle cx="30" cy="32" r="3" fill="#FFFF88" opacity="0.15"/>
+    <!-- moon peek -->
+    <circle cx="52" cy="8" r="5" fill="#FFFACC" opacity="0.6"/>
+    <text x="6" y="16" font-size="6" fill="#AAFF44" opacity="0.5">✦</text>
+    <text x="42" y="36" font-size="6" fill="#88FF44" opacity="0.4">✧</text>
+  </svg>`,
+  bg_ocean: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0d1e3e"/><stop offset="100%" stop-color="#0a3050"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g5)" rx="8"/>
+    <!-- light rays from surface -->
+    <path d="M20 0 L16 48" stroke="#4488FF" stroke-width="1" opacity="0.15"/>
+    <path d="M32 0 L30 48" stroke="#44AAFF" stroke-width="1.5" opacity="0.2"/>
+    <path d="M46 0 L50 48" stroke="#4488FF" stroke-width="1" opacity="0.15"/>
+    <!-- bubbles -->
+    <circle cx="10" cy="36" r="2" fill="none" stroke="#88DDFF" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="18" cy="20" r="1.5" fill="none" stroke="#88DDFF" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="44" cy="28" r="2.5" fill="none" stroke="#AAEEFF" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="56" cy="16" r="1.5" fill="none" stroke="#88DDFF" stroke-width="0.8" opacity="0.6"/>
+    <!-- seaweed -->
+    <path d="M8 48 Q6 40 10 34 Q8 28 12 22" stroke="#22AA66" stroke-width="2" fill="none" opacity="0.7"/>
+    <path d="M56 48 Q58 40 54 34 Q56 28 52 22" stroke="#22AA66" stroke-width="2" fill="none" opacity="0.7"/>
+    <!-- fish -->
+    <ellipse cx="28" cy="24" rx="5" ry="3" fill="#FF8844" opacity="0.8"/>
+    <polygon points="33,24 37,20 37,28" fill="#FF8844" opacity="0.8"/>
+    <circle cx="26" cy="23" r="1" fill="white"/>
+    <circle cx="26" cy="23" r="0.5" fill="#222"/>
+    <ellipse cx="44" cy="36" rx="4" ry="2.5" fill="#FF88CC" opacity="0.7"/>
+    <polygon points="48,36 51,33 51,39" fill="#FF88CC" opacity="0.7"/>
+    <!-- sparkle underwater -->
+    <text x="14" y="42" font-size="7" fill="#88DDFF" opacity="0.6">✦</text>
+    <text x="48" y="44" font-size="6" fill="#AAEEFF" opacity="0.5">✧</text>
+  </svg>`,
+  bg_galaxy: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d0d1a"/><stop offset="100%" stop-color="#1a0d2e"/></linearGradient></defs>
+    <rect width="64" height="48" fill="url(#g6)" rx="8"/>
+    <!-- galaxy spiral -->
+    <ellipse cx="32" cy="24" rx="24" ry="14" fill="none" stroke="#AA44FF" stroke-width="0.8" opacity="0.3" transform="rotate(-20,32,24)"/>
+    <ellipse cx="32" cy="24" rx="16" ry="9" fill="none" stroke="#CC66FF" stroke-width="0.8" opacity="0.4" transform="rotate(-20,32,24)"/>
+    <ellipse cx="32" cy="24" rx="8" ry="5" fill="#AA44FF" opacity="0.15" transform="rotate(-20,32,24)"/>
+    <circle cx="32" cy="24" r="3" fill="#FFD700" opacity="0.8"/>
+    <circle cx="32" cy="24" r="6" fill="#FFD700" opacity="0.1"/>
+    <!-- stars scattered -->
+    <circle cx="6" cy="6" r="1.2" fill="white" opacity="0.8"/>
+    <circle cx="58" cy="8" r="1" fill="white" opacity="0.7"/>
+    <circle cx="12" cy="40" r="1" fill="#DDAAFF" opacity="0.8"/>
+    <circle cx="52" cy="42" r="1.2" fill="#AADDFF" opacity="0.7"/>
+    <circle cx="8" cy="22" r="1.5" fill="#FF88CC" opacity="0.6"/>
+    <circle cx="56" cy="30" r="1" fill="#FFD700" opacity="0.8"/>
+    <circle cx="20" cy="10" r="1" fill="#AADDFF" opacity="0.6"/>
+    <circle cx="46" cy="6" r="1.5" fill="#AA44FF" opacity="0.8"/>
+    <text x="18" y="30" font-size="7" fill="#AA44FF" opacity="0.7">✦</text>
+    <text x="42" y="36" font-size="6" fill="#FF88CC" opacity="0.6">✧</text>
+    <text x="4" y="44" font-size="6" fill="#AADDFF" opacity="0.5">✦</text>
+  </svg>`,
+  sparkle_default: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#1a0033" rx="8"/>
+    <text x="8" y="18" font-size="14" fill="#FFD700">✦</text>
+    <text x="28" y="30" font-size="18" fill="#AA88FF">✧</text>
+    <text x="46" y="16" font-size="12" fill="#FF88CC">⋆</text>
+    <text x="4" y="40" font-size="10" fill="#88DDFF">✽</text>
+    <text x="48" y="42" font-size="10" fill="#FFD700">⊹</text>
+    <text x="20" y="46" font-size="8" fill="#AA88FF">✺</text>
+    <text x="38" y="44" font-size="8" fill="#FF88CC">✦</text>
+  </svg>`,
+  sparkle_rainbow: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#0d0022" rx="8"/>
+    <path d="M8 38 Q32 8 56 38" fill="none" stroke="#FF4444" stroke-width="2" opacity="0.7"/>
+    <path d="M10 40 Q32 12 54 40" fill="none" stroke="#FF8800" stroke-width="2" opacity="0.7"/>
+    <path d="M12 42 Q32 16 52 42" fill="none" stroke="#FFDD00" stroke-width="2" opacity="0.7"/>
+    <path d="M14 44 Q32 20 50 44" fill="none" stroke="#44CC44" stroke-width="2" opacity="0.7"/>
+    <path d="M16 46 Q32 24 48 46" fill="none" stroke="#4488FF" stroke-width="2" opacity="0.7"/>
+    <path d="M18 47 Q32 27 46 47" fill="none" stroke="#AA44FF" stroke-width="2" opacity="0.7"/>
+    <text x="6" y="14" font-size="10" fill="#FF4444">◆</text>
+    <text x="52" y="14" font-size="8" fill="#4488FF">◆</text>
+    <text x="28" y="10" font-size="10" fill="#FFDD00">★</text>
+  </svg>`,
+  sparkle_hearts: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#1a0011" rx="8"/>
+    <text x="6" y="20" font-size="16" fill="#FF4466">♥</text>
+    <text x="26" y="14" font-size="12" fill="#FF88AA">♡</text>
+    <text x="44" y="22" font-size="14" fill="#FF4466">♥</text>
+    <text x="14" y="38" font-size="10" fill="#FF88AA">♡</text>
+    <text x="38" y="40" font-size="12" fill="#FFAABB">♥</text>
+    <text x="54" y="36" font-size="8" fill="#FF6688">♡</text>
+    <text x="2" y="44" font-size="8" fill="#FF4466">♥</text>
+    <text x="28" y="44" font-size="10" fill="#FF88AA">♡</text>
+  </svg>`,
+  sparkle_shoots: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#0d0d1a" rx="8"/>
+    <!-- shooting stars -->
+    <line x1="4" y1="8" x2="24" y2="18" stroke="white" stroke-width="1.5" opacity="0.9"/>
+    <circle cx="4" cy="8" r="2" fill="#FFD700"/>
+    <line x1="20" y1="4" x2="44" y2="16" stroke="white" stroke-width="1.5" opacity="0.8"/>
+    <circle cx="20" cy="4" r="2" fill="#FFFAAA"/>
+    <line x1="36" y1="10" x2="58" y2="22" stroke="white" stroke-width="1.5" opacity="0.9"/>
+    <circle cx="36" cy="10" r="2" fill="#FFD700"/>
+    <line x1="8" y1="24" x2="30" y2="34" stroke="white" stroke-width="1" opacity="0.7"/>
+    <circle cx="8" cy="24" r="1.5" fill="#FFFFFF"/>
+    <line x1="28" y1="30" x2="52" y2="40" stroke="white" stroke-width="1.5" opacity="0.8"/>
+    <circle cx="28" cy="30" r="2" fill="#FFD700"/>
+    <!-- static stars -->
+    <circle cx="56" cy="6" r="1" fill="white" opacity="0.7"/>
+    <circle cx="12" cy="44" r="1" fill="white" opacity="0.6"/>
+    <circle cx="50" cy="44" r="1" fill="#FFD700" opacity="0.8"/>
+  </svg>`,
+  sparkle_blossom: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#1a000d" rx="8"/>
+    <!-- floating blossom petals scattered -->
+    <ellipse cx="10" cy="12" rx="4" ry="2.5" fill="#FFB0CC" opacity="0.85" transform="rotate(30,10,12)"/>
+    <ellipse cx="28" cy="8" rx="3.5" ry="2" fill="#FF88AA" opacity="0.8" transform="rotate(-15,28,8)"/>
+    <ellipse cx="48" cy="14" rx="4" ry="2.5" fill="#FFCCDD" opacity="0.85" transform="rotate(45,48,14)"/>
+    <ellipse cx="6" cy="30" rx="3" ry="2" fill="#FFB0CC" opacity="0.7" transform="rotate(-30,6,30)"/>
+    <ellipse cx="22" cy="26" rx="4" ry="2.5" fill="#FF88AA" opacity="0.8" transform="rotate(20,22,26)"/>
+    <ellipse cx="42" cy="24" rx="3.5" ry="2" fill="#FFCCDD" opacity="0.75" transform="rotate(-40,42,24)"/>
+    <ellipse cx="58" cy="32" rx="4" ry="2.5" fill="#FFB0CC" opacity="0.8" transform="rotate(10,58,32)"/>
+    <ellipse cx="14" cy="42" rx="3" ry="2" fill="#FF88AA" opacity="0.7" transform="rotate(25,14,42)"/>
+    <ellipse cx="36" cy="40" rx="4" ry="2.5" fill="#FFB0CC" opacity="0.8" transform="rotate(-20,36,40)"/>
+    <ellipse cx="54" cy="44" rx="3" ry="2" fill="#FFCCDD" opacity="0.7" transform="rotate(35,54,44)"/>
+    <!-- 5-petal blossom -->
+    <circle cx="32" cy="28" r="2" fill="#FFDDEE"/>
+    <ellipse cx="32" cy="22" rx="2" ry="3.5" fill="#FF88AA" opacity="0.9"/>
+    <ellipse cx="32" cy="34" rx="2" ry="3.5" fill="#FF88AA" opacity="0.9"/>
+    <ellipse cx="26" cy="28" rx="3.5" ry="2" fill="#FFB0CC" opacity="0.9"/>
+    <ellipse cx="38" cy="28" rx="3.5" ry="2" fill="#FFB0CC" opacity="0.9"/>
+  </svg>`,
+  sparkle_galaxy: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#080014" rx="8"/>
+    <text x="4" y="16" font-size="12" fill="#AA44FF" opacity="0.9">✦</text>
+    <text x="22" y="10" font-size="8" fill="#4488FF" opacity="0.8">·</text>
+    <text x="34" y="20" font-size="14" fill="#FF44BB" opacity="0.8">⋆</text>
+    <text x="50" y="14" font-size="10" fill="#44FFCC" opacity="0.7">✧</text>
+    <text x="8" y="34" font-size="8" fill="#FFAA44" opacity="0.8">∗</text>
+    <text x="24" y="40" font-size="12" fill="#AA44FF" opacity="0.7">⊹</text>
+    <text x="44" y="36" font-size="10" fill="#4488FF" opacity="0.8">✦</text>
+    <text x="56" y="44" font-size="8" fill="#FF44BB" opacity="0.7">·</text>
+    <text x="14" y="46" font-size="8" fill="#44FFCC" opacity="0.6">✧</text>
+    <!-- nebula glow -->
+    <circle cx="32" cy="24" r="16" fill="#AA44FF" opacity="0.05"/>
+    <circle cx="20" cy="16" r="8" fill="#4488FF" opacity="0.06"/>
+    <circle cx="46" cy="32" r="10" fill="#FF44BB" opacity="0.05"/>
+  </svg>`,
+  border_default: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#1a0033" rx="8"/>
+    <rect x="4" y="4" width="56" height="40" fill="none" stroke="#664488" stroke-width="1.5" rx="5"/>
+    <rect x="8" y="8" width="48" height="32" fill="none" stroke="#442266" stroke-width="0.8" rx="3"/>
+    <text x="22" y="30" font-size="14" fill="#553366" opacity="0.5">✦</text>
+  </svg>`,
+  border_floral: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#0d1a0d" rx="8"/>
+    <!-- vine border -->
+    <path d="M4 4 Q32 2 60 4 Q62 24 60 44 Q32 46 4 44 Q2 24 4 4" fill="none" stroke="#44AA44" stroke-width="1.5"/>
+    <!-- flowers at corners -->
+    <circle cx="6" cy="6" r="3" fill="#FF88AA"/>
+    <circle cx="6" cy="6" r="1.5" fill="#FFD700"/>
+    <circle cx="58" cy="6" r="3" fill="#FF88AA"/>
+    <circle cx="58" cy="6" r="1.5" fill="#FFD700"/>
+    <circle cx="6" cy="42" r="3" fill="#FF88AA"/>
+    <circle cx="6" cy="42" r="1.5" fill="#FFD700"/>
+    <circle cx="58" cy="42" r="3" fill="#FF88AA"/>
+    <circle cx="58" cy="42" r="1.5" fill="#FFD700"/>
+    <!-- leaves along vine -->
+    <ellipse cx="20" cy="3" rx="3" ry="1.5" fill="#66BB66" transform="rotate(-10,20,3)"/>
+    <ellipse cx="44" cy="3" rx="3" ry="1.5" fill="#66BB66" transform="rotate(10,44,3)"/>
+    <ellipse cx="61" cy="16" rx="1.5" ry="3" fill="#66BB66" transform="rotate(10,61,16)"/>
+    <ellipse cx="61" cy="32" rx="1.5" ry="3" fill="#66BB66" transform="rotate(-10,61,32)"/>
+    <ellipse cx="20" cy="45" rx="3" ry="1.5" fill="#66BB66" transform="rotate(10,20,45)"/>
+    <ellipse cx="44" cy="45" rx="3" ry="1.5" fill="#66BB66" transform="rotate(-10,44,45)"/>
+    <ellipse cx="3" cy="16" rx="1.5" ry="3" fill="#66BB66"/>
+    <ellipse cx="3" cy="32" rx="1.5" ry="3" fill="#66BB66"/>
+    <text x="24" y="30" font-size="12" fill="#44AA44" opacity="0.3">✿</text>
+  </svg>`,
+  border_starburst: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#0d0d22" rx="8"/>
+    <!-- corner stars -->
+    <text x="2" y="12" font-size="12" fill="#FFD700">★</text>
+    <text x="50" y="12" font-size="12" fill="#FFD700">★</text>
+    <text x="2" y="46" font-size="12" fill="#FFD700">★</text>
+    <text x="50" y="46" font-size="12" fill="#FFD700">★</text>
+    <!-- rays from corners -->
+    <line x1="8" y1="8" x2="20" y2="20" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+    <line x1="56" y1="8" x2="44" y2="20" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+    <line x1="8" y1="40" x2="20" y2="28" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+    <line x1="56" y1="40" x2="44" y2="28" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+    <!-- mid-edge stars -->
+    <text x="27" y="8" font-size="8" fill="#FFAA44">✦</text>
+    <text x="27" y="47" font-size="8" fill="#FFAA44">✦</text>
+    <text x="2" y="28" font-size="8" fill="#FFAA44">✦</text>
+    <text x="56" y="28" font-size="8" fill="#FFAA44">✦</text>
+    <rect x="16" y="14" width="32" height="20" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3" rx="2"/>
+  </svg>`,
+  border_moon: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#080014" rx="8"/>
+    <!-- corner crescent moons -->
+    <circle cx="8" cy="8" r="5" fill="none" stroke="#FFFACC" stroke-width="1.2" opacity="0.8"/>
+    <circle cx="10" cy="7" r="4" fill="#080014"/>
+    <circle cx="56" cy="8" r="5" fill="none" stroke="#FFFACC" stroke-width="1.2" opacity="0.8"/>
+    <circle cx="54" cy="7" r="4" fill="#080014"/>
+    <circle cx="8" cy="40" r="5" fill="none" stroke="#FFFACC" stroke-width="1.2" opacity="0.8"/>
+    <circle cx="10" cy="41" r="4" fill="#080014"/>
+    <circle cx="56" cy="40" r="5" fill="none" stroke="#FFFACC" stroke-width="1.2" opacity="0.8"/>
+    <circle cx="54" cy="41" r="4" fill="#080014"/>
+    <!-- small stars along edges -->
+    <text x="26" y="7" font-size="7" fill="#FFFACC" opacity="0.7">✦</text>
+    <text x="26" y="47" font-size="7" fill="#FFFACC" opacity="0.7">✦</text>
+    <text x="2" y="27" font-size="7" fill="#FFFACC" opacity="0.6">✧</text>
+    <text x="57" y="27" font-size="7" fill="#FFFACC" opacity="0.6">✧</text>
+    <!-- center star -->
+    <text x="28" y="30" font-size="10" fill="#FFFACC" opacity="0.2">★</text>
+  </svg>`,
+  border_crystal: `<svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" fill="#0a0a1e" rx="8"/>
+    <!-- diamond gems at corners -->
+    <polygon points="8,4 12,8 8,12 4,8" fill="#88DDFF" opacity="0.9"/>
+    <polygon points="56,4 60,8 56,12 52,8" fill="#AA88FF" opacity="0.9"/>
+    <polygon points="8,36 12,40 8,44 4,40" fill="#FF88DD" opacity="0.9"/>
+    <polygon points="56,36 60,40 56,44 52,40" fill="#88DDFF" opacity="0.9"/>
+    <!-- gem shine -->
+    <line x1="6" y1="6" x2="10" y2="10" stroke="white" stroke-width="0.8" opacity="0.7"/>
+    <line x1="54" y1="6" x2="58" y2="10" stroke="white" stroke-width="0.8" opacity="0.7"/>
+    <!-- mid-edge gems smaller -->
+    <polygon points="32,2 34,5 32,8 30,5" fill="#FFDD88" opacity="0.8"/>
+    <polygon points="32,40 34,43 32,46 30,43" fill="#FFDD88" opacity="0.8"/>
+    <polygon points="2,22 5,24 2,26 -1,24" fill="#88FFDD" opacity="0.7"/>
+    <polygon points="62,22 65,24 62,26 59,24" fill="#88FFDD" opacity="0.7"/>
+    <!-- crystal border lines -->
+    <path d="M12 4 L30 2 L52 4" fill="none" stroke="#88DDFF" stroke-width="0.8" opacity="0.5"/>
+    <path d="M12 44 L30 46 L52 44" fill="none" stroke="#88DDFF" stroke-width="0.8" opacity="0.5"/>
+    <path d="M4 12 L2 24 L4 36" fill="none" stroke="#AA88FF" stroke-width="0.8" opacity="0.5"/>
+    <path d="M60 12 L62 24 L60 36" fill="none" stroke="#AA88FF" stroke-width="0.8" opacity="0.5"/>
+    <text x="24" y="30" font-size="10" fill="#88DDFF" opacity="0.15">💎</text>
+  </svg>`,
+};
+
 const SHOP_ITEMS = {
   pets: [
-    { id:"pet_luna",    name:"Luna",          emoji:"🖤", cost:0,   desc:"Your faithful black cat companion!", art:"luna" },
+    { id:"pet_luna",    name:"Luna",          emoji:"🖤", cost:0,   desc:"Your faithful black cat companion!" },
     { id:"pet_artemis", name:"Artemis",        emoji:"🤍", cost:150, desc:"Luna's wise white cat partner!" },
     { id:"pet_diana",   name:"Diana",          emoji:"💜", cost:400, desc:"Their precious grey kitten daughter!" },
     { id:"pet_dragon",  name:"Baby Dragon",    emoji:"🐉", cost:200, desc:"A tiny dragon who breathes sparkles!" },
@@ -239,27 +565,27 @@ const SHOP_ITEMS = {
     { id:"pet_phoenix", name:"Baby Phoenix",   emoji:"🔥", cost:500, desc:"The rarest companion — a phoenix of pure magic!" },
   ],
   backgrounds: [
-    { id:"bg_default",    name:"Magical Garden",   emoji:"🌸", cost:0,  desc:"The classic magical backdrop" },
-    { id:"bg_starry",     name:"Starry Night",      emoji:"🌟", cost:20, desc:"A dreamy night sky full of stars" },
-    { id:"bg_cherry",     name:"Cherry Blossom",    emoji:"🌸", cost:20, desc:"Soft pink petals falling gently" },
-    { id:"bg_forest",     name:"Enchanted Forest",  emoji:"🌿", cost:25, desc:"A mysterious magical forest" },
-    { id:"bg_ocean",      name:"Underwater Kingdom",emoji:"🌊", cost:25, desc:"Deep beneath the sparkling sea" },
-    { id:"bg_galaxy",     name:"Galaxy",            emoji:"🔮", cost:30, desc:"Drift through the cosmos itself" },
+    { id:"bg_default",    name:"Magical Garden",    cost:0,  desc:"Soft pastels and floating magic" },
+    { id:"bg_starry",     name:"Starry Night",       cost:20, desc:"A dreamy night sky full of stars" },
+    { id:"bg_cherry",     name:"Cherry Blossom",     cost:20, desc:"Soft pink petals falling gently" },
+    { id:"bg_forest",     name:"Enchanted Forest",   cost:25, desc:"A mysterious magical forest" },
+    { id:"bg_ocean",      name:"Underwater Kingdom", cost:25, desc:"Deep beneath the sparkling sea" },
+    { id:"bg_galaxy",     name:"Galaxy",             cost:30, desc:"Drift through the cosmos itself" },
   ],
   sparkles: [
-    { id:"sparkle_default", name:"Magic Stars",    emoji:"✦", cost:0,  desc:"Classic magical sparkles" },
-    { id:"sparkle_rainbow", name:"Rainbow",        emoji:"🌈", cost:15, desc:"All the colors of the rainbow!" },
-    { id:"sparkle_hearts",  name:"Hearts",         emoji:"💕", cost:15, desc:"Floating hearts everywhere!" },
-    { id:"sparkle_shoots",  name:"Shooting Stars", emoji:"💫", cost:20, desc:"Stars streaking across the screen" },
-    { id:"sparkle_blossom", name:"Blossoms",       emoji:"🌸", cost:20, desc:"Soft petals drifting by" },
-    { id:"sparkle_galaxy",  name:"Galaxy Dust",    emoji:"🌌", cost:25, desc:"Cosmic dust from distant stars" },
+    { id:"sparkle_default", name:"Magic Stars",    cost:0,  desc:"Classic magical sparkles" },
+    { id:"sparkle_rainbow", name:"Rainbow",        cost:15, desc:"All the colors of the rainbow!" },
+    { id:"sparkle_hearts",  name:"Hearts",         cost:15, desc:"Floating hearts everywhere!" },
+    { id:"sparkle_shoots",  name:"Shooting Stars", cost:20, desc:"Stars streaking across the screen" },
+    { id:"sparkle_blossom", name:"Blossoms",       cost:20, desc:"Soft petals drifting by" },
+    { id:"sparkle_galaxy",  name:"Galaxy Dust",    cost:25, desc:"Cosmic dust from distant stars" },
   ],
   borders: [
-    { id:"border_default", name:"Simple",        emoji:"⬜", cost:0,  desc:"Clean and simple" },
-    { id:"border_floral",  name:"Floral Vine",   emoji:"🌿", cost:20, desc:"Delicate vines and flowers" },
-    { id:"border_starburst",name:"Star Burst",   emoji:"⭐", cost:20, desc:"Radiating star energy" },
-    { id:"border_moon",    name:"Moon & Stars",  emoji:"🌙", cost:25, desc:"Crescent moons and twinkling stars" },
-    { id:"border_crystal", name:"Crystal Gems",  emoji:"💎", cost:30, desc:"Sparkling crystal gems" },
+    { id:"border_default",  name:"Simple",         cost:0,  desc:"Clean and simple" },
+    { id:"border_floral",   name:"Floral Vine",    cost:20, desc:"Delicate vines and flowers" },
+    { id:"border_starburst",name:"Star Burst",     cost:20, desc:"Radiating star energy" },
+    { id:"border_moon",     name:"Moon & Stars",   cost:25, desc:"Crescent moons and twinkling stars" },
+    { id:"border_crystal",  name:"Crystal Gems",   cost:30, desc:"Sparkling crystal gems" },
   ],
 };
 
@@ -288,160 +614,348 @@ function getPetArt(petId, state="idle", accentColor="#e0379a") {
   const col = accentColor;
   const arts = {
     pet_luna: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#222222"/>
-        <ellipse cx="21" cy="20" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="39" cy="20" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="21" cy="20" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="39" cy="20" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#333333"/>
-        <ellipse cx="24" cy="30" rx="5" ry="6" fill="#FFD700"/>
-        <ellipse cx="36" cy="30" rx="5" ry="6" fill="#FFD700"/>
-        <ellipse cx="24" cy="30" rx="2.5" ry="4" fill="#222200"/>
-        <ellipse cx="36" cy="30" rx="2.5" ry="4" fill="#222200"/>
-        <circle cx="25" cy="28" r="1.5" fill="white"/>
-        <circle cx="37" cy="28" r="1.5" fill="white"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#555" stroke-width="1" fill="none"/>
-        <line x1="18" y1="34" x2="8" y2="32" stroke="#888" stroke-width="1"/>
-        <line x1="18" y1="36" x2="8" y2="36" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="34" x2="52" y2="32" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="36" x2="52" y2="36" stroke="#888" stroke-width="1"/>
-        <circle cx="30" cy="22" r="4" fill="#FFD700" opacity="0.9"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#222222"/>
-        <ellipse cx="21" cy="18" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="39" cy="18" rx="5" ry="9" fill="#222222"/>
-        <ellipse cx="21" cy="18" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="39" cy="18" rx="2.5" ry="5" fill="#FF88AA"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#333333"/>
-        <path d="M20 29 Q24 24 28 29" fill="#FFD700"/>
-        <path d="M32 29 Q36 24 40 29" fill="#FFD700"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#555" stroke-width="1.5" fill="none"/>
-        <line x1="18" y1="33" x2="6" y2="28" stroke="#888" stroke-width="1"/>
-        <line x1="18" y1="35" x2="6" y2="35" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="33" x2="54" y2="28" stroke="#888" stroke-width="1"/>
-        <line x1="42" y1="35" x2="54" y2="35" stroke="#888" stroke-width="1"/>
-        <circle cx="30" cy="21" r="4" fill="#FFD700" opacity="0.9"/>
-        <text x="15" y="12" font-size="8" fill="#FFD700">✦</text>
-        <text x="38" y="10" font-size="8" fill="#FF88CC">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="18" ry="14" fill="#222222"/>
-        <ellipse cx="21" cy="22" rx="5" ry="9" fill="#222222" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="5" ry="9" fill="#222222" transform="rotate(-10,39,22)"/>
-        <ellipse cx="21" cy="22" rx="2.5" ry="5" fill="#FF88AA" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="2.5" ry="5" fill="#FF88AA" transform="rotate(-10,39,22)"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#333333"/>
-        <path d="M22 31 Q26 34 30 31" fill="none" stroke="#FFD700" stroke-width="2"/>
-        <path d="M30 31 Q34 34 38 31" fill="none" stroke="#FFD700" stroke-width="2"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FF8888"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#555" stroke-width="1.5" fill="none"/>
-        <circle cx="30" cy="22" r="4" fill="#FFD700" opacity="0.5"/>
-      </svg>`,
+      idle:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- body -->
+  <ellipse cx="30" cy="52" rx="17" ry="13" fill="#1a1a1a"/>
+  <!-- front paws -->
+  <ellipse cx="20" cy="62" rx="7" ry="4" fill="#222222"/>
+  <ellipse cx="40" cy="62" rx="7" ry="4" fill="#222222"/>
+  <ellipse cx="18" cy="63" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="22" cy="64" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="38" cy="63" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="42" cy="64" rx="2.5" ry="1.5" fill="#333"/>
+  <!-- tail -->
+  <path d="M47 52 Q58 44 55 36 Q52 32 48 36 Q50 42 44 48" fill="#222222"/>
+  <!-- head -->
+  <ellipse cx="30" cy="30" rx="16" ry="15" fill="#1a1a1a"/>
+  <!-- ears - sharp triangles -->
+  <polygon points="16,20 12,6 22,14" fill="#1a1a1a"/>
+  <polygon points="44,20 48,6 38,14" fill="#1a1a1a"/>
+  <!-- inner ear -->
+  <polygon points="16,19 13,9 21,15" fill="#FF88AA"/>
+  <polygon points="44,19 47,9 39,15" fill="#FF88AA"/>
+  <!-- face - muzzle -->
+  <ellipse cx="30" cy="34" rx="8" ry="6" fill="#2a2a2a"/>
+  <!-- eyes - golden, large -->
+  <ellipse cx="23" cy="28" rx="5" ry="6" fill="#FFD700"/>
+  <ellipse cx="37" cy="28" rx="5" ry="6" fill="#FFD700"/>
+  <ellipse cx="23" cy="28" rx="3" ry="4" fill="#111100"/>
+  <ellipse cx="37" cy="28" rx="3" ry="4" fill="#111100"/>
+  <circle cx="22" cy="26" r="1.5" fill="white"/>
+  <circle cx="36" cy="26" r="1.5" fill="white"/>
+  <!-- nose -->
+  <ellipse cx="30" cy="33" rx="2.2" ry="1.5" fill="#FF6688"/>
+  <!-- mouth -->
+  <path d="M28 35 Q30 37 32 35" stroke="#FF6688" stroke-width="1" fill="none"/>
+  <!-- whiskers -->
+  <line x1="14" y1="32" x2="27" y2="33" stroke="#888" stroke-width="0.8"/>
+  <line x1="14" y1="34" x2="27" y2="34" stroke="#888" stroke-width="0.8"/>
+  <line x1="33" y1="33" x2="46" y2="32" stroke="#888" stroke-width="0.8"/>
+  <line x1="33" y1="34" x2="46" y2="34" stroke="#888" stroke-width="0.8"/>
+  <!-- forehead crescent moon symbol -->
+  <path d="M27 18 Q30 14 33 18 Q30 16 27 18" fill="#FFD700"/>
+  <circle cx="30" cy="17" r="3.5" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <circle cx="31.5" cy="16" r="2.8" fill="#1a1a1a"/>
+</svg>`,
+      happy:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- body lifted -->
+  <ellipse cx="30" cy="50" rx="17" ry="13" fill="#1a1a1a"/>
+  <!-- paws raised slightly -->
+  <ellipse cx="19" cy="60" rx="7" ry="4" fill="#222222" transform="rotate(-8,19,60)"/>
+  <ellipse cx="41" cy="60" rx="7" ry="4" fill="#222222" transform="rotate(8,41,60)"/>
+  <ellipse cx="17" cy="61" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="21" cy="62" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="39" cy="61" rx="2.5" ry="1.5" fill="#333"/>
+  <ellipse cx="43" cy="62" rx="2.5" ry="1.5" fill="#333"/>
+  <!-- tail up -->
+  <path d="M47 48 Q60 38 56 26 Q52 22 49 28 Q52 36 44 44" fill="#222222"/>
+  <text x="52" y="24" font-size="7" fill="#FFD700">✦</text>
+  <!-- head -->
+  <ellipse cx="30" cy="28" rx="16" ry="15" fill="#1a1a1a"/>
+  <polygon points="16,18 12,4 22,12" fill="#1a1a1a"/>
+  <polygon points="44,18 48,4 38,12" fill="#1a1a1a"/>
+  <polygon points="16,17 13,7 21,13" fill="#FF88AA"/>
+  <polygon points="44,17 47,7 39,13" fill="#FF88AA"/>
+  <ellipse cx="30" cy="32" rx="8" ry="6" fill="#2a2a2a"/>
+  <!-- happy eyes - wide and bright -->
+  <ellipse cx="23" cy="26" rx="5.5" ry="6.5" fill="#FFD700"/>
+  <ellipse cx="37" cy="26" rx="5.5" ry="6.5" fill="#FFD700"/>
+  <ellipse cx="23" cy="26" rx="3" ry="4" fill="#111100"/>
+  <ellipse cx="37" cy="26" rx="3" ry="4" fill="#111100"/>
+  <circle cx="22" cy="24" r="1.8" fill="white"/>
+  <circle cx="36" cy="24" r="1.8" fill="white"/>
+  <!-- big happy mouth -->
+  <path d="M26 34 Q30 38 34 34" stroke="#FF6688" stroke-width="1.5" fill="none"/>
+  <ellipse cx="30" cy="32" rx="2.2" ry="1.5" fill="#FF6688"/>
+  <!-- whiskers spread -->
+  <line x1="12" y1="31" x2="27" y2="32" stroke="#888" stroke-width="0.8"/>
+  <line x1="12" y1="33" x2="27" y2="33" stroke="#888" stroke-width="0.8"/>
+  <line x1="33" y1="32" x2="48" y2="31" stroke="#888" stroke-width="0.8"/>
+  <line x1="33" y1="33" x2="48" y2="33" stroke="#888" stroke-width="0.8"/>
+  <path d="M27 16 Q30 12 33 16 Q30 14 27 16" fill="#FFD700"/>
+  <circle cx="30" cy="15" r="3.5" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <circle cx="31.5" cy="14" r="2.8" fill="#1a1a1a"/>
+  <!-- sparkles -->
+  <text x="4" y="16" font-size="9" fill="#FFD700">✦</text>
+  <text x="46" y="14" font-size="8" fill="#FF88CC">✦</text>
+</svg>`,
+      sad:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- body hunched -->
+  <ellipse cx="30" cy="54" rx="16" ry="12" fill="#1a1a1a"/>
+  <!-- paws tucked -->
+  <ellipse cx="22" cy="63" rx="6" ry="3.5" fill="#222222"/>
+  <ellipse cx="38" cy="63" rx="6" ry="3.5" fill="#222222"/>
+  <ellipse cx="20" cy="64" rx="2" ry="1.2" fill="#333"/>
+  <ellipse cx="24" cy="65" rx="2" ry="1.2" fill="#333"/>
+  <ellipse cx="36" cy="64" rx="2" ry="1.2" fill="#333"/>
+  <ellipse cx="40" cy="65" rx="2" ry="1.2" fill="#333"/>
+  <!-- tail drooped -->
+  <path d="M46 54 Q54 52 52 60 Q48 64 44 58 Q46 54 42 52" fill="#222222"/>
+  <!-- head slightly down -->
+  <ellipse cx="30" cy="32" rx="16" ry="15" fill="#1a1a1a"/>
+  <polygon points="16,22 13,8 22,16" fill="#1a1a1a" transform="rotate(5,16,22)"/>
+  <polygon points="44,22 47,8 38,16" fill="#1a1a1a" transform="rotate(-5,44,22)"/>
+  <polygon points="16,21 14,11 21,17" fill="#FF88AA" transform="rotate(5,16,21)"/>
+  <polygon points="44,21 46,11 39,17" fill="#FF88AA" transform="rotate(-5,44,21)"/>
+  <ellipse cx="30" cy="36" rx="8" ry="6" fill="#2a2a2a"/>
+  <!-- sad eyes - half closed -->
+  <ellipse cx="23" cy="30" rx="5" ry="5.5" fill="#FFD700"/>
+  <ellipse cx="37" cy="30" rx="5" ry="5.5" fill="#FFD700"/>
+  <ellipse cx="23" cy="31" rx="3" ry="3.5" fill="#111100"/>
+  <ellipse cx="37" cy="31" rx="3" ry="3.5" fill="#111100"/>
+  <circle cx="22" cy="29" r="1.2" fill="white"/>
+  <circle cx="36" cy="29" r="1.2" fill="white"/>
+  <!-- droopy inner brow -->
+  <path d="M19 26 Q23 23 27 26" fill="#1a1a1a"/>
+  <path d="M33 26 Q37 23 41 26" fill="#1a1a1a"/>
+  <ellipse cx="30" cy="35" rx="2.2" ry="1.5" fill="#FF6688"/>
+  <path d="M27 37 Q30 35 33 37" stroke="#FF6688" stroke-width="1" fill="none"/>
+  <line x1="14" y1="34" x2="27" y2="34" stroke="#666" stroke-width="0.8"/>
+  <line x1="33" y1="34" x2="46" y2="34" stroke="#666" stroke-width="0.8"/>
+  <path d="M27 20 Q30 16 33 20 Q30 18 27 20" fill="#FFD700" opacity="0.6"/>
+  <circle cx="30" cy="19" r="3.5" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+  <circle cx="31.5" cy="18" r="2.8" fill="#1a1a1a"/>
+</svg>`,
     },
     pet_artemis: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="20" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="39" cy="20" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="20" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="20" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#F5F5F5"/>
-        <ellipse cx="24" cy="30" rx="5" ry="6" fill="#4488FF"/>
-        <ellipse cx="36" cy="30" rx="5" ry="6" fill="#4488FF"/>
-        <ellipse cx="24" cy="30" rx="2.5" ry="4" fill="#112266"/>
-        <ellipse cx="36" cy="30" rx="2.5" ry="4" fill="#112266"/>
-        <circle cx="25" cy="28" r="1.5" fill="white"/>
-        <circle cx="37" cy="28" r="1.5" fill="white"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#ccc" stroke-width="1" fill="none"/>
-        <line x1="18" y1="34" x2="8" y2="32" stroke="#ccc" stroke-width="1"/>
-        <line x1="18" y1="36" x2="8" y2="36" stroke="#ccc" stroke-width="1"/>
-        <line x1="42" y1="34" x2="52" y2="32" stroke="#ccc" stroke-width="1"/>
-        <line x1="42" y1="36" x2="52" y2="36" stroke="#ccc" stroke-width="1"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="18" ry="16" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="18" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="39" cy="18" rx="5" ry="9" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="18" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="18" rx="2.5" ry="5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="32" rx="14" ry="14" fill="#F5F5F5"/>
-        <path d="M20 29 Q24 24 28 29" fill="#4488FF"/>
-        <path d="M32 29 Q36 24 40 29" fill="#4488FF"/>
-        <ellipse cx="30" cy="36" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#ccc" stroke-width="1.5" fill="none"/>
-        <text x="14" y="12" font-size="8" fill="#4488FF">✦</text>
-        <text x="38" y="10" font-size="8" fill="#88CCFF">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="18" ry="14" fill="#EEEEEE"/>
-        <ellipse cx="21" cy="22" rx="5" ry="9" fill="#EEEEEE" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="5" ry="9" fill="#EEEEEE" transform="rotate(-10,39,22)"/>
-        <ellipse cx="21" cy="22" rx="2.5" ry="5" fill="#FFB0CC" transform="rotate(10,21,22)"/>
-        <ellipse cx="39" cy="22" rx="2.5" ry="5" fill="#FFB0CC" transform="rotate(-10,39,22)"/>
-        <ellipse cx="30" cy="34" rx="14" ry="13" fill="#F5F5F5"/>
-        <path d="M22 31 Q26 34 30 31" fill="none" stroke="#4488FF" stroke-width="2"/>
-        <path d="M30 31 Q34 34 38 31" fill="none" stroke="#4488FF" stroke-width="2"/>
-        <ellipse cx="30" cy="37" rx="3" ry="2" fill="#FFB0B0"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#ccc" stroke-width="1.5" fill="none"/>
-      </svg>`,
+      idle:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- body - cream white -->
+  <ellipse cx="30" cy="52" rx="17" ry="13" fill="#F5F0E8"/>
+  <!-- front paws -->
+  <ellipse cx="20" cy="62" rx="7" ry="4" fill="#EDE8DC"/>
+  <ellipse cx="40" cy="62" rx="7" ry="4" fill="#EDE8DC"/>
+  <ellipse cx="18" cy="63" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="22" cy="64" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="38" cy="63" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="42" cy="64" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <!-- tail - fluffy white with tip -->
+  <path d="M47 52 Q58 44 55 36 Q52 32 48 36 Q50 42 44 48" fill="#F0EBE0"/>
+  <!-- head -->
+  <ellipse cx="30" cy="30" rx="16" ry="15" fill="#F5F0E8"/>
+  <!-- ears -->
+  <polygon points="16,20 12,6 22,14" fill="#F5F0E8"/>
+  <polygon points="44,20 48,6 38,14" fill="#F5F0E8"/>
+  <polygon points="16,19 13,9 21,15" fill="#FFBBCC"/>
+  <polygon points="44,19 47,9 39,15" fill="#FFBBCC"/>
+  <!-- face muzzle -->
+  <ellipse cx="30" cy="34" rx="8" ry="6" fill="#EEE8DC"/>
+  <!-- eyes - vivid blue, Artemis trademark -->
+  <ellipse cx="23" cy="28" rx="5" ry="6" fill="#2266FF"/>
+  <ellipse cx="37" cy="28" rx="5" ry="6" fill="#2266FF"/>
+  <ellipse cx="23" cy="28" rx="3" ry="4" fill="#001166"/>
+  <ellipse cx="37" cy="28" rx="3" ry="4" fill="#001166"/>
+  <circle cx="22" cy="26" r="1.5" fill="white"/>
+  <circle cx="36" cy="26" r="1.5" fill="white"/>
+  <!-- blue eye glow ring -->
+  <ellipse cx="23" cy="28" rx="5.5" ry="6.5" fill="none" stroke="#88AAFF" stroke-width="0.8" opacity="0.6"/>
+  <ellipse cx="37" cy="28" rx="5.5" ry="6.5" fill="none" stroke="#88AAFF" stroke-width="0.8" opacity="0.6"/>
+  <ellipse cx="30" cy="33" rx="2.2" ry="1.5" fill="#FF9999"/>
+  <path d="M28 35 Q30 37 32 35" stroke="#FF9999" stroke-width="1" fill="none"/>
+  <line x1="14" y1="32" x2="27" y2="33" stroke="#CCBBAA" stroke-width="0.8"/>
+  <line x1="14" y1="34" x2="27" y2="34" stroke="#CCBBAA" stroke-width="0.8"/>
+  <line x1="33" y1="33" x2="46" y2="32" stroke="#CCBBAA" stroke-width="0.8"/>
+  <line x1="33" y1="34" x2="46" y2="34" stroke="#CCBBAA" stroke-width="0.8"/>
+  <!-- forehead crescent - gold, same as Luna but mirrored -->
+  <path d="M27 18 Q30 14 33 18 Q30 16 27 18" fill="#FFD700"/>
+  <circle cx="30" cy="17" r="3.5" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <circle cx="28.5" cy="16" r="2.8" fill="#F5F0E8"/>
+</svg>`,
+      happy:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="50" rx="17" ry="13" fill="#F5F0E8"/>
+  <ellipse cx="19" cy="60" rx="7" ry="4" fill="#EDE8DC" transform="rotate(-8,19,60)"/>
+  <ellipse cx="41" cy="60" rx="7" ry="4" fill="#EDE8DC" transform="rotate(8,41,60)"/>
+  <ellipse cx="17" cy="61" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="21" cy="62" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="39" cy="61" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <ellipse cx="43" cy="62" rx="2.5" ry="1.5" fill="#DDD8CC"/>
+  <path d="M47 48 Q60 38 56 26 Q52 22 49 28 Q52 36 44 44" fill="#F0EBE0"/>
+  <text x="52" y="24" font-size="7" fill="#88AAFF">✦</text>
+  <ellipse cx="30" cy="28" rx="16" ry="15" fill="#F5F0E8"/>
+  <polygon points="16,18 12,4 22,12" fill="#F5F0E8"/>
+  <polygon points="44,18 48,4 38,12" fill="#F5F0E8"/>
+  <polygon points="16,17 13,7 21,13" fill="#FFBBCC"/>
+  <polygon points="44,17 47,7 39,13" fill="#FFBBCC"/>
+  <ellipse cx="30" cy="32" rx="8" ry="6" fill="#EEE8DC"/>
+  <!-- happy eyes arc -->
+  <path d="M18 27 Q23 21 28 27" fill="#2266FF"/>
+  <path d="M32 27 Q37 21 42 27" fill="#2266FF"/>
+  <path d="M26 34 Q30 38 34 34" stroke="#FF9999" stroke-width="1.5" fill="none"/>
+  <ellipse cx="30" cy="32" rx="2.2" ry="1.5" fill="#FF9999"/>
+  <line x1="12" y1="31" x2="27" y2="32" stroke="#CCBBAA" stroke-width="0.8"/>
+  <line x1="33" y1="32" x2="48" y2="31" stroke="#CCBBAA" stroke-width="0.8"/>
+  <path d="M27 16 Q30 12 33 16 Q30 14 27 16" fill="#FFD700"/>
+  <circle cx="30" cy="15" r="3.5" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <circle cx="28.5" cy="14" r="2.8" fill="#F5F0E8"/>
+  <text x="4" y="16" font-size="9" fill="#2266FF">✦</text>
+  <text x="46" y="14" font-size="8" fill="#88AAFF">✦</text>
+</svg>`,
+      sad:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="54" rx="16" ry="12" fill="#F5F0E8"/>
+  <ellipse cx="22" cy="63" rx="6" ry="3.5" fill="#EDE8DC"/>
+  <ellipse cx="38" cy="63" rx="6" ry="3.5" fill="#EDE8DC"/>
+  <ellipse cx="20" cy="64" rx="2" ry="1.2" fill="#DDD8CC"/>
+  <ellipse cx="24" cy="65" rx="2" ry="1.2" fill="#DDD8CC"/>
+  <ellipse cx="36" cy="64" rx="2" ry="1.2" fill="#DDD8CC"/>
+  <ellipse cx="40" cy="65" rx="2" ry="1.2" fill="#DDD8CC"/>
+  <path d="M46 54 Q54 52 52 60 Q48 64 44 58 Q46 54 42 52" fill="#F0EBE0"/>
+  <ellipse cx="30" cy="32" rx="16" ry="15" fill="#F5F0E8"/>
+  <polygon points="16,22 13,8 22,16" fill="#F5F0E8" transform="rotate(5,16,22)"/>
+  <polygon points="44,22 47,8 38,16" fill="#F5F0E8" transform="rotate(-5,44,22)"/>
+  <polygon points="16,21 14,11 21,17" fill="#FFBBCC" transform="rotate(5,16,21)"/>
+  <polygon points="44,21 46,11 39,17" fill="#FFBBCC" transform="rotate(-5,44,21)"/>
+  <ellipse cx="30" cy="36" rx="8" ry="6" fill="#EEE8DC"/>
+  <ellipse cx="23" cy="30" rx="5" ry="5.5" fill="#2266FF"/>
+  <ellipse cx="37" cy="30" rx="5" ry="5.5" fill="#2266FF"/>
+  <ellipse cx="23" cy="31" rx="3" ry="3.5" fill="#001166"/>
+  <ellipse cx="37" cy="31" rx="3" ry="3.5" fill="#001166"/>
+  <circle cx="22" cy="29" r="1.2" fill="white"/>
+  <circle cx="36" cy="29" r="1.2" fill="white"/>
+  <path d="M19 26 Q23 23 27 26" fill="#F5F0E8"/>
+  <path d="M33 26 Q37 23 41 26" fill="#F5F0E8"/>
+  <ellipse cx="30" cy="35" rx="2.2" ry="1.5" fill="#FF9999"/>
+  <path d="M27 37 Q30 35 33 37" stroke="#FF9999" stroke-width="1" fill="none"/>
+  <line x1="14" y1="34" x2="27" y2="34" stroke="#CCBBAA" stroke-width="0.8"/>
+  <line x1="33" y1="34" x2="46" y2="34" stroke="#CCBBAA" stroke-width="0.8"/>
+  <path d="M27 20 Q30 16 33 20 Q30 18 27 20" fill="#FFD700" opacity="0.6"/>
+  <circle cx="30" cy="19" r="3.5" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+  <circle cx="28.5" cy="18" r="2.8" fill="#F5F0E8"/>
+</svg>`,
     },
     pet_diana: {
-      idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="16" ry="14" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="22" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="39" cy="22" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="22" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="22" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="33" rx="12" ry="12" fill="#BBBBBB"/>
-        <ellipse cx="25" cy="31" rx="4.5" ry="5" fill="#AA44FF"/>
-        <ellipse cx="35" cy="31" rx="4.5" ry="5" fill="#AA44FF"/>
-        <ellipse cx="25" cy="31" rx="2" ry="3.5" fill="#330066"/>
-        <ellipse cx="35" cy="31" rx="2" ry="3.5" fill="#330066"/>
-        <circle cx="26" cy="29" r="1.2" fill="white"/>
-        <circle cx="36" cy="29" r="1.2" fill="white"/>
-        <ellipse cx="30" cy="36" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M27 38 Q30 41 33 38" stroke="#999" stroke-width="1" fill="none"/>
-        <line x1="19" y1="34" x2="10" y2="32" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="19" y1="36" x2="10" y2="36" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="41" y1="34" x2="50" y2="32" stroke="#aaa" stroke-width="0.8"/>
-        <line x1="41" y1="36" x2="50" y2="36" stroke="#aaa" stroke-width="0.8"/>
-        <circle cx="30" cy="22" r="3" fill="#AA44FF" opacity="0.8"/>
-      </svg>`,
-      happy:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="38" rx="16" ry="14" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="19" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="39" cy="19" rx="4" ry="8" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="19" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="39" cy="19" rx="2" ry="4.5" fill="#FFB0CC"/>
-        <ellipse cx="30" cy="33" rx="12" ry="12" fill="#BBBBBB"/>
-        <path d="M21 30 Q25 25 29 30" fill="#AA44FF"/>
-        <path d="M31 30 Q35 25 39 30" fill="#AA44FF"/>
-        <ellipse cx="30" cy="36" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M25 38 Q30 43 35 38" stroke="#999" stroke-width="1.5" fill="none"/>
-        <circle cx="30" cy="21" r="3" fill="#AA44FF" opacity="0.9"/>
-        <text x="13" y="13" font-size="7" fill="#AA44FF">✦</text>
-        <text x="39" y="11" font-size="7" fill="#CC88FF">✦</text>
-      </svg>`,
-      sad:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="40" rx="16" ry="13" fill="#AAAAAA"/>
-        <ellipse cx="21" cy="23" rx="4" ry="8" fill="#AAAAAA" transform="rotate(10,21,23)"/>
-        <ellipse cx="39" cy="23" rx="4" ry="8" fill="#AAAAAA" transform="rotate(-10,39,23)"/>
-        <ellipse cx="21" cy="23" rx="2" ry="4.5" fill="#FFB0CC" transform="rotate(10,21,23)"/>
-        <ellipse cx="39" cy="23" rx="2" ry="4.5" fill="#FFB0CC" transform="rotate(-10,39,23)"/>
-        <ellipse cx="30" cy="34" rx="12" ry="12" fill="#BBBBBB"/>
-        <path d="M23 31 Q27 34 31 31" fill="none" stroke="#AA44FF" stroke-width="1.5"/>
-        <path d="M29 31 Q33 34 37 31" fill="none" stroke="#AA44FF" stroke-width="1.5"/>
-        <ellipse cx="30" cy="37" rx="2.5" ry="1.8" fill="#FFB0B0"/>
-        <path d="M26 40 Q30 37 34 40" stroke="#999" stroke-width="1.2" fill="none"/>
-        <circle cx="30" cy="22" r="3" fill="#AA44FF" opacity="0.4"/>
-      </svg>`,
+      idle:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- body - soft lavender grey, smaller than parents -->
+  <ellipse cx="30" cy="53" rx="15" ry="12" fill="#BBAACC"/>
+  <!-- front paws - smaller, rounder, very cute -->
+  <ellipse cx="21" cy="63" rx="6" ry="3.5" fill="#AA99BB"/>
+  <ellipse cx="39" cy="63" rx="6" ry="3.5" fill="#AA99BB"/>
+  <ellipse cx="19" cy="64" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="23" cy="65" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="37" cy="64" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="41" cy="65" rx="2" ry="1.2" fill="#998AAA"/>
+  <!-- tail - thin, young cat tail -->
+  <path d="M45 53 Q54 47 52 40 Q49 36 46 40 Q48 45 43 49" fill="#BBAACC"/>
+  <!-- head - rounder/younger face -->
+  <ellipse cx="30" cy="31" rx="15" ry="14" fill="#BBAACC"/>
+  <!-- ears - sharper than body suggests, kitten proportioned (bigger relative to head) -->
+  <polygon points="17,21 13,7 23,15" fill="#BBAACC"/>
+  <polygon points="43,21 47,7 37,15" fill="#BBAACC"/>
+  <polygon points="17,20 14,10 22,16" fill="#FFAACC"/>
+  <polygon points="43,20 46,10 38,16" fill="#FFAACC"/>
+  <!-- face muzzle -->
+  <ellipse cx="30" cy="35" rx="7" ry="5.5" fill="#AE9DBF"/>
+  <!-- eyes - large violet, younger/wider than parents -->
+  <ellipse cx="23" cy="29" rx="5.5" ry="6.5" fill="#9944CC"/>
+  <ellipse cx="37" cy="29" rx="5.5" ry="6.5" fill="#9944CC"/>
+  <ellipse cx="23" cy="29" rx="3" ry="4.5" fill="#330055"/>
+  <ellipse cx="37" cy="29" rx="3" ry="4.5" fill="#330055"/>
+  <circle cx="22" cy="27" r="1.8" fill="white"/>
+  <circle cx="36" cy="27" r="1.8" fill="white"/>
+  <!-- cute sparkle in eyes -->
+  <circle cx="25" cy="31" r="0.8" fill="white" opacity="0.7"/>
+  <circle cx="39" cy="31" r="0.8" fill="white" opacity="0.7"/>
+  <ellipse cx="30" cy="34" rx="2" ry="1.4" fill="#FF88AA"/>
+  <path d="M28 36 Q30 38 32 36" stroke="#FF88AA" stroke-width="1" fill="none"/>
+  <!-- whiskers - thinner, kitten-like -->
+  <line x1="15" y1="33" x2="27" y2="34" stroke="#9988AA" stroke-width="0.7"/>
+  <line x1="15" y1="35" x2="27" y2="35" stroke="#9988AA" stroke-width="0.7"/>
+  <line x1="33" y1="34" x2="45" y2="33" stroke="#9988AA" stroke-width="0.7"/>
+  <line x1="33" y1="35" x2="45" y2="35" stroke="#9988AA" stroke-width="0.7"/>
+  <!-- forehead symbol - crescent + star (Diana unique) -->
+  <circle cx="30" cy="18" r="3.5" fill="none" stroke="#9944CC" stroke-width="1.2"/>
+  <circle cx="31.5" cy="17" r="2.8" fill="#BBAACC"/>
+  <!-- small star next to crescent -->
+  <text x="26" y="16" font-size="6" fill="#9944CC">✦</text>
+</svg>`,
+      happy:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="51" rx="15" ry="12" fill="#BBAACC"/>
+  <ellipse cx="20" cy="61" rx="6" ry="3.5" fill="#AA99BB" transform="rotate(-10,20,61)"/>
+  <ellipse cx="40" cy="61" rx="6" ry="3.5" fill="#AA99BB" transform="rotate(10,40,61)"/>
+  <ellipse cx="18" cy="62" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="22" cy="63" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="38" cy="62" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="42" cy="63" rx="2" ry="1.2" fill="#998AAA"/>
+  <!-- tail up and curled - kitten excitement -->
+  <path d="M45 49 Q56 40 54 28 Q51 24 48 30 Q51 38 43 45" fill="#BBAACC"/>
+  <text x="50" y="26" font-size="7" fill="#9944CC">✦</text>
+  <ellipse cx="30" cy="29" rx="15" ry="14" fill="#BBAACC"/>
+  <polygon points="17,19 13,5 23,13" fill="#BBAACC"/>
+  <polygon points="43,19 47,5 37,13" fill="#BBAACC"/>
+  <polygon points="17,18 14,8 22,14" fill="#FFAACC"/>
+  <polygon points="43,18 46,8 38,14" fill="#FFAACC"/>
+  <ellipse cx="30" cy="33" rx="7" ry="5.5" fill="#AE9DBF"/>
+  <!-- big happy eyes -->
+  <path d="M18 28 Q23 22 28 28" fill="#9944CC"/>
+  <path d="M32 28 Q37 22 42 28" fill="#9944CC"/>
+  <path d="M26 35 Q30 39 34 35" stroke="#FF88AA" stroke-width="1.5" fill="none"/>
+  <ellipse cx="30" cy="33" rx="2" ry="1.4" fill="#FF88AA"/>
+  <line x1="13" y1="32" x2="27" y2="33" stroke="#9988AA" stroke-width="0.7"/>
+  <line x1="33" y1="33" x2="47" y2="32" stroke="#9988AA" stroke-width="0.7"/>
+  <circle cx="30" cy="17" r="3.5" fill="none" stroke="#9944CC" stroke-width="1.2"/>
+  <circle cx="31.5" cy="16" r="2.8" fill="#BBAACC"/>
+  <text x="26" y="15" font-size="6" fill="#9944CC">✦</text>
+  <!-- extra sparkles - kitten energy -->
+  <text x="3" y="18" font-size="9" fill="#9944CC">✦</text>
+  <text x="46" y="16" font-size="8" fill="#CC88FF">✦</text>
+  <text x="8" y="58" font-size="7" fill="#FF88AA">✧</text>
+</svg>`,
+      sad:`<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="55" rx="14" ry="11" fill="#BBAACC"/>
+  <ellipse cx="22" cy="64" rx="5.5" ry="3" fill="#AA99BB"/>
+  <ellipse cx="38" cy="64" rx="5.5" ry="3" fill="#AA99BB"/>
+  <ellipse cx="20" cy="65" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="24" cy="66" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="36" cy="65" rx="2" ry="1.2" fill="#998AAA"/>
+  <ellipse cx="40" cy="66" rx="2" ry="1.2" fill="#998AAA"/>
+  <!-- sad droopy tail -->
+  <path d="M44 55 Q50 56 48 62 Q45 66 42 61 Q43 57 40 54" fill="#BBAACC"/>
+  <ellipse cx="30" cy="33" rx="15" ry="14" fill="#BBAACC"/>
+  <polygon points="17,23 14,9 23,17" fill="#BBAACC" transform="rotate(6,17,23)"/>
+  <polygon points="43,23 46,9 37,17" fill="#BBAACC" transform="rotate(-6,43,23)"/>
+  <polygon points="17,22 15,12 22,18" fill="#FFAACC" transform="rotate(6,17,22)"/>
+  <polygon points="43,22 45,12 38,18" fill="#FFAACC" transform="rotate(-6,43,22)"/>
+  <ellipse cx="30" cy="37" rx="7" ry="5.5" fill="#AE9DBF"/>
+  <!-- sad big eyes - very expressive, kitten sad is maximum sad -->
+  <ellipse cx="23" cy="31" rx="5.5" ry="6" fill="#9944CC"/>
+  <ellipse cx="37" cy="31" rx="5.5" ry="6" fill="#9944CC"/>
+  <ellipse cx="23" cy="32" rx="3" ry="4" fill="#330055"/>
+  <ellipse cx="37" cy="32" rx="3" ry="4" fill="#330055"/>
+  <circle cx="22" cy="30" r="1.5" fill="white"/>
+  <circle cx="36" cy="30" r="1.5" fill="white"/>
+  <!-- very droopy brows -->
+  <path d="M18 26 Q23 22 28 26" fill="#BBAACC"/>
+  <path d="M32 26 Q37 22 42 26" fill="#BBAACC"/>
+  <!-- tiny tear -->
+  <ellipse cx="20" cy="34" rx="1" ry="1.5" fill="#AABBFF" opacity="0.7"/>
+  <ellipse cx="30" cy="36" rx="2" ry="1.4" fill="#FF88AA"/>
+  <path d="M27 38 Q30 36 33 38" stroke="#FF88AA" stroke-width="1" fill="none"/>
+  <line x1="15" y1="35" x2="27" y2="35" stroke="#9988AA" stroke-width="0.7"/>
+  <line x1="33" y1="35" x2="45" y2="35" stroke="#9988AA" stroke-width="0.7"/>
+  <circle cx="30" cy="20" r="3.5" fill="none" stroke="#9944CC" stroke-width="1" opacity="0.5"/>
+  <circle cx="31.5" cy="19" r="2.8" fill="#BBAACC"/>
+  <text x="26" y="18" font-size="6" fill="#9944CC" opacity="0.4">✦</text>
+</svg>`,
     },
-    pet_rabbit: {
+        pet_rabbit: {
       idle:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="22" cy="16" rx="4" ry="12" fill="#F0E0FF"/>
         <ellipse cx="38" cy="16" rx="4" ry="12" fill="#F0E0FF"/>
@@ -1646,13 +2160,19 @@ function CrystalShop({appData, updateData, onClose}) {
                   padding:"2px 10px",borderRadius:10,whiteSpace:"nowrap"}}>✓ ACTIVE</div>
               )}
 
-              {/* Pet preview or emoji */}
+              {/* Pet preview, SVG scene, or emoji fallback */}
               {tab==="pets" ? (
-                <div style={{width:56,height:56,margin:"0 auto 8px"}}>
+                <div style={{width:64,height:72,margin:"0 auto 6px"}}>
                   <div dangerouslySetInnerHTML={{__html:getPetArt(item.id,"idle","#9933cc")}}/>
                 </div>
+              ) : SHOP_PREVIEWS[item.id] ? (
+                <div style={{width:"100%",height:48,margin:"0 auto 8px",borderRadius:8,
+                  overflow:"hidden",border:"1px solid #441166",opacity:owned?1:0.72}}>
+                  <div dangerouslySetInnerHTML={{__html:SHOP_PREVIEWS[item.id]}}
+                    style={{width:"100%",height:"100%",display:"block"}}/>
+                </div>
               ) : (
-                <div style={{fontSize:32,marginBottom:8}}>{item.emoji}</div>
+                <div style={{fontSize:32,marginBottom:8}}>{item.emoji||"✦"}</div>
               )}
 
               <div style={{fontSize:12,fontWeight:800,color:"white",marginBottom:4,lineHeight:1.3}}>
