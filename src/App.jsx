@@ -1,38 +1,32 @@
 /*
 CHANGELOG
 ---------
-v1.6 - 2026-03-10
-- Added: Full custom SVG art for Baby Dragon, Tiny Fairy, Celestial Fox, Baby Phoenix (all 3 states each)
-- Fixed: No more placeholder circle art for any pet
+v1.54 - 2026-03-10
+- Added: Update splash screen on first visit after each update
+- Added: Full version history screen (📋 What's New button on start screen)
+- Added: New versioning system (x.0 massive, x.5 major, x.1-x.4 moderate, x.x1 patch)
 
+v1.53 - 2026-03-10
+- Added: Full custom SVG art for Baby Dragon, Tiny Fairy, Celestial Fox, Baby Phoenix
 
-- Fixed: Sparkles now contained inside app (position absolute, no longer leaking outside on iPad)
-- Fixed: Pet companion now contained inside app (position absolute)
-- Fixed: Crystal earned popup no longer uses fixed positioning
+v1.52 - 2026-03-10
+- Fixed: Loading screen full width, syntax error, home button added
 
-v1.4 - 2026-03-10
-- Fixed: Loading screen now fills full width on all devices
-- Added: Home button (🏠) on playing screen to return to start screen
+v1.51 - 2026-03-10
+- Fixed: Sparkles/pet contained in app, crystal popup positioning
 
-v1.3 - 2026-03-10
-- Added: Crystal shop with Pets, Backgrounds, Sparkles, Borders tabs
-- Added: Luna pet companion with idle/happy/sad animations (bottom-right of playing screen)
-- Added: Magic crystal economy — earned for no-hint sessions, streaks, perfect scores, first hard clear
-- Added: 8 purchasable pets including Artemis, Diana, Moon Rabbit, Baby Phoenix
-- Added: Background themes, sparkle effects, card border cosmetics
-- Added: Crystal balance shown in playing screen header and start screen shop button
-- Fixed: All screens now fill full width on iPad and iPhone (100dvh + width:100%)
-- Fixed: Sparkle effects now use active cosmetic selection
+v1.5 - 2026-03-10
+- Added: Crystal shop, pet companions, magic crystal economy, cosmetics
 
 v1.2 - 2026-03-10
-- Added: Character gallery accessible from start screen and session complete
-- Fixed: Mid-session unlocks now appear immediately without restarting
+- Added: Character gallery, mid-session unlocks
 
 v1.1 - 2026-03-10
-- Added: Netlify function proxy — API key now hidden server-side
-- Added: Rate limiting (10 sessions/IP/hour)
-*/
-import { useState, useEffect, useRef, useCallback } from "react";
+- Added: Netlify proxy, API key secured, rate limiting
+
+v1.0 - 2026-03-10
+- Initial launch
+*/import { useState, useEffect, useRef, useCallback } from "react";
 
 // Ensure full-width rendering
 const GlobalStyle = () => (
@@ -41,6 +35,120 @@ const GlobalStyle = () => (
     * { box-sizing: border-box; }
   `}</style>
 );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VERSION & CHANGELOG
+// ─────────────────────────────────────────────────────────────────────────────
+const CURRENT_VERSION = "1.54";
+
+const CHANGELOG = [
+  {
+    version: "1.54",
+    date: "2026-03-10",
+    label: "Update Log System",
+    emoji: "📋",
+    isNew: true,
+    changes: [
+      "Added: Update splash screen — shows what's new automatically after each update",
+      "Added: Full version history accessible from the start screen",
+      "Added: New versioning system (x.0 = massive, x.5 = major, x.1–x.4 = moderate, x.x1 = patch)",
+    ],
+  },
+  {
+    version: "1.53",
+    date: "2026-03-10",
+    label: "Full Pet Artwork",
+    emoji: "🎨",
+    changes: [
+      "Added: Full custom SVG art for Baby Dragon (green, sparkle breath, gold eyes)",
+      "Added: Full custom SVG art for Tiny Fairy (pink dress, wings, wand)",
+      "Added: Full custom SVG art for Celestial Fox (three tails, glowing blue eyes, cosmic markings)",
+      "Added: Full custom SVG art for Baby Phoenix (flame feathers, ember eyes, glowing crest)",
+      "All pets now have idle, happy, and sad animation states",
+    ],
+  },
+  {
+    version: "1.52",
+    date: "2026-03-10",
+    label: "Layout & Build Fixes",
+    emoji: "🔧",
+    changes: [
+      "Fixed: Loading screen now fills full width on all devices",
+      "Fixed: Syntax error in loading screen closing tag",
+      "Fixed: Home button added to playing screen to return to start",
+    ],
+  },
+  {
+    version: "1.51",
+    date: "2026-03-10",
+    label: "Positioning Fixes",
+    emoji: "📐",
+    changes: [
+      "Fixed: Sparkles now contained inside app — no longer leak outside on iPad",
+      "Fixed: Pet companion now contained inside app boundaries",
+      "Fixed: Crystal earned popup uses correct positioning",
+      "Fixed: All screens now fill full width on iPad and iPhone",
+    ],
+  },
+  {
+    version: "1.5",
+    date: "2026-03-10",
+    label: "Crystal Shop & Pet Companions",
+    emoji: "💎",
+    changes: [
+      "Added: Magic crystal economy — earn crystals for streaks, perfect sessions, no-hint runs",
+      "Added: Crystal Shop with Pets, Backgrounds, Sparkles, and Borders tabs",
+      "Added: Luna pet companion with idle/happy/sad animations on every problem",
+      "Added: 8 purchasable pets: Luna (free), Moon Rabbit, Artemis, Baby Dragon, Tiny Fairy, Celestial Fox, Diana, Baby Phoenix",
+      "Added: 6 background themes including Starry Night, Galaxy, Enchanted Forest",
+      "Added: 6 sparkle effects including Rainbow, Hearts, Shooting Stars",
+      "Added: 5 card border styles",
+      "Added: Crystal balance shown in playing screen header",
+      "Added: One-time bonuses for first Hard clear and first perfect score per difficulty",
+    ],
+  },
+  {
+    version: "1.2",
+    date: "2026-03-10",
+    label: "Character Gallery & Mid-Session Unlocks",
+    emoji: "👯",
+    changes: [
+      "Added: Character Gallery — view all 16 characters from the start screen",
+      "Added: Locked characters shown as silhouettes with unlock requirements",
+      "Added: Tap any unlocked character for a profile card with their story",
+      "Fixed: New character unlocks now appear immediately mid-session without restarting",
+    ],
+  },
+  {
+    version: "1.1",
+    date: "2026-03-10",
+    label: "Security & Gallery",
+    emoji: "🔒",
+    changes: [
+      "Added: Netlify function proxy — API key now hidden server-side, safe to share",
+      "Added: Rate limiting (10 sessions per IP per hour) to protect API credits",
+      "Removed: API key from browser-side code entirely",
+    ],
+  },
+  {
+    version: "1.0",
+    date: "2026-03-10",
+    label: "Initial Launch",
+    emoji: "🚀",
+    changes: [
+      "Core two-part math word problem engine with AI generation via Claude",
+      "16 magical girl characters — 8 starters, 8 unlockable by star count",
+      "Three difficulty levels: Easy, Medium, Hard with adaptive difficulty",
+      "Star economy with character unlocks at milestone star counts",
+      "Streak counter with bonus chime every 3 in a row",
+      "Confetti celebration on 90%+ session score",
+      "Sound effects: correct, wrong, streak, unlock, celebrate",
+      "Hint system with 2 attempts per problem part before reveal",
+      "Persistent progress via localStorage",
+      "Mute button and difficulty toggle in playing screen header",
+    ],
+  },
+];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SOUND ENGINE
@@ -110,6 +218,8 @@ function defaultData() {
     sessionHintsUsed: 0,
     firstHardComplete: false,
     perfectByDiff: { easy: false, medium: false, hard: false },
+    // Update log
+    lastSeenVersion: null,
   };
 }
 
@@ -1702,9 +1812,149 @@ function CharacterGallery({unlockedCount, totalStars, onClose}) {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// UPDATE SPLASH
+// ─────────────────────────────────────────────────────────────────────────────
+function UpdateSplash({onDismiss, onViewHistory}) {
+  const latest = CHANGELOG[0];
+  return (
+    <div style={{position:"fixed",inset:0,background:"rgba(10,0,30,0.88)",
+      zIndex:600,display:"flex",alignItems:"center",justifyContent:"center",
+      padding:20,fontFamily:"Georgia,serif"}}>
+      <div style={{
+        background:"linear-gradient(135deg,#1a0033,#330066)",
+        border:"2px solid #9955ff",borderRadius:28,padding:"28px 24px",
+        maxWidth:380,width:"100%",textAlign:"center",
+        boxShadow:"0 20px 60px rgba(100,0,255,0.3)",
+        animation:"popIn 0.4s ease",
+      }}>
+        <div style={{fontSize:38,marginBottom:6}}>{latest.emoji}</div>
+        <div style={{fontSize:11,letterSpacing:3,color:"#cc88ff",textTransform:"uppercase",
+          fontWeight:700,marginBottom:4}}>What's New</div>
+        <div style={{fontSize:22,fontWeight:900,color:"white",marginBottom:4}}>
+          v{latest.version} — {latest.label}
+        </div>
+        <div style={{fontSize:11,color:"#9977BB",marginBottom:16}}>{latest.date}</div>
+
+        {/* Change list */}
+        <div style={{background:"rgba(255,255,255,0.06)",borderRadius:16,
+          padding:"14px 16px",marginBottom:20,textAlign:"left"}}>
+          {latest.changes.map((c,i)=>(
+            <div key={i} style={{display:"flex",gap:8,marginBottom:i<latest.changes.length-1?8:0}}>
+              <span style={{color:"#cc88ff",flexShrink:0,marginTop:1}}>✦</span>
+              <span style={{fontSize:13,color:"#e0d0ff",lineHeight:1.5}}>{c}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+          <button onClick={onViewHistory} style={{
+            padding:"10px 18px",background:"transparent",
+            border:"1.5px solid #7733dd",borderRadius:14,
+            color:"#cc88ff",fontSize:13,fontWeight:700,
+            cursor:"pointer",fontFamily:"Georgia,serif",
+          }}>
+            📋 Full History
+          </button>
+          <button onClick={onDismiss} style={{
+            padding:"10px 24px",
+            background:"linear-gradient(135deg,#e0379a,#7733dd)",
+            border:"none",borderRadius:14,
+            color:"white",fontSize:14,fontWeight:900,
+            cursor:"pointer",fontFamily:"Georgia,serif",
+            boxShadow:"0 4px 16px #7733dd44",
+          }}>
+            Let's Play! ✨
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHANGELOG HISTORY
+// ─────────────────────────────────────────────────────────────────────────────
+function ChangelogHistory({onClose}) {
+  const labelColor = (v) => {
+    if(v.endsWith(".0") || v === "1.0") return {bg:"#FFD700",text:"#330000",label:"MAJOR"};
+    if(v.endsWith(".5")) return {bg:"#e0379a",text:"white",label:"SIGNIFICANT"};
+    const parts = v.split(".");
+    if(parts.length===3) return {bg:"#4488FF",text:"white",label:"PATCH"};
+    return {bg:"#7733dd",text:"white",label:"UPDATE"};
+  };
+  return (
+    <div style={{position:"fixed",inset:0,
+      background:"linear-gradient(135deg,#0d0d1a,#1a0d2e)",
+      zIndex:600,overflowY:"auto",fontFamily:"Georgia,serif"}}>
+
+      {/* Header */}
+      <div style={{position:"sticky",top:0,
+        background:"rgba(13,13,26,0.97)",backdropFilter:"blur(8px)",
+        padding:"16px 20px",borderBottom:"1px solid #441166",
+        display:"flex",alignItems:"center",justifyContent:"space-between",zIndex:1}}>
+        <div>
+          <div style={{fontSize:20,fontWeight:900,color:"white"}}>📋 Version History</div>
+          <div style={{fontSize:12,color:"#9977BB",marginTop:2}}>
+            Current version: <strong style={{color:"#cc88ff"}}>v{CURRENT_VERSION}</strong>
+          </div>
+        </div>
+        <button onClick={onClose} style={{
+          background:"#331155",border:"1.5px solid #7733dd",
+          borderRadius:12,color:"white",fontSize:14,fontWeight:700,
+          padding:"8px 16px",cursor:"pointer"}}>← Back</button>
+      </div>
+
+      {/* Version entries */}
+      <div style={{maxWidth:560,margin:"0 auto",padding:"20px 16px 40px"}}>
+        {CHANGELOG.map((entry, i)=>{
+          const badge = labelColor(entry.version);
+          return (
+            <div key={i} style={{
+              background:i===0?"linear-gradient(135deg,#1a0044,#2a0066)":"rgba(255,255,255,0.04)",
+              border:`1.5px solid ${i===0?"#9955ff":"#331144"}`,
+              borderRadius:20,padding:"18px 20px",marginBottom:14,
+              position:"relative",
+            }}>
+              {i===0&&(
+                <div style={{position:"absolute",top:-10,left:20,
+                  background:"linear-gradient(135deg,#e0379a,#7733dd)",
+                  color:"white",fontSize:10,fontWeight:900,letterSpacing:2,
+                  padding:"3px 12px",borderRadius:10,textTransform:"uppercase"}}>
+                  ✦ Latest
+                </div>
+              )}
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12,flexWrap:"wrap"}}>
+                <span style={{fontSize:22}}>{entry.emoji}</span>
+                <span style={{fontSize:18,fontWeight:900,color:"white"}}>v{entry.version}</span>
+                <span style={{fontSize:14,fontWeight:700,color:"#cc88ff"}}>{entry.label}</span>
+                <span style={{
+                  background:badge.bg,color:badge.text,
+                  fontSize:9,fontWeight:900,letterSpacing:1.5,
+                  padding:"2px 8px",borderRadius:8,textTransform:"uppercase",marginLeft:"auto",
+                }}>{badge.label}</span>
+              </div>
+              <div style={{fontSize:11,color:"#664488",marginBottom:10,marginTop:-6}}>{entry.date}</div>
+              {entry.changes.map((c,j)=>(
+                <div key={j} style={{display:"flex",gap:8,
+                  marginBottom:j<entry.changes.length-1?6:0}}>
+                  <span style={{color:"#7733dd",flexShrink:0,marginTop:1,fontSize:12}}>✦</span>
+                  <span style={{fontSize:13,color:"#c0a8e0",lineHeight:1.5}}>{c}</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCount, crystals, appData, updateData}) {
   const [showGallery, setShowGallery] = useState(false);
   const [showShop, setShowShop] = useState(false);
+  const [showChangelog, setShowChangelog] = useState(false);
   const diff = DIFF_CONFIG[difficulty];
   const nextUnlock = ALL_CHARACTERS.find(c=>c.unlockAt>totalStars&&c.unlockAt>0);
   if(showGallery) return (
@@ -1712,6 +1962,9 @@ function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCou
   );
   if(showShop) return (
     <CrystalShop appData={appData} updateData={updateData} onClose={()=>setShowShop(false)}/>
+  );
+  if(showChangelog) return (
+    <ChangelogHistory onClose={()=>setShowChangelog(false)}/>
   );
   return (
     <><GlobalStyle/><div style={{minHeight:"100dvh",width:"100%",boxSizing:"border-box",background:"linear-gradient(135deg,#fff0fb,#f0eaff)",
@@ -1785,6 +2038,14 @@ function StartScreen({difficulty, onDiffChange, onStart, totalStars, unlockedCou
           💎 Shop ({crystals} crystals)
         </button>
       </div>
+      <button onClick={()=>setShowChangelog(true)} style={{
+        padding:"8px 20px",background:"transparent",
+        border:"1.5px solid #ddd0ee",borderRadius:12,
+        fontSize:12,fontWeight:600,color:"#9977BB",cursor:"pointer",
+        fontFamily:"Georgia,serif",
+      }}>
+        📋 v{CURRENT_VERSION} — What's New
+      </button>
       <button onClick={onStart} style={{
         padding:"18px 48px",
         background:"linear-gradient(135deg,#e0379a,#7733dd)",
@@ -1960,6 +2221,8 @@ export default function App() {
   const [unlockPopup,setUnlockPopup]   = useState(null);
   const [streakFlash,setStreakFlash]   = useState(false);
   const [petState,setPetState]         = useState("idle");
+  const [showUpdateSplash,setShowUpdateSplash] = useState(false);
+  const [showUpdateHistory,setShowUpdateHistory] = useState(false);
   const [sessionCrystals,setSessionCrystals] = useState(0);
   const [hintsThisSession,setHintsThisSession] = useState(0);
   const [crystalPopup,setCrystalPopup] = useState(null);
@@ -1968,6 +2231,14 @@ export default function App() {
 
   // Save appData whenever it changes
   useEffect(()=>{ saveData(appData); },[appData]);
+
+  // Check for update on mount — show splash if version is new
+  useEffect(()=>{
+    if(appData.lastSeenVersion !== CURRENT_VERSION) {
+      setShowUpdateSplash(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const updateData = useCallback((updates) => {
     setAppData(prev=>{
@@ -2152,17 +2423,31 @@ export default function App() {
   // Next unlock info
   const nextUnlock = UNLOCK_CHARS.find(c=>c.unlockAt>appData.totalStars);
 
+  const dismissUpdateSplash = () => {
+    setShowUpdateSplash(false);
+    updateData({lastSeenVersion: CURRENT_VERSION});
+  };
+
   if(screen==='start') return (
-    <StartScreen
-      difficulty={appData.difficulty}
-      onDiffChange={diff=>updateData({difficulty:diff})}
-      onStart={()=>loadProblems()}
-      totalStars={appData.totalStars}
-      unlockedCount={appData.unlockedCount}
-      crystals={appData.crystals||0}
-      appData={appData}
-      updateData={updateData}
-    />
+    <>
+      <StartScreen
+        difficulty={appData.difficulty}
+        onDiffChange={diff=>updateData({difficulty:diff})}
+        onStart={()=>loadProblems()}
+        totalStars={appData.totalStars}
+        unlockedCount={appData.unlockedCount}
+        crystals={appData.crystals||0}
+        appData={appData}
+        updateData={updateData}
+      />
+      {showUpdateHistory && <ChangelogHistory onClose={()=>setShowUpdateHistory(false)}/>}
+      {showUpdateSplash && !showUpdateHistory && (
+        <UpdateSplash
+          onDismiss={dismissUpdateSplash}
+          onViewHistory={()=>setShowUpdateHistory(true)}
+        />
+      )}
+    </>
   );
 
   if(screen==='loading') return <LoadingScreen difficulty={appData.difficulty}/>;
