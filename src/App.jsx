@@ -1454,7 +1454,8 @@ function LoadingScreen({difficulty}) {
             animationDelay:`${i*0.2}s`}}>{c.emoji}</div>
         ))}
       </div>
-    </div></>\n  );
+    </div></>
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
